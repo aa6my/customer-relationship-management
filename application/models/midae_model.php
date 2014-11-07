@@ -59,6 +59,24 @@ class Midae_model extends CI_Model {
             return $data;
     }
 
+    function get_setting_userrole()
+    {
+        $data = array();
+        $query = $this->db->query("SELECT *FROM user_role");
+
+            foreach ($query->result_array() as $row)
+            {
+               $data[] = $row;
+            }
+
+            return $data;
+    }
+
+    function popup($data)
+    {
+        $this->load->view('popup', $data);
+    }
+
      function insert_new_data($arrayData,$table)
     {
         /*$data = array(

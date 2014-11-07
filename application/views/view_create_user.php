@@ -2,14 +2,17 @@
 $this->load->view('header');
 ?>
 
-<form name ="userinput" action="settings/create_user_now" method="post">
+<form name ="userinput" action="<?php echo base_url(); ?>settings/create_user_now" method="post">
 
 <ul>
 	<li>
 	<label>User role</label>
-	<div>
-		<input type="text" name="userrole" value="" size="50" />
-	</div>
+    <select name="userrole">
+	<?php 
+	foreach ($user_role as $key => $value) {?>
+	<option value="<?php echo $value['id']; ?>"><?php echo $value['role_name'];?></option>
+	<?php  } ?>		                                              
+    </select>
 	</li>
 	<li>
 	<label>Firstname</label>
@@ -33,12 +36,6 @@ $this->load->view('header');
 	<label>Password</label>
 	<div>
 		<input type="text" name="password" value="" size="50" />
-	</div>
-	</li>
-	<li>
-	<label>Status</label>
-	<div>
-		<input type="text" name="status" value="" size="50" />
 	</div>
 	</li>
 	<li>
