@@ -39,7 +39,7 @@ class Settings extends CI_Controller {
 
     public function create_user()
     {
-        $data['user_role'] = $this->midae_model->get_setting_userrole();
+        $data['user_role'] = $this->Midae_model->get_setting_userrole();
         $this->load->view('view_create_user', $data);
         //$this->create_user();
     }
@@ -83,7 +83,7 @@ class Settings extends CI_Controller {
             $data['text'] = "New user registered";
             $data['timer'] = "2000";
             $data['classfunc'] = "settings/users";
-            $this->midae_model->popup($data);
+            $this->Midae_model->popup($data);
 
         }   
     }

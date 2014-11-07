@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('Siteconfig_model','midae_model');
+$autoload['model'] = array('Siteconfig_model','Midae_model');
 
 
 /* End of file autoload.php */
