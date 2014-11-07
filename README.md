@@ -3,6 +3,4 @@ Customer Relationship Management
 
 Manage & Monitor by :
 
-Zack
-Nizam
-Amy
+Zack, Nizam & Amy
