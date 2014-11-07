@@ -9,4 +9,4 @@ Zack, Nizam & Amy
 Information
 ===========
 
-Make sure your mysql password is empty & database name crm.
+Make sure your mysql password is empty & database name crmv2.
