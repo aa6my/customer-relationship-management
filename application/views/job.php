@@ -498,7 +498,7 @@
                             <div class="box">
                                 <div class="box-header">
                                     <h3 class="box-title">Simple Full Width Table</h3>
-                                    <div class="box-tools">
+                                    <!-- <div class="box-tools">
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <li><a href="#">«</a></li>
                                             <li><a href="#">1</a></li>
@@ -506,10 +506,10 @@
                                             <li><a href="#">3</a></li>
                                             <li><a href="#">»</a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div><!-- /.box-header -->
                                 <div class="box-body no-padding">
-                                    <table class="table">
+                                    <table class="table table-striped">
                                         <tbody><tr>
                                             <th style="width: 10px">#</th>
                                             <th>Task</th>
