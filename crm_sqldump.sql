@@ -1,23 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10.5
+-- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Nov 07, 2014 at 07:55 PM
--- Server version: 5.1.73
--- PHP Version: 5.3.3
+-- Host: 127.0.0.1
+-- Generation Time: Nov 07, 2014 at 11:02 AM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
 --
--- Database: `crm`
+-- Database: `crmv2`
 --
 
 -- --------------------------------------------------------
@@ -27,14 +21,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `address` (
-  `address_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
+`address_id` smallint(10) unsigned NOT NULL,
   `address_line1` varchar(255) NOT NULL,
   `address_line2` varchar(255) DEFAULT NULL,
   `address_state` varchar(100) DEFAULT NULL,
   `address_postcode` varchar(10) NOT NULL,
   `country_id` smallint(10) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`address_id`)
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1003 ;
 
 --
@@ -52,8 +45,7 @@ INSERT INTO `address` (`address_id`, `address_line1`, `address_line2`, `address_
 
 CREATE TABLE IF NOT EXISTS `calendar` (
   `date` date NOT NULL,
-  `data` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`date`)
+  `data` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -73,8 +65,7 @@ INSERT INTO `calendar` (`date`, `data`) VALUES
 
 CREATE TABLE IF NOT EXISTS `config_data` (
   `key` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  PRIMARY KEY (`key`)
+  `value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -92,14 +83,13 @@ INSERT INTO `config_data` (`key`, `value`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `contacts` (
-  `contact_id` int(10) NOT NULL AUTO_INCREMENT,
+`contact_id` int(10) NOT NULL,
   `contact_fname` varchar(50) NOT NULL,
   `contact_lname` int(50) NOT NULL,
   `contact_email` varchar(100) NOT NULL,
   `contact_phone` varchar(20) NOT NULL,
   `contact_mobile` varchar(20) NOT NULL,
-  `contact_fax` varchar(20) NOT NULL,
-  PRIMARY KEY (`contact_id`)
+  `contact_fax` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -109,14 +99,13 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 --
 
 CREATE TABLE IF NOT EXISTS `country` (
-  `country_id` int(11) NOT NULL AUTO_INCREMENT,
+`country_id` int(11) NOT NULL,
   `country_iso` char(2) NOT NULL,
   `country_name` varchar(80) NOT NULL,
   `country_nicename` varchar(80) NOT NULL,
   `country_iso3` char(3) DEFAULT NULL,
   `country_numcode` smallint(6) DEFAULT NULL,
-  `country_phonecode` int(5) NOT NULL,
-  PRIMARY KEY (`country_id`)
+  `country_phonecode` int(5) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=240 ;
 
 --
@@ -371,7 +360,7 @@ INSERT INTO `country` (`country_id`, `country_iso`, `country_name`, `country_nic
 --
 
 CREATE TABLE IF NOT EXISTS `customers` (
-  `customer_id` int(5) NOT NULL AUTO_INCREMENT,
+`customer_id` int(5) NOT NULL,
   `customer_name` varchar(250) NOT NULL,
   `customer_firstname` varchar(50) NOT NULL,
   `customer_lastname` varchar(50) NOT NULL,
@@ -383,8 +372,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `customer_postcode` varchar(7) NOT NULL,
   `customer_state` varchar(30) NOT NULL,
   `country_id` smallint(10) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`customer_id`)
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
@@ -401,13 +389,12 @@ INSERT INTO `customers` (`customer_id`, `customer_name`, `customer_firstname`, `
 --
 
 CREATE TABLE IF NOT EXISTS `events` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `url` varchar(100) NOT NULL,
-  `allDay` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
+  `allDay` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -417,20 +404,18 @@ CREATE TABLE IF NOT EXISTS `events` (
 --
 
 CREATE TABLE IF NOT EXISTS `files` (
-  `file_id` int(5) NOT NULL AUTO_INCREMENT,
+`file_id` int(5) NOT NULL,
   `file_name` varchar(30) NOT NULL,
   `file_content` mediumblob NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`file_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `files`
 --
 
 INSERT INTO `files` (`file_id`, `file_name`, `file_content`, `last_update`) VALUES
-(1, 'asdad', 0x35313732622d6c6963656e73652e747874, '0000-00-00 00:00:00'),
-(2, 'test', 0x65316663632d702e747874, '2014-11-06 17:17:10');
+(1, 'asdad', 0x35313732622d6c6963656e73652e747874, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -439,40 +424,28 @@ INSERT INTO `files` (`file_id`, `file_name`, `file_content`, `last_update`) VALU
 --
 
 CREATE TABLE IF NOT EXISTS `jobs` (
-  `job_id` int(5) NOT NULL AUTO_INCREMENT,
+`job_id` int(5) NOT NULL,
   `customer_id` int(5) NOT NULL,
   `website_id` int(5) NOT NULL,
   `job_title` varchar(20) NOT NULL,
-  `job_date_start` date NOT NULL,
-  `job_start_time` time NOT NULL,
-  `job_end_time` time NOT NULL,
+  `job_date` date NOT NULL,
   `job_due_date` date NOT NULL,
   `job_complete_date` date NOT NULL,
-  `user_id` int(5) NOT NULL COMMENT 'from user_meta table',
-  `job_tax` int(5) NOT NULL,
-  `job_currency` int(5) NOT NULL,
   `job_type` varchar(10) NOT NULL,
   `job_status` varchar(10) NOT NULL,
   `job_description` text NOT NULL,
   `job_hour` double NOT NULL,
   `job_amount` int(5) NOT NULL,
   `job_quote_date` date NOT NULL,
-  `job_renewal_date` date NOT NULL,
-  `job_task_type` int(5) NOT NULL,
-  `job_discount_amount` int(5) NOT NULL,
-  `job_discount_name` varchar(20) NOT NULL,
-  `job_discount_type` int(5) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`job_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_date_start`, `job_start_time`, `job_end_time`, `job_due_date`, `job_complete_date`, `user_id`, `job_tax`, `job_currency`, `job_type`, `job_status`, `job_description`, `job_hour`, `job_amount`, `job_quote_date`, `job_renewal_date`, `job_task_type`, `job_discount_amount`, `job_discount_name`, `job_discount_type`, `last_update`) VALUES
-(2, 1, 1, 'sdf', '0000-00-00', '00:00:00', '00:00:00', '0000-00-00', '0000-00-00', 0, 0, 0, '', '', '', 0, 0, '0000-00-00', '0000-00-00', 0, 0, '', 0, '2014-11-07 11:49:56'),
-(3, 1, 1, 'web development', '2014-11-08', '05:28:00', '04:34:00', '2014-11-09', '2014-11-10', 2000, 2, 2, 'Database d', '1', 'we develop', 4, 0, '2014-11-07', '2014-11-12', 1, 34, 'discouint test', 1, '2014-11-06 16:00:00');
+INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_date`, `job_due_date`, `job_complete_date`, `job_type`, `job_status`, `job_description`, `job_hour`, `job_amount`, `job_quote_date`, `last_update`) VALUES
+(1, 0, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '2014-11-06 07:18:08');
 
 -- --------------------------------------------------------
 
@@ -481,7 +454,7 @@ INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_dat
 --
 
 CREATE TABLE IF NOT EXISTS `leads` (
-  `lead_id` smallint(6) NOT NULL AUTO_INCREMENT,
+`lead_id` smallint(6) NOT NULL,
   `lead_name` varchar(250) NOT NULL,
   `lead_firstname` varchar(50) NOT NULL,
   `lead_lastname` varchar(50) NOT NULL,
@@ -493,8 +466,7 @@ CREATE TABLE IF NOT EXISTS `leads` (
   `lead_postcode` varchar(7) NOT NULL,
   `lead_state` varchar(30) NOT NULL,
   `country_id` smallint(10) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`lead_id`)
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
@@ -511,7 +483,7 @@ INSERT INTO `leads` (`lead_id`, `lead_name`, `lead_firstname`, `lead_lastname`, 
 --
 
 CREATE TABLE IF NOT EXISTS `member` (
-  `member_id` int(11) NOT NULL AUTO_INCREMENT,
+`member_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL DEFAULT '',
   `last_name` varchar(255) NOT NULL DEFAULT '',
   `business` varchar(255) NOT NULL DEFAULT '',
@@ -519,8 +491,7 @@ CREATE TABLE IF NOT EXISTS `member` (
   `phone` varchar(255) NOT NULL DEFAULT '',
   `mobile` varchar(255) NOT NULL DEFAULT '',
   `date_created` date NOT NULL,
-  `date_updated` date DEFAULT NULL,
-  PRIMARY KEY (`member_id`)
+  `date_updated` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -530,7 +501,7 @@ CREATE TABLE IF NOT EXISTS `member` (
 --
 
 CREATE TABLE IF NOT EXISTS `system_users` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+`id` bigint(20) unsigned NOT NULL,
   `email` varchar(254) COLLATE utf8_bin DEFAULT NULL,
   `password` varchar(160) COLLATE utf8_bin DEFAULT NULL,
   `salt` varchar(160) COLLATE utf8_bin DEFAULT NULL,
@@ -541,8 +512,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
   `reset_request_time` datetime DEFAULT NULL,
   `reset_request_ip` varchar(64) COLLATE utf8_bin DEFAULT NULL,
   `verification_status` tinyint(1) NOT NULL DEFAULT '0',
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
+  `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
 
 --
@@ -550,7 +520,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-07 18:15:15', '192.168.0.110', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-07 05:28:25', '::1', NULL, NULL, NULL, 1, 1),
 (10, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 1, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 0, 1);
 
 -- --------------------------------------------------------
@@ -562,8 +532,7 @@ INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `
 CREATE TABLE IF NOT EXISTS `user_access_map` (
   `user_role_id` int(10) NOT NULL,
   `controller` varchar(255) COLLATE utf8_bin NOT NULL,
-  `permission` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`user_role_id`,`controller`)
+  `permission` int(10) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -584,8 +553,7 @@ CREATE TABLE IF NOT EXISTS `user_autologin` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `user_agent` varchar(150) COLLATE utf8_bin NOT NULL,
   `last_ip` varchar(40) COLLATE utf8_bin NOT NULL,
-  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`key_id`,`user_id`)
+  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -598,8 +566,7 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
   `user_id` bigint(20) unsigned NOT NULL,
   `first_name` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `last_name` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `phone` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
+  `phone` varchar(100) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -608,16 +575,7 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
 
 INSERT INTO `user_meta` (`user_id`, `first_name`, `last_name`, `phone`) VALUES
 (1, 'Saiful', 'Nizam', NULL),
-(2, 'First', 'Last', NULL),
-(3, '', '', NULL),
-(4, '', '', NULL),
-(5, '', '', NULL),
-(6, '', '', NULL),
-(7, '', '', NULL),
-(8, 'Test1', 'Test2', NULL),
-(9, 'Test1', 'Test2', NULL),
-(10, 'Test', 'Test', NULL),
-(2000, 'test', 'ayam', NULL);
+(2, 'First', 'Last', NULL);
 
 -- --------------------------------------------------------
 
@@ -626,10 +584,9 @@ INSERT INTO `user_meta` (`user_id`, `first_name`, `last_name`, `phone`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `user_role` (
-  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(5) unsigned NOT NULL,
   `role_name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
-  `default_access` varchar(10) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `default_access` varchar(10) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
 --
@@ -646,7 +603,7 @@ INSERT INTO `user_role` (`id`, `role_name`, `default_access`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `vendors` (
-  `vendor_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
+`vendor_id` smallint(10) unsigned NOT NULL,
   `vendor_name` varchar(250) NOT NULL,
   `vendor_firstname` varchar(50) NOT NULL,
   `vendor_lastname` varchar(50) NOT NULL,
@@ -658,8 +615,7 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `vendor_postcode` varchar(7) NOT NULL,
   `vendor_state` varchar(30) NOT NULL,
   `country_id` smallint(10) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`vendor_id`)
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=211 ;
 
 --
@@ -690,11 +646,10 @@ CREATE TABLE IF NOT EXISTS `vendor_address` (
 --
 
 CREATE TABLE IF NOT EXISTS `websites` (
-  `website_id` int(5) NOT NULL AUTO_INCREMENT,
+`website_id` int(5) NOT NULL,
   `website_url` varchar(20) NOT NULL,
   `website_name` varchar(20) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`website_id`)
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
@@ -704,6 +659,184 @@ CREATE TABLE IF NOT EXISTS `websites` (
 INSERT INTO `websites` (`website_id`, `website_url`, `website_name`, `last_update`) VALUES
 (1, 'aaaa1.com', 'aaa1 ventures', '2014-11-05 02:32:20');
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `address`
+--
+ALTER TABLE `address`
+ ADD PRIMARY KEY (`address_id`);
+
+--
+-- Indexes for table `calendar`
+--
+ALTER TABLE `calendar`
+ ADD PRIMARY KEY (`date`);
+
+--
+-- Indexes for table `config_data`
+--
+ALTER TABLE `config_data`
+ ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+ ADD PRIMARY KEY (`contact_id`);
+
+--
+-- Indexes for table `country`
+--
+ALTER TABLE `country`
+ ADD PRIMARY KEY (`country_id`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+ ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `files`
+--
+ALTER TABLE `files`
+ ADD PRIMARY KEY (`file_id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+ ADD PRIMARY KEY (`job_id`);
+
+--
+-- Indexes for table `leads`
+--
+ALTER TABLE `leads`
+ ADD PRIMARY KEY (`lead_id`);
+
+--
+-- Indexes for table `member`
+--
+ALTER TABLE `member`
+ ADD PRIMARY KEY (`member_id`);
+
+--
+-- Indexes for table `system_users`
+--
+ALTER TABLE `system_users`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_access_map`
+--
+ALTER TABLE `user_access_map`
+ ADD PRIMARY KEY (`user_role_id`,`controller`);
+
+--
+-- Indexes for table `user_autologin`
+--
+ALTER TABLE `user_autologin`
+ ADD PRIMARY KEY (`key_id`,`user_id`);
+
+--
+-- Indexes for table `user_meta`
+--
+ALTER TABLE `user_meta`
+ ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `user_role`
+--
+ALTER TABLE `user_role`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `vendors`
+--
+ALTER TABLE `vendors`
+ ADD PRIMARY KEY (`vendor_id`);
+
+--
+-- Indexes for table `websites`
+--
+ALTER TABLE `websites`
+ ADD PRIMARY KEY (`website_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `address`
+--
+ALTER TABLE `address`
+MODIFY `address_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1003;
+--
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+MODIFY `contact_id` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `country`
+--
+ALTER TABLE `country`
+MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=240;
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `files`
+--
+ALTER TABLE `files`
+MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `leads`
+--
+ALTER TABLE `leads`
+MODIFY `lead_id` smallint(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `system_users`
+--
+ALTER TABLE `system_users`
+MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `user_role`
+--
+ALTER TABLE `user_role`
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `vendors`
+--
+ALTER TABLE `vendors`
+MODIFY `vendor_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=211;
+--
+-- AUTO_INCREMENT for table `websites`
+--
+ALTER TABLE `websites`
+MODIFY `website_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
