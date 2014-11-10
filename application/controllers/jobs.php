@@ -49,6 +49,8 @@ class Jobs extends CI_Controller {
                     );
     
             $this->Midae_model->insert_new_data($data,'jobs'); //insert data into JOBS table
+
+            return $this->db->insert_id();
     }
 
     public function index()
@@ -89,16 +91,39 @@ class Jobs extends CI_Controller {
                 add_job(); //call add job_job function
                
            }
-           else if($this->input->post('save_task'))
+           else if($this->input->post('save_task')) //if save_task button clicked
            {
-             $this->load->view('dashboard.php');
+             
 
-               // $id = $this->session->userdata('user_id');
-               $this->add_job(); //call add job_job function
-                //$order_by = array('jobs_id','desc');
-                //$data = $this->Midae_model->get_specified_row("jobs",false,$order_by);
+               
+               $last_insert_id = $this->add_job(); //call add job_job function then get the last id inserted
 
-               // print_r($data);
+               if($last_insert_id)
+               {
+                    $postData = $this->input->post(); //get ALL input post data from form
+                    $data     = array(
+
+                    'job_id'               => $last_insert_id,
+                    'job_task_hour'        => $postData['job_task_hour'],
+                    'job_task_amount'      => $postData['job_task_amount'],
+                    'job_task_due_date'    => $postData['job_task_due_date'],
+                    'user_id'              => $postData['user_id'],
+                    'job_task_percentage'  => $postData['job_task_percentage'],
+                    'job_task_description' => $postData['job_task_description']
+
+                    );
+    
+      
+                    $this->Midae_model->insert_new_data($data,'jobs_task'); //insert data into JOBS_task table
+
+                
+                    $this->session->set_flashdata('success', 'New Job successfully recorded');
+                    redirect('jobs');
+               }
+               
+               
+
+               
            }
            
 
