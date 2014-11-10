@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>  
-        </div><hr>
+        </div>
         <div class="row">
             <div id="calendar"></div>
         </div>

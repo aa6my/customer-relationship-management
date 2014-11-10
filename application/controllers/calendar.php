@@ -37,7 +37,6 @@ class Calendar extends CI_Controller {
 
         // Component
        // $this->output->enable_profiler(TRUE); //Profiler Debug
-        $this->load->model('Midae_model');
         $data['user_meta'] = $this->Midae_model->get_user_meta();
         $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
         $data['top_desc'] = "Change your page purpose here"; //function purpose here.
@@ -45,22 +44,37 @@ class Calendar extends CI_Controller {
 
         $crud = new grocery_CRUD();
         $state = $crud->getState();
-        //$crud->set_theme('datatables');
+        $crud->set_theme('datatables');
         $crud->set_table('events');
         $crud->set_subject('Events');
-
+        $crud->callback_edit_field('start',array($this,'_callback_timetostr'));
+        $crud->callback_edit_field('end',array($this,'_callback_timetostr'));
+        $crud->field_type('class', 'hidden');
+        $crud->change_field_type('title', 'readonly');
+        $crud->change_field_type('body', 'readonly');
+        $crud->unset_texteditor('body','full_text');
 
         if($state == "add" | $state == "edit"){
-
-        }elseif ($state == "read") {
         $output = $crud->render();
         $output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
+        }elseif ($state == "read") {
+        
+ 
         }
         else{
         redirect(base_url() . "calendar");
         }
 
+    }
+
+ 
+    public function _callback_timetostr($value)
+    {
+        date_default_timezone_set('Asia/Kuala_Lumpur');
+        $date = $value / 1000;
+
+        return date('d-m-Y h:i A', $date);
     }
 
     public function events(){
