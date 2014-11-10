@@ -18,6 +18,39 @@ class Jobs extends CI_Controller {
 
     }
 
+    public function add_job()
+    {
+         $postData = $this->input->post(); //get ALL input post data from form
+         $data = array(
+
+                    'customer_id'         => $postData['customer_id'],
+                    'website_id'          => $postData['website_id'],
+                    'job_title'           => $postData['job_title'],
+                    'job_date_start'      => $postData['job_date_start'],
+                    'job_start_time'      => $postData['job_start_time'],
+                    'job_end_time'        => $postData['job_end_time'],
+                    'job_due_date'        => $postData['job_due_date'],
+                    'job_complete_date'   => $postData['job_complete_date'],
+                    'user_id'             => $postData['user_id'],
+                    'job_tax'             => $postData['job_tax'],
+                    'job_currency'        => $postData['job_currency'],
+                    'job_type'            => $postData['job_type'],
+                    'job_status'          => $postData['job_status'],
+                    'job_description'     => $postData['job_description'],
+                    'job_hour'            => $postData['job_hour'],
+                    'job_quote_date'      => $postData['job_quote_date'],
+                    'job_renewal_date'    => $postData['job_renewal_date'],
+                    'job_task_type'       => $postData['job_task_type'],
+                    'job_discount_amount' => $postData['job_discount_amount'],
+                    'job_discount_name'   => $postData['job_discount_name'],
+                    'job_discount_type'   => $postData['job_discount_type'],
+                    'last_update'         => date("Y-m-d")
+
+                    );
+    
+            $this->Midae_model->insert_new_data($data,'jobs'); //insert data into JOBS table
+    }
+
     public function index()
     {
 
@@ -51,40 +84,21 @@ class Jobs extends CI_Controller {
 
            if($this->input->post('save')) // if save button click
            {
-                $postData = $this->input->post(); //get ALL input post data from form
-                print_r($postData);
-                date_default_timezone_set('Asia/Kuala_Lumpur');
-                $data = array(
-
-                    'customer_id'         => $postData['customer_id'],
-                    'website_id'          => $postData['website_id'],
-                    'job_title'           => $postData['job_title'],
-                    'job_date_start'      => $postData['job_date_start'],
-                    'job_start_time'      => $postData['job_start_time'],
-                    'job_end_time'        => $postData['job_end_time'],
-                    'job_due_date'        => $postData['job_due_date'],
-                    'job_complete_date'   => $postData['job_complete_date'],
-                    'user_id'             => $postData['user_id'],
-                    'job_tax'             => $postData['job_tax'],
-                    'job_currency'        => $postData['job_currency'],
-                    'job_type'            => $postData['job_type'],
-                    'job_status'          => $postData['job_status'],
-                    'job_description'     => $postData['job_description'],
-                    'job_hour'            => $postData['job_hour'],
-                    'job_quote_date'      => $postData['job_quote_date'],
-                    'job_renewal_date'    => $postData['job_renewal_date'],
-                    'job_task_type'       => $postData['job_task_type'],
-                    'job_discount_amount' => $postData['job_discount_amount'],
-                    'job_discount_name'   => $postData['job_discount_name'],
-                    'job_discount_type'   => $postData['job_discount_type'],
-                    'last_update'         => date("Y-m-d")
-
-                    );
-    
-            $this->Midae_model->insert_new_data($data,'jobs'); //insert data into JOBS table
                
-      
+                date_default_timezone_set('Asia/Kuala_Lumpur');
+                add_job(); //call add job_job function
+               
+           }
+           else if($this->input->post('save_task'))
+           {
+             $this->load->view('dashboard.php');
 
+               // $id = $this->session->userdata('user_id');
+               $this->add_job(); //call add job_job function
+                //$order_by = array('jobs_id','desc');
+                //$data = $this->Midae_model->get_specified_row("jobs",false,$order_by);
+
+               // print_r($data);
            }
            
 

@@ -115,6 +115,55 @@ class Midae_model extends CI_Model {
         return strtotime(substr($date, 6, 4)."-".substr($date, 0, 2)."-".substr($date, 3, 2)." " .substr($date, 10, 6)) * 1000;
     }
 
+    /**
+    * [get_all_rows This function can use for all the tables, default function is to call all the results rows in table]
+    * @param  [type] $table [name of table you want to fetch data]
+    * @return [type]        [return data sets]
+    */
+    function get_all_rows($table)
+    {
+            $data = array();
+            $query = $this->db->query("SELECT *FROM $table");
+
+            foreach ($query->result_array() as $row)
+            {
+               $data[] = $row;
+            }
+
+            return $data;
+    }
+
+
+
+    /**
+     * [get_specified_row This function can use for all the tables, default function is to call the specified results rows in table]
+     * @param  [type] $table [name of table you want to fetch data]
+     * @param  [type] $where [where condition]
+     * @param  [type] $order_by [order by]
+     * @return [type] [return sepcified row]
+     */
+    function get_specified_row($table,$where,$order_by)
+    {
+        
+        $this->db->select('*');
+        $this->db->from($table);
+
+        if($where!="")
+        {
+             $this->db->where($where); 
+        }
+       
+
+        if($order_by!="")
+        {
+            $this->db->order_by($order_by);
+        }
+
+        $query = $this->db->get();
+        return $query->row_array();    
+    }
+
+
 }
 
 ?>
