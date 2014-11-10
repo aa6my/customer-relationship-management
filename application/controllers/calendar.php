@@ -45,7 +45,7 @@ class Calendar extends CI_Controller {
 
         $crud = new grocery_CRUD();
         $state = $crud->getState();
-        $crud->set_theme('datatables');
+        //$crud->set_theme('datatables');
         $crud->set_table('events');
         $crud->set_subject('Events');
 
@@ -79,7 +79,6 @@ class Calendar extends CI_Controller {
     {
         $this->form_validation->set_rules('from', 'Desde', 'trim|required|xss_clean');
         $this->form_validation->set_rules('to', 'Hasta', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('url', 'Url', 'trim|required|xss_clean');
         $this->form_validation->set_rules('title', 'Título', 'trim|required|xss_clean');
         $this->form_validation->set_rules('event', 'Evento', 'trim|required|xss_clean');
         $this->form_validation->set_rules('class', 'Tipo de evento', 'trim|required|xss_clean');
