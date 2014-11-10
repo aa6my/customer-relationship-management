@@ -62,13 +62,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="url" class="col-sm-12 control-label">Enlace al evento</label>
-                <div class="col-sm-12">
-                  <input type="url" name="url" class="form-control" id="url" placeholder="Introduce una url o no :)">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-12 control-label">Tipo de evento</label>
+                <label class="col-sm-12 control-label">Type of event</label>
                 <div class="col-sm-12">
                     <select class="form-control" name="class">
                         <option value="event-info">Info</option>
@@ -81,13 +75,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="title" class="col-sm-12 control-label">Título</label>
+                <label for="title" class="col-sm-12 control-label">Title</label>
                 <div class="col-sm-12">
-                  <input type="text" name="title" class="form-control" id="title" placeholder="Introduce un título">
+                  <input type="text" name="title" class="form-control" id="title" placeholder="Enter a title">
                 </div>
             </div>
             <div class="form-group">
-                <label for="body" class="col-sm-12 control-label">Evento</label>
+                <label for="body" class="col-sm-12 control-label">Event</label>
                 <div class="col-sm-12">
                   <textarea id="body" name="event" class="form-control" rows="3"></textarea>
                 </div>
