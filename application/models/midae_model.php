@@ -148,13 +148,13 @@ class Midae_model extends CI_Model {
         $this->db->select('*');
         $this->db->from($table);
 
-        if($where!="")
+        if($where!=false)
         {
              $this->db->where($where); 
         }
        
 
-        if($order_by!="")
+        if($order_by!=false)
         {
             $this->db->order_by($order_by);
         }
