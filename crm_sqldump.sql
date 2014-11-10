@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2014 at 04:37 AM
+-- Generation Time: Nov 10, 2014 at 11:12 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -395,21 +395,13 @@ INSERT INTO `customers` (`customer_id`, `customer_name`, `customer_firstname`, `
 --
 
 CREATE TABLE IF NOT EXISTS `events` (
-`id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL,
   `title` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
   `body` text COLLATE utf8_spanish_ci NOT NULL,
-  `url` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
   `class` varchar(45) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'info',
   `start` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `end` varchar(15) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=20 ;
-
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`id`, `title`, `body`, `url`, `class`, `start`, `end`) VALUES
-(19, 'Ayam', 'Ayam', 'http://www.google.com', 'event-info', '1415608560000', '1415608560000');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -422,15 +414,14 @@ CREATE TABLE IF NOT EXISTS `files` (
   `file_name` varchar(30) NOT NULL,
   `file_content` mediumblob NOT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `files`
 --
 
 INSERT INTO `files` (`file_id`, `file_name`, `file_content`, `last_update`) VALUES
-(1, 'asdad', 0x35313732622d6c6963656e73652e747874, '0000-00-00 00:00:00'),
-(2, 'test', 0x65316663632d702e747874, '2014-11-06 17:17:10');
+(1, 'asdad', 0x35313732622d6c6963656e73652e747874, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -463,15 +454,14 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `job_discount_name` varchar(20) NOT NULL,
   `job_discount_type` int(5) NOT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `jobs`
 --
 
 INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_date_start`, `job_start_time`, `job_end_time`, `job_due_date`, `job_complete_date`, `user_id`, `job_tax`, `job_currency`, `job_type`, `job_status`, `job_description`, `job_hour`, `job_amount`, `job_quote_date`, `job_renewal_date`, `job_task_type`, `job_discount_amount`, `job_discount_name`, `job_discount_type`, `last_update`) VALUES
-(2, 1, 1, 'sdf', '0000-00-00', '00:00:00', '00:00:00', '0000-00-00', '0000-00-00', 0, 0, 0, '', '', '', 0, 0, '0000-00-00', '0000-00-00', 0, 0, '', 0, '2014-11-07 11:49:56'),
-(3, 1, 1, 'web development', '2014-11-08', '05:28:00', '04:34:00', '2014-11-09', '2014-11-10', 2000, 2, 2, 'Database d', '1', 'we develop', 4, 0, '2014-11-07', '2014-11-12', 1, 34, 'discouint test', 1, '2014-11-06 16:00:00');
+(14, 1, 1, 'web services', '2014-11-11', '10:20:00', '11:30:00', '2014-11-12', '2014-11-13', 1, 3, 0, 'Web design', '1', 'make a web services', 2, 0, '2014-11-10', '2014-11-14', 1, 3, 'discount', 1, '2014-11-09 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -481,14 +471,14 @@ INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_dat
 
 CREATE TABLE IF NOT EXISTS `jobs_task` (
 `job_task_id` int(5) NOT NULL,
-  `job_id` int(5) NOT NULL,
+  `job_id` int(5) NOT NULL COMMENT 'from JOBS table',
   `job_task_hour` int(5) NOT NULL,
   `job_task_amount` int(5) NOT NULL,
   `job_task_due_date` date NOT NULL,
-  `user_id` int(5) NOT NULL,
-  `job_task_percentage` int(5) NOT NULL,
+  `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
+  `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
   `job_task_description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -556,14 +546,15 @@ CREATE TABLE IF NOT EXISTS `system_users` (
   `reset_request_ip` varchar(64) COLLATE utf8_bin DEFAULT NULL,
   `verification_status` tinyint(1) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `system_users`
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-10 03:02:26', '::1', NULL, NULL, NULL, 1, 1);
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-10 07:24:34', '::1', NULL, NULL, NULL, 1, 1),
+(10, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 1, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -616,7 +607,8 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
 --
 
 INSERT INTO `user_meta` (`user_id`, `first_name`, `last_name`, `phone`) VALUES
-(1, 'Saiful', 'Nizam', NULL);
+(1, 'Saiful', 'Nizam', NULL),
+(2, 'First', 'Last', NULL);
 
 -- --------------------------------------------------------
 
@@ -628,15 +620,14 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 `id` int(5) unsigned NOT NULL,
   `role_name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `default_access` varchar(10) COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `role_name`, `default_access`) VALUES
-(1, 'Admin', '11111'),
-(3, '1', NULL);
+(1, 'Admin', '11111');
 
 -- --------------------------------------------------------
 
@@ -742,12 +733,6 @@ ALTER TABLE `customers`
  ADD PRIMARY KEY (`customer_id`);
 
 --
--- Indexes for table `events`
---
-ALTER TABLE `events`
- ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `files`
 --
 ALTER TABLE `files`
@@ -844,25 +829,20 @@ MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=240;
 ALTER TABLE `customers`
 MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `events`
---
-ALTER TABLE `events`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
---
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `jobs_task`
 --
 ALTER TABLE `jobs_task`
-MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT;
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `leads`
 --
@@ -877,12 +857,12 @@ MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `system_users`
 --
 ALTER TABLE `system_users`
-MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `vendors`
 --
