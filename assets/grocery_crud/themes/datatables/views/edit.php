@@ -48,9 +48,29 @@
 			<div id='report-error' class='report-div error'></div>
 			<div id='report-success' class='report-div success'></div>
 		</div>
+		<?php
+		$url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		$parsed = parse_url($url);
+		$path = $parsed['path'];
+		$path_parts = explode('/', $path);
+		$desired_output = $path_parts[2]; 
+		if($desired_output == "calendar"){
+		?>
 		<div class='buttons-box'>
 			<div class='form-button-box'>
-				<input  id="form-button-save" type='submit' value='<?php echo $this->l('form_update_changes'); ?>' class='btn bg-green btn-sm' />
+			<input  id="form-button-save" type='submit' value='Back' onclick="history.go(-1);" class='btn bg-yellow btn-sm' />
+			</div>
+			<div class='clear'></div>
+		</div>
+		<div class='clear'></div>
+
+		<?php
+		}else
+		{
+		?>
+		<div class='buttons-box'>
+			<div class='form-button-box'>
+			<input  id="form-button-save" type='submit' value='<?php echo $this->l('form_update_changes'); ?>' class='btn bg-green btn-sm' />
 			</div>
 			<?php 	if(!$this->unset_back_to_list) { ?>
 			<div class='form-button-box'>
@@ -65,6 +85,9 @@
 			</div>
 			<div class='clear'></div>
 		</div>
+		<?php
+		}
+		?>
 	</form>
 </div>
 </div>

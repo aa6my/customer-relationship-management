@@ -1,7 +1,7 @@
 <% _.each(events, function(event){ %>
 <div class="cal-row-fluid">
 	<div class="cal-cell<%= event.days%> cal-offset<%= event.start_day %> day-highlight dh-<%= event['class'] %>" data-event-class="<%= event['class'] %>">
-		<a href="calendar/view/read/<%= event.id %>" data-event-id="<%= event.id %>"
+		<a href="calendar/view/edit/<%= event.id %>" data-event-id="<%= event.id %>"
 					data-event-class="<%= event['class'] %>" class="event-item">
 					<%= event.title %></a>
 	</div>
