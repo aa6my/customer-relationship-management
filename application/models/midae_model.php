@@ -79,25 +79,40 @@ class Midae_model extends CI_Model {
 
      function insert_new_data($arrayData,$table)
     {
-        /*$data = array(
-            'app_stuid' => $stuid,
-            'app_name' => $name,
-            'app_address' => $address,
-            'app_postcode' => $postcode,
-            'state_id' => $stateid,
-            'app_phone' => $phone,
-            'course_id' => $courseid,
-            'app_sem' => $semester,
-            'app_mentor' => $mentor,
-            'category_id' => $categoryid,
-            'app_details' => $details
 
-
-
-        );*/
         $this->db->insert($table,$arrayData);
         $this->db->_error_message();
         return  $this->db->_error_message();
+    }
+
+    public function add()
+    {
+        $this->db->set("start", $this->_formatDate($this->input->post("from")));
+        $this->db->set("end", $this->_formatDate($this->input->post("to")));
+        $this->db->set("url", $this->input->post("url"));
+        $this->db->set("title", $this->input->post("title"));
+        $this->db->set("body", $this->input->post("event"));
+        $this->db->set("class", $this->input->post("class"));
+        if($this->db->insert("events"))
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getAll()
+    {
+        $query = $this->db->get('events');
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        return object();
+    }
+
+    private function _formatDate($date)
+    {
+        return strtotime(substr($date, 6, 4)."-".substr($date, 0, 2)."-".substr($date, 3, 2)." " .substr($date, 10, 6)) * 1000;
     }
 
 }

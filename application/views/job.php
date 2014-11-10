@@ -53,7 +53,7 @@
                                             <td align="right" width="100">Job Title</td>
                                             <td>
                                             
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-7">
                                             		<input type="text" class="form-control input-sm" placeholder="" name="job_title">
                                         		</div>
                                         	
@@ -79,7 +79,7 @@
                                             
                                             <td align="right">Hourly Rate</td>
                                             <td>
-                                               <div class="col-xs-2">
+                                               <div class="col-xs-3">
                                             		 <input type="text" class="form-control input-sm" placeholder="" name="job_hour">
                                         		</div>
                                             </td>
@@ -211,7 +211,7 @@
                                             
                                             <td align="right">Tax</td>
                                             <td>
-                                               <div class="col-xs-2">
+                                               <div class="col-xs-3">
                                             		<input type="text" class="form-control input-sm" placeholder="" name="job_tax">
                                         		</div>
                                             </td>
@@ -494,7 +494,7 @@
 
 
 
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div class="box">
                                 <div class="box-header">
                                     <h3 class="box-title">Job Task</h3>
@@ -509,8 +509,10 @@
                                     </div> -->
                                 </div><!-- /.box-header -->
                                 <div class="box-body no-padding">
+
                                     <table class="table table-striped">
-                                        <tbody><tr>
+                                        <tbody>
+                                        <tr>
                                             <th style="width: 10px">#</th>
                                             <th>Description</th>
                                             <th>Hours</th>
@@ -520,6 +522,23 @@
                                             <th>Staff</th>
                                             <th>%</th>
                                             <th>Action</th>
+                                        </tr>
+                                         <tr>
+                                            <td>
+                                               
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_discount_name" style="width:40px;">
+                                                
+                                            </td>
+                                            <td><div class="col-xs-5">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_discount_name">
+                                                </div></td>
+                                            <td>Hours</td>
+                                            <td>Amount</td>
+                                            <td>Due Date</td>
+                                            <td>Done Date</td>
+                                            <td>Staff</td>
+                                            <td>%</td>
+                                            <td>Action</td>
                                         </tr>
                                         
                                         
