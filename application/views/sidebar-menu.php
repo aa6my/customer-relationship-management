@@ -7,7 +7,6 @@
                         <li class="<?php if($this->uri->segment(1)=="calendar"){echo "active";}?>">
                             <a href="<?php echo base_url(); ?>calendar">
                                 <i class="fa fa-calendar"></i> <span>Calendar</span>
-                                <small class="badge pull-right bg-red">3</small>
                             </a>
                         </li>
                         <li class="<?php if($this->uri->segment(1)=="vendors"){echo "active";}?>">
