@@ -40,7 +40,15 @@
                 <div class="row">
                         <div class="col-md-4">
                             <div class="box">
+
+
+                            
+
+
+
+
                                 <div class="box-header">
+                               
                                     <h3 class="box-title">Add Job</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
@@ -531,20 +539,20 @@
                                                  -->
                                             </td>
                                             <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_discount_name">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description">
                                                 
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control input-sm" placeholder="" name="job_discount_name" style="width:40px;">
+                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_hour" style="width:40px;">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control input-sm" placeholder="" name="job_discount_name" style="width:40px;">
+                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" style="width:40px;">
                                             </td>
                                             <td>
                                                
                                                   
                                                         
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_renewal_date" style="width:150px">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_task_due_date" style="width:150px">
                                                   
                                             </td>
                                             <!-- <td>Done Date</td> -->
@@ -561,7 +569,7 @@
                                                 
                                        
                                             
-                                            <input type="checkbox" style="position: absolute; opacity: 0;">
+                                            <input type="checkbox" style="position: absolute; opacity: 0;" name="job_task_percentage" value="1">
                                            
                                         
                                        
