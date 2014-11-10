@@ -53,6 +53,7 @@
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                 
+                               
                                 <table class="table table-striped">
                                         <tbody>
                                        
@@ -62,7 +63,7 @@
                                             <td>
                                             
                                                <div class="col-xs-7">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_title">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_title" value="<?php echo $jobs['job_title'];?>">
                                                 </div>
                                             
                                             </td>
@@ -73,10 +74,9 @@
                                             <td align="right">Type</td>
                                             <td>
                                                <div class="col-xs-5">
-                                                    <select class="form-control" name="job_type" REQUIRED>
-                                                        <option></option>
-                                                        <option>Web design</option>
-                                                        <option>Database design</option>
+                                                    <select class="form-control" name="job_type">
+                                                        <option <?php if($jobs['job_type']=="") echo 'selected';?>></option>
+                                                        
                                                         
                                                     </select>
                                                 </div>
