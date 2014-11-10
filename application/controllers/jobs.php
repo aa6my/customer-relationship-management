@@ -75,7 +75,7 @@ class Jobs extends CI_Controller {
         $crud->callback_before_insert(array($this,'_last_update'));
         
         
-        if($state == "add" | $state == "edit") //nk display add form dengan edit form
+        if($state == "add") //nk display add form dengan edit form
         {
             $data['staff']     = $this->Midae_model->get_staff_member();
             $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
@@ -88,7 +88,9 @@ class Jobs extends CI_Controller {
            {
                
                 date_default_timezone_set('Asia/Kuala_Lumpur');
-                add_job(); //call add job_job function
+                $this->add_job(); //call add job_job function
+                $this->session->set_flashdata('success', 'New Job successfully recorded');
+                redirect('jobs');
                
            }
            else if($this->input->post('save_task')) //if save_task button clicked
@@ -128,6 +130,22 @@ class Jobs extends CI_Controller {
            
 
 
+        }
+        else if($state=="edit")
+        {
+            
+            $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
+            $data['top_desc']  = "Change your page purpose here"; //function purpose here.*/
+            
+
+            $job_id = $this->uri->segment(4) ;
+
+            $where = array('job_id' => $job_id);
+
+            $data['jobs'] = $this->Midae_model->get_specified_row("jobs",$where,false);
+
+            
+            $this->load->view('job_edit.php', $data);
         }
         /*elseif ($state == "read") 
         {
