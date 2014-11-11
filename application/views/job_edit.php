@@ -36,7 +36,44 @@
 
                 <!-- Main content -->
                 <section class="content">
-                <form action="<?php echo base_url('jobs/index/add'); ?>" method="post">
+                <?php
+
+                if($this->session->flashdata('save'))
+
+                {
+                    ?>
+
+              
+                                    <div class="alert alert-success alert-dismissable">
+                                        <i class="fa fa-check"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b><?php echo $this->session->flashdata('save');?> </b> 
+                                    </div>
+                <?php
+                }
+                else if($this->session->flashdata('record'))
+                {
+                ?>
+                                    <div class="alert alert-success alert-dismissable">
+                                        <i class="fa fa-check"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b><?php echo $this->session->flashdata('record');?> </b> 
+                                    </div>
+                <?php
+                }
+                
+                else if($this->session->flashdata('error'))
+                {
+                ?>
+                                   <div class="alert alert-danger alert-dismissable">
+                                        <i class="fa fa-ban"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b><?php echo $this->session->flashdata('error');?> </b> 
+                                    </div>
+                <?php
+                }
+                ?>
+                <form action="" method="post">
                 <div class="row">
                         <div class="col-md-4">
                             <div class="box">
@@ -62,7 +99,7 @@
                                             <td align="right" width="100">Job Title</td>
                                             <td>
                                             
-                                               <div class="col-xs-7">
+                                               <div class="col-xs-9">
                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_title" value="<?php echo $jobs['job_title'];?>">
                                                 </div>
                                             
@@ -73,10 +110,18 @@
                                             
                                             <td align="right">Type</td>
                                             <td>
-                                               <div class="col-xs-5">
-                                                    <select class="form-control" name="job_type">
-                                                        <option <?php if($jobs['job_type']=="") echo 'selected';?>></option>
+                                               <div class="col-xs-7">
+                                                    <select class="form-control" name="job_type_id" REQUIRED>
+                                                        <option value="">Please select</option>
+                                                        <?php
+                                                        foreach($groupData['job_type'] as $type)
+                                                        {
+                                                            ?>
                                                         
+                                                        <option value="<?php echo $type['job_type_id'];?>" <?php if($jobs['job_type_id']==$type['job_type_id']) echo 'selected';?>><?php echo $type['job_type_name'];?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                         
                                                     </select>
                                                 </div>
@@ -88,7 +133,7 @@
                                             <td align="right">Hourly Rate</td>
                                             <td>
                                                <div class="col-xs-3">
-                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_hour">
+                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_hour" value="<?php echo $jobs['job_hour'];?>">
                                                 </div>
                                             </td>
                                            
@@ -97,10 +142,11 @@
                                             
                                             <td align="right">Status</td>
                                             <td>
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-7">
                                                     <select class="form-control" name="job_status">
-                                                        <option value="0">New</option>
-                                                        <option value="1">Existing</option>
+                                                        <option value="" <?php if($jobs['job_status']=="") echo 'selected';?>>Please Select</option>
+                                                        <option value="0" <?php if($jobs['job_status']==0) echo 'selected';?>>New</option>
+                                                        <option value="1" <?php if($jobs['job_status']==1) echo 'selected';?>>Existing</option>
                                                         
                                                     </select>
                                                 </div>
@@ -116,7 +162,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_quote_date">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_quote_date" value="<?php echo $jobs['job_quote_date'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -131,7 +177,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_date_start">
+                                                            <input type="date" class="form-control datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_date_start" value="<?php echo $jobs['job_date_start'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -141,12 +187,12 @@
                                             
                                             <td align="right">Start Time</td>
                                             <td>
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-6">
                                                     <div class="input-group">
                                                          <div class="input-group-addon">
                                                                     <i class="fa fa-clock-o"></i>
                                                          </div>
-                                                        <input type="text" class="form-control timepicker" name="job_start_time">
+                                                        <input type="text" class="form-control timepicker" name="job_start_time" value="<?php echo $jobs['job_start_time'];?>">
                                                            
                                                     </div>
                                                 </div>
@@ -157,12 +203,12 @@
                                             
                                             <td align="right">End Time</td>
                                             <td>
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-6">
                                                     <div class="input-group">
                                                          <div class="input-group-addon">
                                                                     <i class="fa fa-clock-o"></i>
                                                          </div>
-                                                        <input type="text" class="form-control timepicker" name="job_end_time">
+                                                        <input type="text" class="form-control timepicker" name="job_end_time" value="<?php echo $jobs['job_end_time'];?>">
                                                            
                                                     </div>
                                                 </div>
@@ -178,7 +224,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control input-sm datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_due_date">
+                                                            <input type="date" class="form-control input-sm datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_due_date" value="<?php echo $jobs['job_due_date'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -193,7 +239,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control input-sm datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_complete_date">
+                                                            <input type="date" class="form-control input-sm datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_complete_date" value="<?php echo $jobs['job_complete_date'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -203,11 +249,12 @@
                                             
                                             <td align="right">Staff Member</td>
                                             <td>
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-7">
                                                     <select class="form-control" name="user_id">
+                                                     <option value="">Please Select</option>
                                                         <?php 
-                                                        foreach ($staff as $key => $value) {?>
-                                                            <option value="<?php echo $value['user_id']; ?>"><?php echo $value['first_name'].' '.$value['last_name'];?></option>
+                                                        foreach ($groupData['staff'] as $key => $value) {?>
+                                                            <option value="<?php echo $value['user_id']; ?>" <?php if($jobs['user_id']==$value['user_id']) echo 'selected';?>><?php echo $value['first_name'].' '.$value['last_name'];?></option>
                                                       <?php  } ?>
                                                         
                                                     </select>
@@ -220,7 +267,7 @@
                                             <td align="right">Tax</td>
                                             <td>
                                                <div class="col-xs-3">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_tax">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_tax" value="<?php echo $jobs['job_tax'];?>">
                                                 </div>
                                             </td>
                                            
@@ -229,11 +276,16 @@
                                             
                                             <td align="right">Currency</td>
                                             <td>
+                                             <?php
+                                            //waiting nizam make the universal code for this one
+                                            //currently use standard style
+                                            ?>
                                                <div class="col-xs-5">
                                                     <select class="form-control" name="job_currency">
-                                                        <option value="0">RM</option>
-                                                        <option value="1">USD</option>
-                                                        <option value="2">AUD</option>
+                                                        <option value="">Please Select</option>
+                                                        <option value="0" <?php if($jobs['job_currency']==0) echo 'selected';?>>RM</option>
+                                                        <option value="1" <?php if($jobs['job_currency']==1) echo 'selected';?>>USD</option>
+                                                        <option value="2" <?php if($jobs['job_currency']==2) echo 'selected';?>>AUD</option>
                                                         
                                                     </select>
                                                 </div>
@@ -281,7 +333,7 @@
 
 
 
-
+                             <!-- job description part -->
                         <div class="col-bg-6">
                                     <div class="box">
                                         <div class="box-header">
@@ -297,7 +349,7 @@
                                                             <td>
                                                             
                                                                <div class="col-xs-12">
-                                                                    <textarea class="form-control" rows="3" placeholder="" name="job_description"></textarea>
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="job_description"><?php echo $jobs['job_description'];?></textarea>
                                                                 </div>
                                                             
                                                             </td>
@@ -309,6 +361,40 @@
                                         </div>
                                     </div>
                         </div>
+                        <!-- end job description -->
+
+                        <!-- job notes part -->
+                        <div class="col-bg-6">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">Job Notes</h3>
+                                        </div>
+                                         <div class="box-body">
+                                                <table class="table table-striped">
+                                                        <tbody>
+                                                       
+                                                        <tr>
+                                                            
+                                                            
+                                                            <td>
+                                                            
+                                                               <div class="col-xs-12">
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="job_note"><?php echo $jobs['job_note'];?></textarea>
+                                                                </div>
+                                                            
+                                                            </td>
+                                                           
+                                                        </tr>
+                                                        
+                                                        
+                                                    </tbody></table>
+                                        </div>
+                                    </div>
+                        </div>
+                        <!-- end job notes -->
+
+
+                        
 
 
 
@@ -333,12 +419,13 @@
                                             <td align="right" width="100">Assign Website</td>
                                             <td>
                                             
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-7">
                                                     <select class="form-control" name="website_id">
+                                                    <option value="">Please Select</option>
                                                         <?php 
-                                                        foreach ($website as $value ) {
+                                                        foreach ($groupData['website'] as $value ) {
                                                             ?>
-                                                            <option value="<?php echo $value['website_id'];?>"><?php echo $value['website_url'];?></option>
+                                                            <option value="<?php echo $value['website_id'];?>" <?php if($jobs['website_id']==$value['website_id']) echo 'selected';?>><?php echo $value['website_url'];?></option>
                                                       <?php  } ?>
                                                         
                                                     </select>
@@ -352,12 +439,13 @@
                                             <td align="right" width="100">Assign Customers</td>
                                             <td>
                                             
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-7">
                                                     <select class="form-control" name="customer_id">
+                                                     <option value="">Please Select</option>
                                                         <?php 
-                                                        foreach ($customer as $value ) {
+                                                        foreach ($groupData['customer'] as $value ) {
                                                             ?>
-                                                            <option value="<?php echo $value['customer_id'];?>"><?php echo $value['customer_name'];?></option>
+                                                            <option value="<?php echo $value['customer_id'];?>" <?php if($jobs['customer_id']==$value['customer_id']) echo 'selected';?>><?php echo $value['customer_name'];?></option>
                                                       <?php  } ?>
                                                         
                                                     </select>
@@ -399,7 +487,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_renewal_date">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_renewal_date" value="<?php echo $jobs['job_renewal_date'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -409,11 +497,12 @@
                                             
                                             <td align="right">Task type</td>
                                             <td>
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-7">
                                                     <select class="form-control" name="job_task_type">
-                                                        <option value="0">Hourly rate & Amount</option>
-                                                        <option value="1">Quantity & Amount</option>
-                                                        <option value="2">Amount Only</option>
+                                                    <option value="">Please Select</option>
+                                                        <option value="0" <?php if($jobs['job_task_type']==0) echo 'selected';?>>Hourly rate & Amount</option>
+                                                        <option value="1" <?php if($jobs['job_task_type']==1) echo 'selected';?>>Quantity & Amount</option>
+                                                        <option value="2" <?php if($jobs['job_task_type']==2) echo 'selected';?>>Amount Only</option>
                                                         
                                                     </select>
                                                 </div>
@@ -424,8 +513,8 @@
                                             
                                             <td align="right">Discount Amount</td>
                                             <td>
-                                               <div class="col-xs-2">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_discount_amount">
+                                               <div class="col-xs-3">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_discount_amount" value="<?php echo $jobs['job_discount_amount'];?>">
                                                 </div>
                                             </td>
                                            
@@ -434,8 +523,8 @@
                                             
                                             <td align="right">Discount Name</td>
                                             <td>
-                                               <div class="col-xs-5">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_discount_name">
+                                               <div class="col-xs-7">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_discount_name" value="<?php echo $jobs['job_discount_name'];?>">
                                                 </div>
                                             </td>
                                            
@@ -444,10 +533,11 @@
                                             
                                             <td align="right">Discount type</td>
                                             <td>
-                                               <div class="col-xs-5">
+                                               <div class="col-xs-7">
                                                     <select class="form-control" name="job_discount_type">
-                                                        <option value="0">Before Tax</option>
-                                                        <option value="1">After Tax</option>
+                                                    <option value="">Please Select</option>
+                                                        <option value="0" <?php if($jobs['job_discount_type']==0) echo 'selected';?>>Before Tax</option>
+                                                        <option value="1" <?php if($jobs['job_discount_type']==1) echo 'selected';?>>After Tax</option>
                                                         
                                                         
                                                     </select>
