@@ -11,35 +11,6 @@
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="<?php echo base_url(); ?>assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
-        <style>
-        .calendar {
-            font-family: Arial;
-            font-size:   12px;
-        }
-
-        table.calendar {
-            margin:          auto;
-            border-collapse: collapse;
-        }
-
-        .calendar .days td {
-            width:            80px;
-            height:           80px;
-            padding:          4px;
-            border:           1px solid #999;
-            vertical-align:   top;
-            background-color: #DEF;
-        }
-
-        .calendar .days td:hover {
-            background-color: #FFF;
-        }
-
-        .calendar .highlight {
-            font-weight: bold;
-            color:       #00F;
-        }
-        </style>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

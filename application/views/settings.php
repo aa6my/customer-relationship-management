@@ -55,6 +55,14 @@
                                             <label for="exampleInputEmail1">Site Description</label>
                                             <input type="text" class="form-control" id="sitedescription" name="sitedescription" value="<?php echo $this->config->item('sitedescription'); ?>">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Time Zone</label>&nbsp;<a href="http://php.net/manual/en/timezones.php" target="_blank">[Timezone]</a>
+                                            <input type="text" class="form-control" id="sitedescription" name="timezone" value="<?php echo $this->config->item('timezone'); ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Admin Email</label>
+                                            <input type="text" class="form-control" id="sitedescription" name="adminemail" value="<?php echo $this->config->item('adminemail'); ?>">
+                                        </div>
                                     </div><!-- /.box-body -->
 
                                     <div class="box-footer">
