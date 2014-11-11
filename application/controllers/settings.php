@@ -102,7 +102,9 @@ class Settings extends CI_Controller {
     {
      $update_data=array(
         'sitename'=>$this->input->post('sitename'),
-        'sitedescription'=>$this->input->post('sitedescription')
+        'sitedescription'=>$this->input->post('sitedescription'),
+        'timezone'=>$this->input->post('timezone'),
+        'adminemail'=>$this->input->post('adminemail')
         );
      $success = $this->Siteconfig_model->update_config($update_data);
      if($success) redirect("/settings");
