@@ -610,7 +610,7 @@
                                 <div class="box-body no-padding">
 
                                     <table class="table table-striped" id="task">
-                                        <tbody>
+                                        
                                         <tr>
                                             <th style="width: 10px">#</th>
                                             <th style="width: 430px">Description</th>
@@ -629,27 +629,27 @@
                                                  -->
                                             </td>
                                             <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" id="job_task_description">
                                                 
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_hour" style="width:40px;">
+                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_hour" id="job_task_hour" style="width:40px;">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" style="width:40px;">
+                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount" style="width:40px;">
                                             </td>
                                             <td>
                                                
                                                   
                                                         
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_task_due_date" style="width:150px">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_task_due_date" id="job_task_due_date" style="width:150px">
                                                   
                                             </td>
                                             <!-- <td>Done Date</td> -->
                                             <td>
-                                                <select class="form-control" name="user_id" style="width:100px">
+                                                <select class="form-control" name="user_id" id="user_id" style="width:100px">
                                                         <?php 
-                                                        foreach ($staff as $key => $value) {?>
+                                                        foreach ($groupData['staff'] as $key => $value) {?>
                                                             <option value="<?php echo $value['user_id']; ?>"><?php echo $value['first_name'].' '.$value['last_name'];?></option>
                                                       <?php  } ?>
                                                         
@@ -659,7 +659,7 @@
                                                 
                                        
                                             
-                                            <input type="checkbox" style="position: absolute; opacity: 0;" name="job_task_percentage" value="1">
+                                            <input type="checkbox" style="position: absolute; opacity: 0;" name="job_task_percentage" id="job_task_percentage" value="1">
                                            
                                         
                                        
@@ -671,11 +671,15 @@
                                             <td>
                                             <!-- <input type="submit" class="btn btn-success btn-sm" value="New Task" name="save_task"> -->
                                             <input type="button" class="btn btn-success btn-sm button_task" value="New Task" name="save_task">
+                                            <input type="text" name="<?php echo $this->security->get_csrf_token_name(); ?>" id="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $token_val; ?>" />
                                             </td>
                                         </tr>
                                         
                                         
-                                    </tbody></table>
+                                    
+                                    <!-- <tbody id="new_task">
+                                    </tbody> -->
+                                    </table>
                                     <span id="loading"></span>
 
                                     <script>
@@ -685,33 +689,85 @@
 
                                             table_selector : $('#task'),
                                             button_selector : $('#task input[type=button]'),
-                                            loading_part : $('#loading')
+                                            loading_part : $('#loading'),
+                                            idJob       : <?php echo $job_id;?>,
+                                            select_tr : $('#task tr:last'), 
+                                            token : '<?php echo $this->security->get_csrf_hash(); ?>'
                                         
                                         ,
                                         displayContent : function(){
 
                                             $.ajax({
 
-                                                type : 'post',
-                                                url : 'http://localhost/customer-relationship-management/jobs/ajax_job_task',
-                                                //url : '"'<?php echo base_url().'jobs/ajax_job_task/$job_id';?>,
-                                                data : 'job_id='+<?php echo $job_id;?>,
-                                                beforeSend : function(){
-                                                    // do display loading image her
+                                                type        : 'POST',
+                                                url         : '<?php echo base_url();?>jobs/ajax_job_task',
+                                                data        : "job_id="+myObj.idJob+"&jenis=display&<?php echo $this->security->get_csrf_token_name(); ?>="+myObj.token,
+                                                cache       : false,
+                                                beforeSend  : function(){
+                                                    myObj.loading_part.html('loading...');
                                                 },
-                                                success : function(a){
+                                                success     : function(a){
                                                     myObj.table_selector.append(a);
+                                                    myObj.loading_part.hide();
                                                 },
-                                                error : function(){
+                                                error       : function (jqXHR, textStatus, errorThrown) {
+                                                   // Some code to debbug e.g.:               
+                                                   
+                                                }
+                                            })
+                                        }
+                                        ,
+                                        addContent     : function(url,dataString){
+
+                                            $.ajax({
+
+                                                type        : 'POST',
+                                                url         :  url,
+                                                data        : "job_id="+myObj.idJob+"&jenis=add"+dataString,
+                                                cache       : false,
+                                                beforeSend  : function(){
+                                                    myObj.loading_part.html('loading...');
+                                                },
+                                                success     : function(a){
+                                                    //myObj.displayContent();
+                                                    myObj.table_selector.append(a);
+                                                    
+                                                },
+                                                error       : function(){
                                                     //do error staff display here
                                                 }
                                             })
                                         }
+                                        ,
+                                        
+
 
                                     }
 
-                                        myObj.displayContent();
-                                        //alert(myObj.loading_part.attr('id'));
+                                        myObj.displayContent(myObj.idJob);
+                                        myObj.button_selector.on('click', function(){
+
+                                            var url = '<?php echo base_url();?>jobs/ajax_job_task';
+                                                var job_task_description = $('#job_task_description').val(),
+                                                job_task_hour            = $('#job_task_hour').val(),
+                                                job_task_amount          = $('#job_task_amount').val(),
+                                                job_task_due_date        = $('#job_task_due_date').val(),
+                                                user_id                  = $('#user_id').val(),
+                                                job_task_percentage      = $('#job_task_percentage').val(),
+                                                csrf_test_name = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
+
+                                            var dataString = "&job_task_description="+job_task_description+
+                                                             "&job_task_hour="+job_task_hour+
+                                                             "&job_task_amount="+job_task_amount+
+                                                             "&job_task_due_date="+job_task_due_date+
+                                                             "&user_id="+user_id+
+                                                             "&job_task_percentage="+job_task_percentage+
+                                                             "&csrf_test_name="+csrf_test_name;
+
+                                            myObj.addContent(url,dataString);
+
+
+                                        })
                                     })
                                     </script>
                                 </div><!-- /.box-body -->

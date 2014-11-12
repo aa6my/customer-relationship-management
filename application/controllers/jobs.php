@@ -232,7 +232,7 @@ class Jobs extends CI_Controller {
                 
                
            }
-
+            $data['token_val'] = $this->security->get_csrf_hash();
            $this->load->view('job_edit.php', $data);
 
         }
@@ -253,14 +253,49 @@ class Jobs extends CI_Controller {
 
     public function ajax_job_task()
     {
-       // $job_id = $this->uri->segment(4);
         $where =  array(
 
-            'job_id' => $this->uri->segment(3)
-            );
+            'job_id' => $this->input->post('job_id')
+           );
+
+
+        if($this->input->post('jenis')=="display")
+        {
+            $data['job_task'] = $this->Midae_model->get_all_rows("jobs_task",$where);
+            $data['jenis'] = "display";
+            $this->load->view('job_ajax_task', $data);
+        }
+        else if($this->input->post('jenis')=="add")
+        {
+
+            $postData       = $this->input->post();
+             $where =  array(
+
+            'job_id' => $this->input->post('job_id')
+           );
+
+            $arrayData = array(
+
+                    'job_id'               => $postData['job_id'],
+                    'job_task_hour'        => $postData['job_task_hour'],
+                    'job_task_amount'      => $postData['job_task_amount'],
+                    'job_task_due_date'    => $postData['job_task_due_date'],
+                    'user_id'              => $postData['user_id'],
+                    'job_task_percentage'  => $postData['job_task_percentage'],
+                    'job_task_description' => $postData['job_task_description']
+                );
+
+            $this->Midae_model->insert_new_data($arrayData,"jobs_task");
+            //$mm = array('job_task_id','desc');
+            $data['job_task'] = $this->Midae_model->get_all_rows_jobs("jobs_task",$this->input->post('job_id'));
+            //$this->input->post('csrf_test_name');
+            $data['jenis'] = "add";
+            $this->load->view('job_ajax_task', $data);
+        }
         
-        $data['job_task'] = $this->Midae_model-> get_all_rows("jobs",$where);
-        $this->load->view('job_ajax_task', $data);
+        
+        
+        
 
     }
 
