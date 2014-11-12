@@ -1,5 +1,26 @@
 <?php
 
+/**
+
+    +-+-+-+-+ +-+-+-+-+-+
+    |S|E|G|I| |M|i|D|a|e|
+    +-+-+-+-+ +-+-+-+-+-+
+
+ * Customer Relationship Management [CRM]
+ *
+ * http://www.segimidae.net
+ *
+ * PHP version 5
+ *
+ * @category   models
+ * @package    midae_model.php
+ * @author     Nizam <nizam@segimidae.net>
+ * @author     Norlihazmey <norlihazmey@segimidae.net>
+ * @license    https://ellislab.com/codeigniter/user-guide/license.html
+ * @copyright  2014 SEGI MiDae
+ * @version    0.4.1
+*/
+
 class Midae_model extends CI_Model {
 
     function __construct()
@@ -229,5 +250,8 @@ class Midae_model extends CI_Model {
 
 
 }
+
+/* End of file midae_model.php */
+/* Location: ./application/models/midae_model.php */
 
 ?>
