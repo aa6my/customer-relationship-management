@@ -121,12 +121,17 @@ class Midae_model extends CI_Model {
     /**
     * [get_all_rows This function can use for all the tables, default function is to call all the results rows in table]
     * @param  [string] $table [name of table you want to fetch data]
+    * @param  [array] $where [condition to apply]
     * @return [type]        [return data sets]
     */
-    function get_all_rows($table)
+    function get_all_rows($table,$where)
     {
             $data = array();
             $query = $this->db->query("SELECT *FROM $table");
+
+            if($where!=false){
+                $this->db->where($where);
+            }
 
             foreach ($query->result_array() as $row)
             {
@@ -135,6 +140,9 @@ class Midae_model extends CI_Model {
 
             return $data;
     }
+
+
+   
 
 
 
@@ -175,6 +183,7 @@ class Midae_model extends CI_Model {
      * @param  [array] $usingCondition [using condition or not]
      * @return [type]                 [description]
      */
+    
     function update_data($columnToUpdate, $tableToUpdate, $usingCondition)
     {
         
