@@ -110,7 +110,6 @@ class Midae_model extends CI_Model {
     {
         $this->db->set("start", $this->_formatDate($this->input->post("from")));
         $this->db->set("end", $this->_formatDate($this->input->post("to")));
-        $this->db->set("url", $this->input->post("url"));
         $this->db->set("title", $this->input->post("title"));
         $this->db->set("body", $this->input->post("event"));
         $this->db->set("class", $this->input->post("class"));

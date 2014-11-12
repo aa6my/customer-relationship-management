@@ -1,7 +1,27 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Quotes extends CI_Controller {
+/**
 
+    +-+-+-+-+ +-+-+-+-+-+
+    |S|E|G|I| |M|i|D|a|e|
+    +-+-+-+-+ +-+-+-+-+-+
+
+ * Customer Relationship Management [CRM]
+ *
+ * http://www.segimidae.net
+ *
+ * PHP version 5
+ *
+ * @category   controllers
+ * @package    quotes.php
+ * @author     Nizam <nizam@segimidae.net>
+ * @author     Norlihazmey <norlihazmey@segimidae.net>
+ * @license    https://ellislab.com/codeigniter/user-guide/license.html
+ * @copyright  2014 SEGI MiDae
+ * @version    0.4.1
+*/
+
+class Quotes extends CI_Controller {
     
     public function __construct()
     {
@@ -15,15 +35,7 @@ class Quotes extends CI_Controller {
 	public function index()
 	{
 
-        // Component
-        //$this->output->enable_profiler(TRUE); //Profiler Debug
-        $this->load->model('Midae_model');
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "Customer Form"; //function purpose here.
-        //End of component
 
-            $this->load->view('dashboard.php', $data);
 	}
 
     public function access_map(){
@@ -33,14 +45,7 @@ class Quotes extends CI_Controller {
         );
     }
 
-
-  
-    public function _customers_output($output = null)
-    {
-        $this->load->view('customers.php',$output);
-    }
-
 }
 
-/* End of file dashboard.php */
-/* Location: ./application/controllers/dashboard.php */
+/* End of file quotes.php */
+/* Location: ./application/controllers/quotes.php */

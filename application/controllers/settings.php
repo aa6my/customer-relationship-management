@@ -1,4 +1,26 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+
+    +-+-+-+-+ +-+-+-+-+-+
+    |S|E|G|I| |M|i|D|a|e|
+    +-+-+-+-+ +-+-+-+-+-+
+
+ * Customer Relationship Management [CRM]
+ *
+ * http://www.segimidae.net
+ *
+ * PHP version 5
+ *
+ * @category   controllers
+ * @package    settings.php
+ * @author     Nizam <nizam@segimidae.net>
+ * @author     Norlihazmey <norlihazmey@segimidae.net>
+ * @license    https://ellislab.com/codeigniter/user-guide/license.html
+ * @copyright  2014 SEGI MiDae
+ * @version    0.4.1
+*/
+
 class Settings extends CI_Controller {
 
     public function access_map(){
@@ -6,7 +28,8 @@ class Settings extends CI_Controller {
             'index'=>'view',
             'update'=>'view',
             'create_user'=>'view',
-            'create_user_now'=>'view'
+            'create_user_now'=>'view',
+            'updatesetting'=>'view'
         );
     }
 
@@ -111,4 +134,6 @@ class Settings extends CI_Controller {
     }
 
 }
-?>
+
+/* End of file settings.php */
+/* Location: ./application/controllers/settings.php */
