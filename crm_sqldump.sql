@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2014 at 11:12 AM
+-- Generation Time: Nov 12, 2014 at 06:20 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -442,26 +442,28 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `user_id` int(5) NOT NULL COMMENT 'from user_meta table',
   `job_tax` int(5) NOT NULL,
   `job_currency` int(5) NOT NULL,
-  `job_type` varchar(10) NOT NULL,
+  `job_type_id` int(5) NOT NULL COMMENT 'from table JOB_TYPES',
   `job_status` varchar(10) NOT NULL,
   `job_description` text NOT NULL,
+  `job_note` text NOT NULL,
   `job_hour` double NOT NULL,
   `job_amount` int(5) NOT NULL,
   `job_quote_date` date NOT NULL,
   `job_renewal_date` date NOT NULL,
   `job_task_type` int(5) NOT NULL,
   `job_discount_amount` int(5) NOT NULL,
-  `job_discount_name` varchar(20) NOT NULL,
+  `job_discount_name` varchar(50) NOT NULL,
   `job_discount_type` int(5) NOT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_date_start`, `job_start_time`, `job_end_time`, `job_due_date`, `job_complete_date`, `user_id`, `job_tax`, `job_currency`, `job_type`, `job_status`, `job_description`, `job_hour`, `job_amount`, `job_quote_date`, `job_renewal_date`, `job_task_type`, `job_discount_amount`, `job_discount_name`, `job_discount_type`, `last_update`) VALUES
-(14, 1, 1, 'web services', '2014-11-11', '10:20:00', '11:30:00', '2014-11-12', '2014-11-13', 1, 3, 0, 'Web design', '1', 'make a web services', 2, 0, '2014-11-10', '2014-11-14', 1, 3, 'discount', 1, '2014-11-09 16:00:00');
+INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_date_start`, `job_start_time`, `job_end_time`, `job_due_date`, `job_complete_date`, `user_id`, `job_tax`, `job_currency`, `job_type_id`, `job_status`, `job_description`, `job_note`, `job_hour`, `job_amount`, `job_quote_date`, `job_renewal_date`, `job_task_type`, `job_discount_amount`, `job_discount_name`, `job_discount_type`, `last_update`) VALUES
+(14, 1, 1, 'web services1', '2014-11-07', '12:45:00', '11:23:00', '2014-11-12', '2014-11-13', 1, 5, 0, 2, '1', 'do a lot of CRM tasks', 'we need to regroup this one', 5, 0, '2014-11-06', '2014-11-15', 1, 5, 'this is discount name', 1, '2014-11-10 16:00:00'),
+(15, 0, 0, 'rr', '0000-00-00', '00:00:00', '00:00:00', '0000-00-00', '0000-00-00', 0, 0, 0, 2, '', '', '', 0, 0, '0000-00-00', '0000-00-00', 0, 0, '', 0, '2014-11-10 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -478,7 +480,34 @@ CREATE TABLE IF NOT EXISTS `jobs_task` (
   `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
   `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
   `job_task_description` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `jobs_task`
+--
+
+INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `job_task_hour`, `job_task_amount`, `job_task_due_date`, `user_id`, `job_task_percentage`, `job_task_description`) VALUES
+(1, 14, 3, 3, '2014-11-12', 2, 4, 'asdasdasdasdasdasdasd'),
+(2, 15, 6, 4, '2014-11-13', 1, 5, 'sdfsdf');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_types`
+--
+
+CREATE TABLE IF NOT EXISTS `job_types` (
+`job_type_id` int(5) NOT NULL,
+  `job_type_name` varchar(30) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `job_types`
+--
+
+INSERT INTO `job_types` (`job_type_id`, `job_type_name`) VALUES
+(1, 'Web development'),
+(2, 'Developing CRM');
 
 -- --------------------------------------------------------
 
@@ -553,7 +582,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-10 07:24:34', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-12 03:14:10', '::1', NULL, NULL, NULL, 1, 1),
 (10, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 1, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 0, 1);
 
 -- --------------------------------------------------------
@@ -751,6 +780,12 @@ ALTER TABLE `jobs_task`
  ADD PRIMARY KEY (`job_task_id`);
 
 --
+-- Indexes for table `job_types`
+--
+ALTER TABLE `job_types`
+ ADD PRIMARY KEY (`job_type_id`);
+
+--
 -- Indexes for table `leads`
 --
 ALTER TABLE `leads`
@@ -837,12 +872,17 @@ MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `jobs_task`
 --
 ALTER TABLE `jobs_task`
-MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `job_types`
+--
+ALTER TABLE `job_types`
+MODIFY `job_type_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `leads`
 --
