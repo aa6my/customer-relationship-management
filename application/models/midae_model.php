@@ -147,21 +147,50 @@ class Midae_model extends CI_Model {
     */
     function get_all_rows($table,$where)
     {
-            $data = array();
-            $query = $this->db->query("SELECT *FROM $table");
+            //$data = array();
+            //$query = $this->db->query("SELECT *FROM $table");
+
+            $this->db->select('*');
+            $this->db->from($table);
 
             if($where!=false){
-                $this->db->where($where);
+               $this->db->where($where);
             }
-
-            foreach ($query->result_array() as $row)
+           
+            /*foreach ($query->result_array() as $row)
             {
                $data[] = $row;
-            }
-
-            return $data;
+            }*/
+            $query = $this->db->get();
+            return $query->result_array(); 
+            //return $data;
     }
 
+
+    function get_all_rows_jobs($table,$job_id)
+    {
+            //$data = array();
+            //$query = $this->db->query("SELECT *FROM $table");
+
+            $this->db->select('*');
+            $this->db->from('jobs_task');
+
+            //if($where!=false){
+               $this->db->where('job_id',$job_id);
+            //}
+           // if($order_by!=false)
+             //{
+                $this->db->order_by('job_task_id','desc');
+           // }
+
+            /*foreach ($query->result_array() as $row)
+            {
+               $data[] = $row;
+            }*/
+            $query = $this->db->get();
+            return $query->result_array(); 
+            //return $data;
+    }
 
    
 
