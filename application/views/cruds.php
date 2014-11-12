@@ -27,7 +27,6 @@
         <style type='text/css'>
         body
         {
-            font-family: Arial;
             font-size: 14px;
         }
         a {
