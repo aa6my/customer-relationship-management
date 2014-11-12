@@ -1,11 +1,31 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
 
+    +-+-+-+-+ +-+-+-+-+-+
+    |S|E|G|I| |M|i|D|a|e|
+    +-+-+-+-+ +-+-+-+-+-+
+
+ * Customer Relationship Management [CRM]
+ *
+ * http://www.segimidae.net
+ *
+ * PHP version 5
+ *
+ * @category   models
+ * @package    jobs.php
+ * @author     Author <emi>
+ * @author     Another Author <another@example.com>
+ * @license    https://ellislab.com/codeigniter/user-guide/license.html
+ * @copyright  2014 SEGI MiDae
+ * @version    0.4.1
+*/
 class Jobs extends CI_Controller {
 
     public function access_map(){
         return array(
             'index'=>'view',
-            'update'=>'edit'
+            'update'=>'edit',
+            'ajax_job_task' => 'view'
         );
     }
 
@@ -56,7 +76,7 @@ class Jobs extends CI_Controller {
     {
             $data['website']   = $this->Midae_model->get_website(); //get websites from database
             $data['customer']  = $this->Midae_model->get_customer(); //get customers from database
-            $data['job_type'] = $this->Midae_model->get_all_rows("job_types"); //get all types of  job
+            $data['job_type'] = $this->Midae_model->get_all_rows("job_types", false); //get all types of  job
             $data['staff']     = $this->Midae_model->get_staff_member();
 
             return $data;
@@ -88,7 +108,8 @@ class Jobs extends CI_Controller {
         $crud->unset_print();        
         $crud->callback_before_insert(array($this,'_last_update'));
         
-        
+
+       
         if($state == "add") //nk display add form dengan edit form
         {
             
@@ -226,6 +247,20 @@ class Jobs extends CI_Controller {
 
 
            
+
+    }
+
+
+    public function ajax_job_task()
+    {
+       // $job_id = $this->uri->segment(4);
+        $where =  array(
+
+            'job_id' => $this->uri->segment(3)
+            );
+        
+        $data['job_task'] = $this->Midae_model-> get_all_rows("jobs",$where);
+        $this->load->view('job_ajax_task', $data);
 
     }
 

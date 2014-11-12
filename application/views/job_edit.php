@@ -609,7 +609,7 @@
                                 </div><!-- /.box-header -->
                                 <div class="box-body no-padding">
 
-                                    <table class="table table-striped">
+                                    <table class="table table-striped" id="task">
                                         <tbody>
                                         <tr>
                                             <th style="width: 10px">#</th>
@@ -669,12 +669,51 @@
                                            
                                             </td>
                                             <td>
-                                            <input type="submit" class="btn btn-success btn-sm" value="New Task" name="save_task">
+                                            <!-- <input type="submit" class="btn btn-success btn-sm" value="New Task" name="save_task"> -->
+                                            <input type="button" class="btn btn-success btn-sm button_task" value="New Task" name="save_task">
                                             </td>
                                         </tr>
                                         
                                         
                                     </tbody></table>
+                                    <span id="loading"></span>
+
+                                    <script>
+                                    $(function()
+                                    {
+                                        var myObj = {
+
+                                            table_selector : $('#task'),
+                                            button_selector : $('#task input[type=button]'),
+                                            loading_part : $('#loading')
+                                        
+                                        ,
+                                        displayContent : function(){
+
+                                            $.ajax({
+
+                                                type : 'post',
+                                                url : 'http://localhost/customer-relationship-management/jobs/ajax_job_task',
+                                                //url : '"'<?php echo base_url().'jobs/ajax_job_task/$job_id';?>,
+                                                data : 'job_id='+<?php echo $job_id;?>,
+                                                beforeSend : function(){
+                                                    // do display loading image her
+                                                },
+                                                success : function(a){
+                                                    myObj.table_selector.append(a);
+                                                },
+                                                error : function(){
+                                                    //do error staff display here
+                                                }
+                                            })
+                                        }
+
+                                    }
+
+                                        myObj.displayContent();
+                                        //alert(myObj.loading_part.attr('id'));
+                                    })
+                                    </script>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
 
@@ -683,31 +722,7 @@
                     </div>
 </form>
                 
-                <!--<script type="text/javascript" charset="utf-8">
-                $(document).ready(function(){
-                    $(".calendar .day").click(function(){
-
-                        day_num = $(this).find(".day_num").html();
-
-                        day_data = prompt("?????", $(this).find(".content").html());
-
-                        if( day_data != null ){
-                            $.ajax({
-                                url:window.location,
-                                type:"POST",
-                                data:{
-                                    day:day_num,
-
-                                    data:day_data
-                                },
-                                success:function(msg){
-                                    location.reload();
-                                }
-                            });
-                        }
-                    })
-                })
-                </script>-->
+                
                
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
