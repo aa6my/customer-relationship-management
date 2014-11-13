@@ -168,8 +168,7 @@ class Midae_model extends CI_Model {
 
     function get_all_rows_jobs($table,$job_id)
     {
-            //$data = array();
-            //$query = $this->db->query("SELECT *FROM $table");
+            
 
             $this->db->select('*');
             $this->db->from('jobs_task');
@@ -180,6 +179,30 @@ class Midae_model extends CI_Model {
            // if($order_by!=false)
              //{
                 $this->db->order_by('job_task_id','desc');
+           // }
+
+            /*foreach ($query->result_array() as $row)
+            {
+               $data[] = $row;
+            }*/
+            $query = $this->db->get();
+            return $query->row_array(); 
+            //return $data;
+    }
+
+    function get_all_job_task_row($table,$job_task_id)
+    {
+            
+
+            $this->db->select('*');
+            $this->db->from($table);
+
+            //if($where!=false){
+               $this->db->where('job_task_id',$job_task_id);
+            //}
+           // if($order_by!=false)
+             //{
+                //$this->db->order_by('job_task_id','desc');
            // }
 
             /*foreach ($query->result_array() as $row)

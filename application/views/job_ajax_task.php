@@ -9,10 +9,11 @@ foreach($job_task as $value)
 {
     $this->session->set_userdata('num', $a);
     ?>
-<tr>
+<tr data-current_tr="<?php echo @$value['job_task_id'];?>">
                                             <td>
-                                              
-                                                   <?php echo $a++;?>
+                                            <span class="num">
+                                                <?php echo $a++;?>
+                                            </span>
                                             </td>
                                             <td>
                                                     <?php echo @$value['job_task_description'];?>
@@ -37,7 +38,7 @@ foreach($job_task as $value)
                                                 <?php echo (@$value['job_task_percentage']==1) ? '100 %' : '0 %';?>
                                             </td>
                                             <td>
-                                                
+                                                <input type="button" class="btn btn-warning btn-sm button_edit_task" value="Edit" name="edit_task" data-job_task_id="<?php echo @$value['job_task_id'];?>">
                                             </td>
                                         </tr>
 
@@ -50,15 +51,16 @@ foreach($job_task as $value)
     {
   ?>
 
-  <tr>
+  <tr >
                                             <td>
+                                            <span class="num">
                                               <?php 
                                               $b = $this->session->userdata('num')+1;
                                               $this->session->set_userdata('num', $b);
                                               echo $b;
 
                                               ?>
-                                                   
+                                            </span>       
                                             </td>
                                             <td>
                                                     <?php echo @$job['job_task_description'];?>
@@ -81,10 +83,10 @@ foreach($job_task as $value)
                                                 
                                             </td>
                                             <td>
-                                                <?php echo (@$value['job_task_percentage']==1) ? '100 %' : '0 %';?>
+                                                <?php echo (@$job['job_task_percentage']==1) ? '100 %' : '0 %';?>
                                             </td>
                                             <td>
-                                                
+                                                <input type="button" class="btn btn-warning btn-sm button_edit_task" value="Edit" name="edit_task" data-job_task_id="<?php echo @$job['job_task_id'];?>">
                                             </td>
                                         </tr>
 

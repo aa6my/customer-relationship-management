@@ -703,14 +703,11 @@
                                         displayContent : function(url,loading,data){
 
                                             $.ajax({
-
                                                 type        : myObj.ajax_method,
                                                 url         : url,
                                                 data        : data,
                                                 cache       : myObj.ajax_cache,
-                                                beforeSend  : function(){
-                                                         myObj.loading_part.show();
-                                                },
+                                                beforeSend  : function(){  myObj.loading_part.show(); },
                                                 success     : function(a){
                                                         myObj.error_selector.hide();
                                                         myObj.select_tr.after(a);
@@ -722,41 +719,45 @@
                                                         myObj.error_selector.show().find('td').html(myObj.error_msg);
                                                         myObj.loading_part.hide();
                                                     }        
-                                                   
+                                                },timeout     : myObj.ajax_timeOut // if reached this 5 seconds, error msg triggered
+                                            });
+                                        }
+                                        ,
+                                        addEditContent     : function(url,dataString,display_part, jenis){
+
+                                            $.ajax({
+                                                type        : myObj.ajax_method,
+                                                url         : url,
+                                                data        : dataString,
+                                                cache       : myObj.ajax_cache,
+                                                beforeSend  : function(){  myObj.loading_part.show(); },
+                                                success     : function(a){
+                                                        myObj.error_selector.hide();
+
+                                                        if(jenis=="edit")
+                                                        {
+                                                            display_part.append(a);
+                                                        }
+                                                        else
+                                                        {
+
+                                                        }
+
+                                                        
+                                                        myObj.loading_part.hide();
+                                                },
+                                                error       : function(x, t, m){
+                                                    if(t){
+                                                        myObj.error_selector.show().find('td').html(myObj.error_msg);
+                                                        myObj.loading_part.hide();
+                                                    }   
                                                 },
                                                 timeout     : myObj.ajax_timeOut // if reached this 5 seconds, error msg triggered
                                             });
                                         }
                                         ,
-                                        addContent     : function(url,dataString){
+                                        editContent : function(){
 
-                                            $.ajax({
-
-                                                type        : myObj.ajax_method,
-                                                url         : url,
-                                                data        : "job_id="+myObj.idJob+"&jenis=add"+dataString,
-                                                cache       : myObj.ajax_cache,
-                                                beforeSend  : function(){
-                                                        myObj.loading_part.show();
-                                                },
-                                                success     : function(a){
-                                                        myObj.error_selector.hide();
-                                                        myObj.table_selector.find('tbody').append(a);
-                                                        myObj.loading_part.hide();
-                                                    
-                                                },
-                                                error       : function(x, t, m){
-                                                    if(t){
-                                                        
-                                                        myObj.error_selector.show().find('td').html(myObj.error_msg);
-                                                        myObj.loading_part.hide();
-                                                    }   
-                                                    
-                                                    
-
-                                                },
-                                                timeout     : myObj.ajax_timeOut // if reached this 5 seconds, error msg triggered
-                                            });
                                         }
                                         
                                         
@@ -768,9 +769,9 @@
                                      * display content
                                      * 
                                      */
-                                        var disp_data = "job_id="+myObj.idJob+"&jenis=display&<?php echo $this->security->get_csrf_token_name(); ?>="+myObj.token,
-                                            url       = '<?php echo base_url();?>jobs/ajax_job_task',
-                                            load_selector  = '#loading';
+                                            var disp_data = "job_id="+myObj.idJob+"&jenis=display&<?php echo $this->security->get_csrf_token_name(); ?>="+myObj.token,
+                                            url           = '<?php echo base_url();?>jobs/ajax_job_task',
+                                            load_selector = '#loading';
 
                                             myObj.displayContent(url,load_selector,disp_data);
 
@@ -779,7 +780,7 @@
 
 
 
-                                    /** ADD
+                                    /** ADD NEW ENTRY
                                      * when new task button was clicked
                                      * adding content
                                      */
@@ -794,7 +795,8 @@
                                                 job_task_percentage      = $('#job_task_percentage').val(),
                                                 csrf_test_name           = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
 
-                                                var dataString = "&job_task_description="+job_task_description+
+                                                var dataString = "job_id="+myObj.idJob+"&jenis=add"+
+                                                                 "&job_task_description="+job_task_description+
                                                                  "&job_task_hour="+job_task_hour+
                                                                  "&job_task_amount="+job_task_amount+
                                                                  "&job_task_due_date="+job_task_due_date+
@@ -802,22 +804,93 @@
                                                                  "&job_task_percentage="+job_task_percentage+
                                                                  "&csrf_test_name="+csrf_test_name;
 
-                                                myObj.addContent(url,dataString);
-
+                                                var display_part =   myObj.table_selector.find('tbody');
+                                                myObj.addEditContent(url,dataString, display_part, 'edit');
+                                        });
                                     /* end adding content */
 
 
 
-                                    /** EDIT
+                                    /** OPEN EDIT FORM
                                      * when edit button clicked
                                      */
-                                    
+                                        $('#task').on('click','.button_edit_task',function(){
+                                        
+                                            var job_task_id = $(this).data('job_task_id');
+                                            var current_tr = $(this).closest('tr');
+                                            var num_disp = current_tr.find('td .num').text();
 
+                                           // alert(num_disp);
+
+                                            current_tr.find('td').remove();
+                                            current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'edit',num_display : num_disp });
+                                            
+                                        });
 
                                     /* end editing content */
 
 
-                                        });
+
+
+
+
+
+                                    /** SAVE
+                                     * when save button clicked
+                                     */
+                                     $('#task').on('click','.button_save_task',function(){
+
+                                             var job_task_id = $(this).data('job_task_id');
+                                             var current_tr = $(this).closest('tr');
+                                             var num_disp = $(this).data('num_display');
+
+                                             //alert(job_task_id);
+                                                var url                  = '<?php echo base_url();?>jobs/ajax_job_task_edit';
+                                                var job_task_description = $('#job_task_description1').val(),
+                                                job_task_hour            = $('#job_task_hour1').val(),
+                                                job_task_amount          = $('#job_task_amount1').val(),
+                                                job_task_due_date        = $('#job_task_due_date1').val(),
+                                                user_id                  = $('#user_id1').val(),
+                                                //job_task_percentage      = $('#job_task_percentage1').val(),
+                                                csrf_test_name           = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
+
+                                                var checkbox_p = $('#job_task_percentage1');
+                                                var job_task_percentage;
+
+                                                    if(checkbox_p.is(':checked'))
+                                                    {
+                                                        job_task_percentage = 1;
+                                                        //return true;
+                                                        
+                                                    }
+                                                    else
+                                                    {
+                                                        job_task_percentage = 0;
+                                                        //return true;
+                                                    }
+
+                                               // alert(job_task_percentage);
+                                                var dataString = "job_task_id="+job_task_id+"&jenis=save"+
+                                                                 "&num_display="+num_disp+
+                                                                 "&job_task_description="+job_task_description+
+                                                                 "&job_task_hour="+job_task_hour+
+                                                                 "&job_task_amount="+job_task_amount+
+                                                                 "&job_task_due_date="+job_task_due_date+
+                                                                 "&user_id="+user_id+
+                                                                 "&job_task_percentage="+job_task_percentage+
+                                                                 "&csrf_test_name="+csrf_test_name;
+
+                                                  //alert(job_task_id);               
+                                                var display_part =   current_tr;
+                                                myObj.addEditContent(url,dataString, display_part,'save');
+                                                current_tr.find('td').remove();
+                                                current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'display',num_display : num_disp });
+
+                                    });
+                                    /* end save content */
+
+
+                                        
                                     });
                                     </script>
                                 </div><!-- /.box-body -->
