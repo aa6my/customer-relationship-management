@@ -26,6 +26,7 @@ class Jobs extends CI_Controller {
             'index'=>'view',
             'update'=>'edit',
             'ajax_job_task' => 'view'
+            //'ajax_job_task' => 'edit'
         );
     }
 
@@ -287,7 +288,7 @@ class Jobs extends CI_Controller {
 
             $this->Midae_model->insert_new_data($arrayData,"jobs_task");
             //$mm = array('job_task_id','desc');
-            $data['job_task'] = $this->Midae_model->get_all_rows_jobs("jobs_task",$this->input->post('job_id'));
+            $data['job'] = $this->Midae_model->get_all_rows_jobs("jobs_task",14);
             //$this->input->post('csrf_test_name');
             $data['jenis'] = "add";
             $this->load->view('job_ajax_task', $data);

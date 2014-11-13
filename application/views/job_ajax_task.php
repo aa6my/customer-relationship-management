@@ -1,13 +1,18 @@
 <?php
+$a = 1;
+
+$GLOBALS['b'] = 1;
 if($jenis=="display")
 {
+    
 foreach($job_task as $value)
 {
+    $this->session->set_userdata('num', $a);
     ?>
 <tr>
                                             <td>
                                               
-                                                   <?php //echo print_r($job_task);?>
+                                                   <?php echo $a++;?>
                                             </td>
                                             <td>
                                                     <?php echo @$value['job_task_description'];?>
@@ -29,7 +34,7 @@ foreach($job_task as $value)
                                                 
                                             </td>
                                             <td>
-                                            <?php echo @$value['job_task_percentage'];?>
+                                                <?php echo (@$value['job_task_percentage']==1) ? '100 %' : '0 %';?>
                                             </td>
                                             <td>
                                                 
@@ -37,37 +42,46 @@ foreach($job_task as $value)
                                         </tr>
 
  <?php
+        
       }
+      
     }
     else
     {
   ?>
+
   <tr>
                                             <td>
-                                              
-                                                   <?php //echo print_r($job_task);?>
+                                              <?php 
+                                              $b = $this->session->userdata('num')+1;
+                                              $this->session->set_userdata('num', $b);
+                                              echo $b;
+
+                                              ?>
+                                                   
                                             </td>
                                             <td>
-                                                    <?php echo @$job_task['job_task_description'];?>
+                                                    <?php echo @$job['job_task_description'];?>
+
                                                 
                                             </td>
                                             <td>
                                                 
-                                                <?php echo @$job_task['job_task_hour'];?>&nbsp;Hour
+                                                <?php echo @$job['job_task_hour'];?>&nbsp;Hour
                                             </td>
                                             <td>
                                                 
-                                                <?php echo @$job_task['job_task_amount'];?>
+                                                <?php echo @$job['job_task_amount'];?>
                                             </td>
                                             <td>
-                                                <?php echo @$job_task['job_task_due_date'];?>
+                                                <?php echo @$job['job_task_due_date'];?>
                                             </td>
                                             <!-- <td>Done Date</td> -->
                                             <td>
                                                 
                                             </td>
                                             <td>
-                                            <?php echo @$job_task['job_task_percentage'];?>
+                                                <?php echo (@$value['job_task_percentage']==1) ? '100 %' : '0 %';?>
                                             </td>
                                             <td>
                                                 

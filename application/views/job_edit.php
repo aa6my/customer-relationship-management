@@ -619,8 +619,14 @@
                                             <th>Due Date</th>
                                             <!-- <th>Done Date</th> -->
                                             <th>Staff</th>
-                                            <th>%</th>
+                                            <th style="width:100px">%</th>
                                             <th>Action</th>
+                                        </tr>
+                                        <tr id="loading" style="display:none">
+                                            <td colspan="8" align="center"><span><img src="<?php echo base_url().'assets/img/725.GIF';?>" /></span></td>
+                                        </tr>
+                                        <tr id="error" style="display:none;">
+                                            <td colspan="8" align="center" style="color:red"></td>
                                         </tr>
                                          <tr>
                                             <td>
@@ -640,10 +646,7 @@
                                             </td>
                                             <td>
                                                
-                                                  
-                                                        
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_task_due_date" id="job_task_due_date" style="width:150px">
-                                                  
+                                                <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_task_due_date" id="job_task_due_date" style="width:150px">
                                             </td>
                                             <!-- <td>Done Date</td> -->
                                             <td>
@@ -655,120 +658,167 @@
                                                         
                                                </select>
                                             </td>
-                                            <td>
-                                                
-                                       
-                                            
-                                            <input type="checkbox" style="position: absolute; opacity: 0;" name="job_task_percentage" id="job_task_percentage" value="1">
-                                           
-                                        
-                                       
-                                   
+                                            <td style="width:30px">
                                                    
-                                               
+                                                 <input type="checkbox" style="position: absolute; opacity: 0;" name="job_task_percentage" id="job_task_percentage" value="1">
                                            
                                             </td>
                                             <td>
                                             <!-- <input type="submit" class="btn btn-success btn-sm" value="New Task" name="save_task"> -->
                                             <input type="button" class="btn btn-success btn-sm button_task" value="New Task" name="save_task">
-                                            <input type="text" name="<?php echo $this->security->get_csrf_token_name(); ?>" id="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $token_val; ?>" />
+                                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" id="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $token_val; ?>" />
                                             </td>
                                         </tr>
                                         
                                         
                                     
-                                    <!-- <tbody id="new_task">
-                                    </tbody> -->
+                                    <!-- <tbody id="new_task">-->
+                                     
                                     </table>
-                                    <span id="loading"></span>
+                                    <!-- <span id="loading"><img src="<?php echo base_url().'assets/img/725.GIF';?>" /></span> -->
 
                                     <script>
                                     $(function()
                                     {
+                                        
                                         var myObj = {
 
-                                            table_selector : $('#task'),
-                                            button_selector : $('#task input[type=button]'),
-                                            loading_part : $('#loading'),
-                                            idJob       : <?php echo $job_id;?>,
-                                            select_tr : $('#task tr:last'), 
-                                            token : '<?php echo $this->security->get_csrf_hash(); ?>'
+                                            /**
+                                             * default configuration
+                                             * Dont modified this if not sure
+                                             */
+                                            table_selector  : $('#task'),
+                                            //button_selector : $('#task input[type =button]'),
+                                            loading_part    : $(loading),
+                                            idJob           : <?php echo $job_id;?>,
+                                            select_tr       : $('#task tbody tr:last'), 
+                                            token           : '<?php echo $this->security->get_csrf_hash(); ?>',
+                                            error_selector  :  $('#error'),
+                                            error_msg       : 'There is a problem requesting. Please try again!!',
+                                            ajax_timeOut    : 5000,
+                                            ajax_method     : 'POST',
+                                            ajax_cache      : false
                                         
                                         ,
-                                        displayContent : function(){
+                                        displayContent : function(url,loading,data){
 
                                             $.ajax({
 
-                                                type        : 'POST',
-                                                url         : '<?php echo base_url();?>jobs/ajax_job_task',
-                                                data        : "job_id="+myObj.idJob+"&jenis=display&<?php echo $this->security->get_csrf_token_name(); ?>="+myObj.token,
-                                                cache       : false,
+                                                type        : myObj.ajax_method,
+                                                url         : url,
+                                                data        : data,
+                                                cache       : myObj.ajax_cache,
                                                 beforeSend  : function(){
-                                                    myObj.loading_part.html('loading...');
+                                                         myObj.loading_part.show();
                                                 },
                                                 success     : function(a){
-                                                    myObj.table_selector.append(a);
-                                                    myObj.loading_part.hide();
+                                                        myObj.error_selector.hide();
+                                                        myObj.select_tr.after(a);
+                                                        myObj.loading_part.hide();
                                                 },
-                                                error       : function (jqXHR, textStatus, errorThrown) {
-                                                   // Some code to debbug e.g.:               
+                                                error       : function(x, t, m) {
+                                                    if(t){
+                                                        
+                                                        myObj.error_selector.show().find('td').html(myObj.error_msg);
+                                                        myObj.loading_part.hide();
+                                                    }        
                                                    
-                                                }
-                                            })
+                                                },
+                                                timeout     : myObj.ajax_timeOut // if reached this 5 seconds, error msg triggered
+                                            });
                                         }
                                         ,
                                         addContent     : function(url,dataString){
 
                                             $.ajax({
 
-                                                type        : 'POST',
-                                                url         :  url,
+                                                type        : myObj.ajax_method,
+                                                url         : url,
                                                 data        : "job_id="+myObj.idJob+"&jenis=add"+dataString,
-                                                cache       : false,
+                                                cache       : myObj.ajax_cache,
                                                 beforeSend  : function(){
-                                                    myObj.loading_part.html('loading...');
+                                                        myObj.loading_part.show();
                                                 },
                                                 success     : function(a){
-                                                    //myObj.displayContent();
-                                                    myObj.table_selector.append(a);
+                                                        myObj.error_selector.hide();
+                                                        myObj.table_selector.find('tbody').append(a);
+                                                        myObj.loading_part.hide();
                                                     
                                                 },
-                                                error       : function(){
-                                                    //do error staff display here
-                                                }
-                                            })
+                                                error       : function(x, t, m){
+                                                    if(t){
+                                                        
+                                                        myObj.error_selector.show().find('td').html(myObj.error_msg);
+                                                        myObj.loading_part.hide();
+                                                    }   
+                                                    
+                                                    
+
+                                                },
+                                                timeout     : myObj.ajax_timeOut // if reached this 5 seconds, error msg triggered
+                                            });
                                         }
-                                        ,
+                                        
                                         
 
 
                                     }
 
-                                        myObj.displayContent(myObj.idJob);
-                                        myObj.button_selector.on('click', function(){
+                                    /** DISPLAY
+                                     * display content
+                                     * 
+                                     */
+                                        var disp_data = "job_id="+myObj.idJob+"&jenis=display&<?php echo $this->security->get_csrf_token_name(); ?>="+myObj.token,
+                                            url       = '<?php echo base_url();?>jobs/ajax_job_task',
+                                            load_selector  = '#loading';
 
-                                            var url = '<?php echo base_url();?>jobs/ajax_job_task';
+                                            myObj.displayContent(url,load_selector,disp_data);
+
+                                    /* end display content */
+
+
+
+
+                                    /** ADD
+                                     * when new task button was clicked
+                                     * adding content
+                                     */
+                                       $('#task input[type =button]').on('click', function(){
+
+                                                var url                  = '<?php echo base_url();?>jobs/ajax_job_task';
                                                 var job_task_description = $('#job_task_description').val(),
                                                 job_task_hour            = $('#job_task_hour').val(),
                                                 job_task_amount          = $('#job_task_amount').val(),
                                                 job_task_due_date        = $('#job_task_due_date').val(),
                                                 user_id                  = $('#user_id').val(),
                                                 job_task_percentage      = $('#job_task_percentage').val(),
-                                                csrf_test_name = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
+                                                csrf_test_name           = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
 
-                                            var dataString = "&job_task_description="+job_task_description+
-                                                             "&job_task_hour="+job_task_hour+
-                                                             "&job_task_amount="+job_task_amount+
-                                                             "&job_task_due_date="+job_task_due_date+
-                                                             "&user_id="+user_id+
-                                                             "&job_task_percentage="+job_task_percentage+
-                                                             "&csrf_test_name="+csrf_test_name;
+                                                var dataString = "&job_task_description="+job_task_description+
+                                                                 "&job_task_hour="+job_task_hour+
+                                                                 "&job_task_amount="+job_task_amount+
+                                                                 "&job_task_due_date="+job_task_due_date+
+                                                                 "&user_id="+user_id+
+                                                                 "&job_task_percentage="+job_task_percentage+
+                                                                 "&csrf_test_name="+csrf_test_name;
 
-                                            myObj.addContent(url,dataString);
+                                                myObj.addContent(url,dataString);
+
+                                    /* end adding content */
 
 
-                                        })
-                                    })
+
+                                    /** EDIT
+                                     * when edit button clicked
+                                     */
+                                    
+
+
+                                    /* end editing content */
+
+
+                                        });
+                                    });
                                     </script>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->

@@ -187,7 +187,7 @@ class Midae_model extends CI_Model {
                $data[] = $row;
             }*/
             $query = $this->db->get();
-            return $query->result_array(); 
+            return $query->row_array(); 
             //return $data;
     }
 
