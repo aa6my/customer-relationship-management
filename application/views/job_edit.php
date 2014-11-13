@@ -620,7 +620,7 @@
                                             <!-- <th>Done Date</th> -->
                                             <th>Staff</th>
                                             <th style="width:100px">%</th>
-                                            <th>Action</th>
+                                            <th style="width:200px">Action</th>
                                         </tr>
                                         <tr id="loading" style="display:none">
                                             <td colspan="8" align="center"><span><img src="<?php echo base_url().'assets/img/725.GIF';?>" /></span></td>
@@ -675,7 +675,7 @@
                                     <!-- <tbody id="new_task">-->
                                      
                                     </table>
-                                    <!-- <span id="loading"><img src="<?php echo base_url().'assets/img/725.GIF';?>" /></span> -->
+                                    
 
                                     <script>
                                     $(function()
@@ -688,7 +688,6 @@
                                              * Dont modified this if not sure
                                              */
                                             table_selector  : $('#task'),
-                                            //button_selector : $('#task input[type =button]'),
                                             loading_part    : $(loading),
                                             idJob           : <?php echo $job_id;?>,
                                             select_tr       : $('#task tbody tr:last'), 
@@ -700,7 +699,7 @@
                                             ajax_cache      : false
                                         
                                         ,
-                                        displayContent : function(url,loading,data){
+                                        displayContent : function(url, loading, data){
 
                                             $.ajax({
                                                 type        : myObj.ajax_method,
@@ -723,7 +722,7 @@
                                             });
                                         }
                                         ,
-                                        addEditContent     : function(url,dataString,display_part, jenis){
+                                        addEditContent     : function(url, dataString, display_part, jenis){
 
                                             $.ajax({
                                                 type        : myObj.ajax_method,
@@ -738,7 +737,7 @@
                                                         {
                                                             display_part.append(a);
                                                         }
-                                                        else
+                                                        else /** for DELETE and DISPLAY --no need to show up any DOM elements **/
                                                         {
 
                                                         }
@@ -757,7 +756,7 @@
                                         }
                                         ,
                                         editContent : function(){
-
+                                            //this function not declare yet
                                         }
                                         
                                         
@@ -786,6 +785,7 @@
                                      */
                                        $('#task input[type =button]').on('click', function(){
 
+                                                /* value from form to insert into database */
                                                 var url                  = '<?php echo base_url();?>jobs/ajax_job_task';
                                                 var job_task_description = $('#job_task_description').val(),
                                                 job_task_hour            = $('#job_task_hour').val(),
@@ -795,6 +795,7 @@
                                                 job_task_percentage      = $('#job_task_percentage').val(),
                                                 csrf_test_name           = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
 
+                                                /** string that become the value in ajax post data -see function parameter **/
                                                 var dataString = "job_id="+myObj.idJob+"&jenis=add"+
                                                                  "&job_task_description="+job_task_description+
                                                                  "&job_task_hour="+job_task_hour+
@@ -804,10 +805,11 @@
                                                                  "&job_task_percentage="+job_task_percentage+
                                                                  "&csrf_test_name="+csrf_test_name;
 
-                                                var display_part =   myObj.table_selector.find('tbody');
+                                                /** part that want to display the data  after insert **/
+                                                var display_part =   myObj.table_selector.find('tbody'); 
                                                 myObj.addEditContent(url,dataString, display_part, 'edit');
                                         });
-                                    /* end adding content */
+                                        /* end adding content */
 
 
 
@@ -816,13 +818,15 @@
                                      */
                                         $('#task').on('click','.button_edit_task',function(){
                                         
+                                            /** store the task job id for using in update query**/
                                             var job_task_id = $(this).data('job_task_id');
                                             var current_tr = $(this).closest('tr');
+                                            /**  numbering value store for displaying in each part(edit,display etc.. **/
                                             var num_disp = current_tr.find('td .num').text();
 
-                                           // alert(num_disp);
-
+                                            /** remove the <TD> html tag **/
                                             current_tr.find('td').remove();
+                                            /** after remove, then add the new one with new set of <TD> react as a form**/
                                             current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'edit',num_display : num_disp });
                                             
                                         });
@@ -844,32 +848,32 @@
                                              var current_tr = $(this).closest('tr');
                                              var num_disp = $(this).data('num_display');
 
-                                             //alert(job_task_id);
+                                             
                                                 var url                  = '<?php echo base_url();?>jobs/ajax_job_task_edit';
                                                 var job_task_description = $('#job_task_description1').val(),
                                                 job_task_hour            = $('#job_task_hour1').val(),
                                                 job_task_amount          = $('#job_task_amount1').val(),
                                                 job_task_due_date        = $('#job_task_due_date1').val(),
                                                 user_id                  = $('#user_id1').val(),
-                                                //job_task_percentage      = $('#job_task_percentage1').val(),
                                                 csrf_test_name           = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
 
+                                                /** want to check either chekcbok is tick or not**/
                                                 var checkbox_p = $('#job_task_percentage1');
                                                 var job_task_percentage;
 
                                                     if(checkbox_p.is(':checked'))
                                                     {
                                                         job_task_percentage = 1;
-                                                        //return true;
+                                                        
                                                         
                                                     }
                                                     else
                                                     {
                                                         job_task_percentage = 0;
-                                                        //return true;
+                                                        
                                                     }
 
-                                               // alert(job_task_percentage);
+                                               
                                                 var dataString = "job_task_id="+job_task_id+"&jenis=save"+
                                                                  "&num_display="+num_disp+
                                                                  "&job_task_description="+job_task_description+
@@ -880,9 +884,11 @@
                                                                  "&job_task_percentage="+job_task_percentage+
                                                                  "&csrf_test_name="+csrf_test_name;
 
-                                                  //alert(job_task_id);               
+                                                               
                                                 var display_part =   current_tr;
                                                 myObj.addEditContent(url,dataString, display_part,'save');
+
+                                                /** remove td then load the new one-like edit part**/
                                                 current_tr.find('td').remove();
                                                 current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'display',num_display : num_disp });
 
@@ -890,6 +896,28 @@
                                     /* end save content */
 
 
+
+
+                                    /** DELETE task
+                                     * 
+                                     */
+                                    $('#task').on('click','.button_delete_task', function(){
+
+                                             var job_task_id = $(this).data('job_task_id');
+                                             var current_tr = $(this).closest('tr');
+                                             var num_disp = $(this).data('num_display');
+
+                                             /** remove the <TD> html tag **/
+                                            current_tr.find('td').remove();
+                                            /** after remove, then add the new one with new set of <TD> react as a form**/
+                                           // current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'edit',num_display : num_disp });
+
+                                             
+                                    })
+
+
+
+                                    /* end delete task */
                                         
                                     });
                                     </script>

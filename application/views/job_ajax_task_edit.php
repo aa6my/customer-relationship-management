@@ -84,9 +84,11 @@
                                             if($jenis=="edit")
                                             {?>  
                                                 <input type="button" class="btn btn-info btn-sm button_save_task" value="Save Task" name="save_task" data-job_task_id="<?php echo @$jobs['job_task_id'];?>" data-num_display= "<?php echo $num_display;?>">
+
                                             <?php }
                                             else{ ?>
                                                 <input type="button" class="btn btn-warning btn-sm button_edit_task" value="Edit" name="edit_task" data-job_task_id="<?php echo @$jobs['job_task_id'];?>" data-num_display= "<?php echo $num_display;?>">
+                                                <button type="button" class="btn btn-danger btn-sm button_delete_task"><i class="fa fa-trash-o"></i></button>
                                             <?php }
                                             ?>
                                             

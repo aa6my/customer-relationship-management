@@ -39,6 +39,7 @@ foreach($job_task as $value)
                                             </td>
                                             <td>
                                                 <input type="button" class="btn btn-warning btn-sm button_edit_task" value="Edit" name="edit_task" data-job_task_id="<?php echo @$value['job_task_id'];?>">
+                                                <button type="button" class="btn btn-danger btn-sm button_delete_task" data-job_task_id="<?php echo @$value['job_task_id'];?>"><i class="fa fa-trash-o"></i></button>
                                             </td>
                                         </tr>
 
@@ -87,6 +88,7 @@ foreach($job_task as $value)
                                             </td>
                                             <td>
                                                 <input type="button" class="btn btn-warning btn-sm button_edit_task" value="Edit" name="edit_task" data-job_task_id="<?php echo @$job['job_task_id'];?>">
+                                                <button type="button" class="btn btn-danger btn-sm button_delete_task"><i class="fa fa-trash-o"></i></button>
                                             </td>
                                         </tr>
 
