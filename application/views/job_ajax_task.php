@@ -12,7 +12,7 @@ foreach($job_task as $value)
 <tr data-current_tr="<?php echo @$value['job_task_id'];?>">
                                             <td>
                                             <span class="num">
-                                                <?php echo $a++;?>
+                                                <?php //echo $a++;?>
                                             </span>
                                             </td>
                                             <td>
@@ -32,7 +32,7 @@ foreach($job_task as $value)
                                             </td>
                                             <!-- <td>Done Date</td> -->
                                             <td>
-                                                
+                                                 <?php echo @$value['first_name'];?>
                                             </td>
                                             <td>
                                                 <?php echo (@$value['job_task_percentage']==1) ? '100 %' : '0 %';?>
@@ -56,9 +56,9 @@ foreach($job_task as $value)
                                             <td>
                                             <span class="num">
                                               <?php 
-                                              $b = $this->session->userdata('num')+1;
-                                              $this->session->set_userdata('num', $b);
-                                              echo $b;
+                                              //$b = $this->session->userdata('num')+1;
+                                              //$this->session->set_userdata('num', $b);
+                                              //echo $b;
 
                                               ?>
                                             </span>       
@@ -81,7 +81,7 @@ foreach($job_task as $value)
                                             </td>
                                             <!-- <td>Done Date</td> -->
                                             <td>
-                                                
+                                                <?php echo @$job['first_name'];?>
                                             </td>
                                             <td>
                                                 <?php echo (@$job['job_task_percentage']==1) ? '100 %' : '0 %';?>

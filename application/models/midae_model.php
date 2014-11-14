@@ -171,7 +171,7 @@ class Midae_model extends CI_Model {
     * @param  [array] $where [condition to apply]
     * @return [type]        [return data sets]
     */
-    function get_all_rows($table,$where)
+    function get_all_rows($table,$where, $tableNameToJoin, $tableRelation)
     {
             //$data = array();
             //$query = $this->db->query("SELECT *FROM $table");
@@ -183,6 +183,10 @@ class Midae_model extends CI_Model {
                $this->db->where($where);
             }
            
+           if($tableNameToJoin && $tableRelation){
+
+                $this->db->join($tableNameToJoin, $tableRelation);
+           }
             /*foreach ($query->result_array() as $row)
             {
                $data[] = $row;
@@ -193,7 +197,7 @@ class Midae_model extends CI_Model {
     }
 
 
-    function get_all_rows_jobs($table,$job_id)
+    function get_all_rows_jobs($table,$job_id, $tableNameToJoin, $tableRelation)
     {
             
 
@@ -202,6 +206,13 @@ class Midae_model extends CI_Model {
 
             //if($where!=false){
                $this->db->where('job_id',$job_id);
+
+               if($tableNameToJoin && $tableRelation){
+
+                $this->db->join($tableNameToJoin, $tableRelation);
+           }
+
+
             //}
            // if($order_by!=false)
              //{
@@ -217,7 +228,7 @@ class Midae_model extends CI_Model {
             //return $data;
     }
 
-    function get_all_job_task_row($table,$job_task_id)
+    function get_all_job_task_row($table,$job_task_id, $tableNameToJoin, $tableRelation)
     {
             
 
@@ -232,10 +243,19 @@ class Midae_model extends CI_Model {
                 //$this->db->order_by('job_task_id','desc');
            // }
 
+            if($tableNameToJoin && $tableRelation){
+
+                $this->db->join($tableNameToJoin, $tableRelation);
+           }
             /*foreach ($query->result_array() as $row)
             {
                $data[] = $row;
             }*/
+            /*if($join1!="")
+            {
+                $this->db->join($join1);
+            }*/
+
             $query = $this->db->get();
             return $query->row_array(); 
             //return $data;

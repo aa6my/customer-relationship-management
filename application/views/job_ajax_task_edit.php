@@ -1,7 +1,7 @@
  <td>
  <span class="num">
                                                
-                                                  <?php echo $num_display;?>
+                                                  <?php //echo $num_display;?>
                                                   </span>
                                             </td>
                                             <td>
@@ -64,7 +64,7 @@
                                                </select>
                                             <?php }
                                             else{
-                                                echo $jobs['user_id'];
+                                                echo $jobs['first_name'];
                                             }
                                             ?>
                                             </td>

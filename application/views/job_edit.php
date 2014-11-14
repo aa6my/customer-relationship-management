@@ -133,7 +133,7 @@
                                             <td align="right">Hourly Rate</td>
                                             <td>
                                                <div class="col-xs-3">
-                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_hour" value="<?php echo $jobs['job_hour'];?>">
+                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_hour" id="job_hour" value="<?php echo $jobs['job_hour'];?>">
                                                 </div>
                                             </td>
                                            
@@ -792,8 +792,24 @@
                                                 job_task_amount          = $('#job_task_amount').val(),
                                                 job_task_due_date        = $('#job_task_due_date').val(),
                                                 user_id                  = $('#user_id').val(),
-                                                job_task_percentage      = $('#job_task_percentage').val(),
+                                                //job_task_percentage      = $('#job_task_percentage').val(),
                                                 csrf_test_name           = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
+
+                                                var checkbox_p = $('#job_task_percentage');
+                                                var job_task_percentage;
+
+                                                    if(checkbox_p.is(':checked'))
+                                                    {
+                                                        job_task_percentage = 1;
+                                                        
+                                                        
+                                                    }
+                                                    else
+                                                    {
+                                                        job_task_percentage = 0;
+                                                        
+                                                    }
+
 
                                                 /** string that become the value in ajax post data -see function parameter **/
                                                 var dataString = "job_id="+myObj.idJob+"&jenis=add"+
@@ -912,15 +928,54 @@
                                              /** remove the <TD> html tag **/
                                              current_tr.find('td').remove();
                                              myObj.addEditContent(url,dataString, "no_need",'delete');
-                                            /** after remove, then add the new one with new set of <TD> react as a form**/
-                                           // current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'edit',num_display : num_disp });
-
+                                           
                                              
                                     })
 
 
 
                                     /* end delete task */
+
+
+
+
+
+                                   
+                                   
+                                         $('#job_task_hour').on('keyup',function(){
+
+                                                var groupVar = varDeclare();
+                                                if(groupVar[0].val()!=""){                                                    
+                                                    var new_amount = cal(groupVar[0],groupVar[2]);
+                                                        groupVar[1].val(new_amount);
+                                                        return true;
+                                                }
+                                                else{
+                                                    alert("Please enter the hours rate!!");
+                                                    groupVar[0].focus();
+                                                    return false;
+                                                }
+                                        });
+
+
+                                        $('#job_hour').on('keyup',function(){
+
+                                                var groupVar = varDeclare();
+                                                if(groupVar[2].val()!=""){                                                    
+                                                    var new_amount = cal(groupVar[0],groupVar[2]);
+                                                        groupVar[1].val(new_amount);
+                                                        return true;
+                                                }
+                                                else{
+                                                    alert("Please enter the hours rate!!");
+                                                    groupVar[2].focus();
+                                                    return false;
+                                                }
+                                        });
+                                   
+                                    
+
+
                                         
                                     });
                                     </script>

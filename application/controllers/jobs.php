@@ -78,7 +78,7 @@ class Jobs extends CI_Controller {
     {
             $data['website']   = $this->Midae_model->get_website(); //get websites from database
             $data['customer']  = $this->Midae_model->get_customer(); //get customers from database
-            $data['job_type'] = $this->Midae_model->get_all_rows("job_types", false); //get all types of  job
+            $data['job_type'] = $this->Midae_model->get_all_rows("job_types", false, false, false); //get all types of  job
             $data['staff']     = $this->Midae_model->get_staff_member();
 
             return $data;
@@ -260,10 +260,16 @@ class Jobs extends CI_Controller {
             'job_id' => $this->input->post('job_id')
            );
 
+        $tableNameToJoin = 'user_meta';
+        $tableRelation = 'user_meta.user_id = jobs_task.user_id';
 
         if($this->input->post('jenis')=="display")
         {
-            $data['job_task'] = $this->Midae_model->get_all_rows("jobs_task",$where);
+             //$join1 = array('' =>'');
+            
+                
+
+            $data['job_task'] = $this->Midae_model->get_all_rows("jobs_task",$where, $tableNameToJoin, $tableRelation);
             $data['jenis'] = "display";
             $this->load->view('job_ajax_task', $data);
         }
@@ -285,7 +291,7 @@ class Jobs extends CI_Controller {
 
             $this->Midae_model->insert_new_data($arrayData,"jobs_task");
            
-            $data['job'] = $this->Midae_model->get_all_rows_jobs("jobs_task",$this->input->post('job_id'));
+            $data['job'] = $this->Midae_model->get_all_rows_jobs("jobs_task",$this->input->post('job_id'), $tableNameToJoin, $tableRelation);
             
             $data['jenis'] = "add";
             $this->load->view('job_ajax_task', $data);
@@ -304,10 +310,12 @@ class Jobs extends CI_Controller {
 
         if($this->input->post('jenis')=="edit" || $this->input->post('jenis')=="display")
         {
+            $tableNameToJoin = 'user_meta';
+            $tableRelation = 'user_meta.user_id = jobs_task.user_id';
             $data['jenis'] = $this->input->post('jenis');
             $data['num_display'] = $this->input->post('num_display');
             $data['groupData'] = $this->get_temporary_data();
-            $data['jobs'] = $this->Midae_model->get_all_job_task_row("jobs_task",$job_task_id);
+            $data['jobs'] = $this->Midae_model->get_all_job_task_row("jobs_task",$job_task_id, $tableNameToJoin, $tableRelation);
             $this->load->view('job_ajax_task_edit', $data);
             
         }

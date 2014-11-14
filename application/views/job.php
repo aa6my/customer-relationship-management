@@ -96,7 +96,7 @@
                                             <td align="right">Hourly Rate</td>
                                             <td>
                                                <div class="col-xs-3">
-                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_hour">
+                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_hour" id="job_hour">
                                                 </div>
                                             </td>
                                            
@@ -596,10 +596,10 @@
                                                 
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_hour" style="width:40px;">
+                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_hour" id="job_task_hour" style="width:40px;">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" style="width:40px;">
+                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount" style="width:40px;">
                                             </td>
                                             <td>
                                                
@@ -612,7 +612,7 @@
                                             <td>
                                                 <select class="form-control" name="user_id" style="width:100px">
                                                         <?php 
-                                                        foreach ($staff as $key => $value) {?>
+                                                        foreach ($groupData['staff'] as $key => $value) {?>
                                                             <option value="<?php echo $value['user_id']; ?>"><?php echo $value['first_name'].' '.$value['last_name'];?></option>
                                                       <?php  } ?>
                                                         
@@ -638,6 +638,41 @@
                                         
                                         
                                     </tbody></table>
+                                    <script>
+                                    $(function(){
+                                         $('#job_task_hour').on('keyup',function(){
+
+                                                var groupVar = varDeclare();
+                                                if(groupVar[0].val()!=""){                                                    
+                                                    var new_amount = cal(groupVar[0],groupVar[2]);
+                                                        groupVar[1].val(new_amount);
+                                                        return true;
+                                                }
+                                                else{
+                                                    alert("Please enter the hours rate!!");
+                                                    groupVar[0].focus();
+                                                    return false;
+                                                }
+                                        });
+
+
+                                        $('#job_hour').on('keyup',function(){
+
+                                                var groupVar = varDeclare();
+                                                if(groupVar[2].val()!=""){                                                    
+                                                    var new_amount = cal(groupVar[0],groupVar[2]);
+                                                        groupVar[1].val(new_amount);
+                                                        return true;
+                                                }
+                                                else{
+                                                    alert("Please enter the hours rate!!");
+                                                    groupVar[2].focus();
+                                                    return false;
+                                                }
+                                        });
+                                    })
+                                    </script>
+                                    
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
 
