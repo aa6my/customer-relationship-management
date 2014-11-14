@@ -904,11 +904,14 @@
                                     $('#task').on('click','.button_delete_task', function(){
 
                                              var job_task_id = $(this).data('job_task_id');
-                                             var current_tr = $(this).closest('tr');
-                                             var num_disp = $(this).data('num_display');
+                                             var current_tr  = $(this).closest('tr');
+                                             var num_disp    = $(this).data('num_display');
+                                             var dataString  = "job_task_id="+job_task_id+"&jenis=delete";
+                                             var url         = '<?php echo base_url();?>jobs/ajax_job_task_edit';
 
                                              /** remove the <TD> html tag **/
-                                            current_tr.find('td').remove();
+                                             current_tr.find('td').remove();
+                                             myObj.addEditContent(url,dataString, "no_need",'delete');
                                             /** after remove, then add the new one with new set of <TD> react as a form**/
                                            // current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'edit',num_display : num_disp });
 

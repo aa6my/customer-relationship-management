@@ -98,6 +98,15 @@ class Midae_model extends CI_Model {
         $this->load->view('popup', $data);
     }
 
+
+
+
+    /**
+     * [insert_new_data insert data into table - any type of table]
+     * @param  [type] $arrayData [data value received from controller(column and value already)]
+     * @param  [type] $table     [name of table to insert the data]
+     * @return [type]            [description]
+     */
      function insert_new_data($arrayData,$table)
     {
 
@@ -105,6 +114,24 @@ class Midae_model extends CI_Model {
         $this->db->_error_message();
         return  $this->db->_error_message();
     }
+
+
+
+
+
+    /**
+     * [delete_data delete all type of table]
+     * @param  [type] $table [name of table]
+     * @param  [type] $where [condition to applied]
+     * @return [type]        [description]
+     */
+    public function delete_data($table, $where){
+
+        $this->db->where($where);
+        $this->db->delete($table);
+    }
+
+
 
     public function add()
     {
@@ -272,6 +299,7 @@ class Midae_model extends CI_Model {
      * @param  [string] $messageType [what type of message you want to display]
      * @param  [string] $urlToGo     [url you want to redirect after making the process ==> if using current url just use current_url()]
      * @return [type]              [description]
+     * currently only 3 types of message can appear on page (save, record, error) ->can change the if else to add another type of message
      */
     function display_message($messageType, $urlToGo)
     {

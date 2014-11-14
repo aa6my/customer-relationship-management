@@ -335,12 +335,15 @@ class Jobs extends CI_Controller {
             $data['jobs'] = $this->Midae_model->get_all_job_task_row("jobs_task",$job_task_id);
              $this->load->view('job_ajax_task_edit', $data);
         }
-        /*else if($this->input->post('jenis')=="display")
+        else if($this->input->post('jenis')=="delete")
         {
 
-            $data['jobs'] = $this->Midae_model->get_all_job_task_row("jobs_task",$job_task_id);
+            $where = array(
+                'job_task_id' => $this->input->post('job_task_id')
+                );
+            $this->Midae_model->delete_data("jobs_task", $where);
 
-        }*/
+        }
 
 
        
