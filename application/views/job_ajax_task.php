@@ -103,17 +103,20 @@ foreach($job_task as $value)
                                                 <tbody><tr>
                                                     <th style="width:40px">Subtotal</th>
                                                     <td style="width:10px">:</td>
-                                                    <td>RM <?php echo $subTotal;?></td>
+                                                    <td><?php echo ($subTotal!="") ? "RM ".$subTotal : "-";?></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Discount</th>
                                                     <td>:</td>
-                                                    <td>RM <?php echo $total[0]['job_discount_amount'];?></td>
+                                                    <td><?php echo (@$total[0]['job_discount_amount']!="") ? "RM ".$total[0]['job_discount_amount'] : "-";?></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Total</th>
                                                     <td>:</td>
-                                                    <td>RM <?php echo $subTotal - $total[0]['job_discount_amount'];?></td>
+                                                    <td> <?php 
+                                                    $tot = $subTotal - @$total[0]['job_discount_amount'];
+                                                    echo ($tot!="") ? "RM ".$tot : "-";
+                                                    ?></td>
                                                 </tr>
                                                 </tbody>
                                             </table>

@@ -107,7 +107,9 @@ class Jobs extends CI_Controller {
         $crud->set_theme('datatables');
         $crud->set_table('jobs');
         $crud->set_subject('Jobs');        
-        $crud->unset_print();        
+        $crud->unset_print();    
+        $crud->unset_read();
+        $crud->callback_after_delete(array($this,'delete_job_n_jobtask'));     
         $crud->callback_before_insert(array($this,'_last_update'));
         
 
@@ -241,7 +243,10 @@ class Jobs extends CI_Controller {
         
         else
         {
-            $crud->columns('job_title','job_date','job_due_date','job_type','job_status');
+            $crud->columns('job_title','job_date_start','job_due_date','job_type_id','job_status');
+            $crud->display_as('job_type_id','Job type');
+            $crud->callback_column('job_type_id',array($this,'crud_job_type'))
+                 ->callback_column('job_status',array($this,'crud_job_status'));
             $output = $crud->render();
             $output = array_merge($data,(array)$output);
             $this->load->view('cruds.php',$output);
@@ -249,6 +254,42 @@ class Jobs extends CI_Controller {
 
 
            
+
+    }
+
+    public function crud_job_type($value, $row)
+    {
+        $where = array(
+                'job_type_id' => $value
+            );
+
+        $job_type = $this->Midae_model->get_specified_row("job_types",$where,false);
+       
+        return $job_type['job_type_name'];
+    }
+
+    public function crud_job_status($value, $row)
+    {
+       $status = ($value==0) ? "New" : "Existing";
+       
+       return $status;
+    }
+
+
+    function delete_job_n_jobtask($job_id){
+
+        if($job_id)
+        {
+            $where = array(
+                'job_id' => $job_id
+                );
+            $this->Midae_model-> delete_data("jobs_task", $where);
+            return true;
+        }
+        else
+        {
+            return true;
+        }
 
     }
 
