@@ -675,6 +675,41 @@
                                     <!-- <tbody id="new_task">-->
                                      
                                     </table>
+                                    <div class="col-md-13">
+                                    <!-- Primary box -->
+                                    <div class="box box-solid box-danger">
+                                        <div class="box-header" >
+                                            <h3 class="box-title">Total</h3>
+                                            
+                                        </div>
+                                        <div class="box-body" id="total">
+                                            
+                                        </div><!-- /.box-body -->
+                                    </div><!-- /.box -->
+                                </div>
+
+
+
+                                    <!-- <div class="table-responsive">
+                                        <table class="table no-border" style="border:none">
+                                            <tbody><tr>
+                                                <th style="width:50%">Subtotal:</th>
+                                                <td>$250.30</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tax (9.3%)</th>
+                                                <td>$10.34</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Shipping:</th>
+                                                <td>$5.80</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total:</th>
+                                                <td>$265.24</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </div> -->
                                     
 
                                     <script>
@@ -685,7 +720,7 @@
 
                                             /**
                                              * default configuration
-                                             * Dont modified this if not sure
+                                             * Don't modified this if not sure
                                              */
                                             table_selector  : $('#task'),
                                             loading_part    : $(loading),
@@ -697,7 +732,6 @@
                                             ajax_timeOut    : 5000,
                                             ajax_method     : 'POST',
                                             ajax_cache      : false
-                                        
                                         ,
                                         displayContent : function(url, loading, data){
 
@@ -711,12 +745,14 @@
                                                         myObj.error_selector.hide();
                                                         myObj.select_tr.after(a);
                                                         myObj.loading_part.hide();
+                                                        myObj.dispTotal();
                                                 },
                                                 error       : function(x, t, m) {
                                                     if(t){
                                                         
                                                         myObj.error_selector.show().find('td').html(myObj.error_msg);
                                                         myObj.loading_part.hide();
+
                                                     }        
                                                 },timeout     : myObj.ajax_timeOut // if reached this 5 seconds, error msg triggered
                                             });
@@ -736,10 +772,11 @@
                                                         if(jenis=="edit")
                                                         {
                                                             display_part.append(a);
+                                                            myObj.dispTotal();
                                                         }
                                                         else /** for DELETE and DISPLAY --no need to show up any DOM elements **/
                                                         {
-
+                                                            myObj.dispTotal();
                                                         }
 
                                                         
@@ -755,8 +792,8 @@
                                             });
                                         }
                                         ,
-                                        editContent : function(){
-                                            //this function not declare yet
+                                        dispTotal          : function(){
+                                            $('#total').load('<?php echo base_url();?>jobs/ajax_job_task',{job_id : myObj.idJob, jenis : 'total'});
                                         }
                                         
                                         
@@ -778,12 +815,24 @@
 
 
 
+                                     /** LOAD TOTAL PART
+                                     * when edit button clicked
+                                     */
+                                        
+                                                  
+                                            
+                                        
+
+                                    /* end editing content */
+
+
+
 
                                     /** ADD NEW ENTRY
                                      * when new task button was clicked
                                      * adding content
                                      */
-                                       $('#task input[type =button]').on('click', function(){
+                                       $('#task input[type=button]').on('click', function(){
 
                                                 /* value from form to insert into database */
                                                 var url                  = '<?php echo base_url();?>jobs/ajax_job_task';
@@ -824,6 +873,7 @@
                                                 /** part that want to display the data  after insert **/
                                                 var display_part =   myObj.table_selector.find('tbody'); 
                                                 myObj.addEditContent(url,dataString, display_part, 'edit');
+                                                
                                         });
                                         /* end adding content */
 
@@ -844,6 +894,7 @@
                                             current_tr.find('td').remove();
                                             /** after remove, then add the new one with new set of <TD> react as a form**/
                                             current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'edit',num_display : num_disp });
+                                            
                                             
                                         });
 
@@ -907,6 +958,7 @@
                                                 /** remove td then load the new one-like edit part**/
                                                 current_tr.find('td').remove();
                                                 current_tr.load('<?php echo base_url();?>jobs/ajax_job_task_edit',{job_task_id : job_task_id, jenis : 'display',num_display : num_disp });
+                                                
 
                                     });
                                     /* end save content */
@@ -928,20 +980,26 @@
                                              /** remove the <TD> html tag **/
                                              current_tr.find('td').remove();
                                              myObj.addEditContent(url,dataString, "no_need",'delete');
+                                            
                                            
                                              
                                     })
+                                     /* end delete task */
 
 
 
-                                    /* end delete task */
 
+                                     
 
 
 
 
                                    
-                                   
+                                   /** TASK HOUR
+                                    * [description] Code to call function hour in js file in assets folder
+                                    * automatic calculate amount when enter hour in job task
+                                    * @return {[type]} [description]
+                                    */
                                          $('#job_task_hour').on('keyup',function(){
 
                                                 var groupVar = varDeclare();
@@ -973,7 +1031,9 @@
                                                 }
                                         });
                                    
-                                    
+                                    /**
+                                     * END TASK HOUR
+                                     */
 
 
                                         

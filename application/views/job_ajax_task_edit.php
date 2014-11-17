@@ -35,7 +35,7 @@
                                                 <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount1" style="width:40px;" value="<?php echo $jobs['job_task_amount'];?>">
                                             <?php }
                                             else{
-                                                echo $jobs['job_task_amount'];
+                                                echo 'RM '.$jobs['job_task_amount'];
                                             }
                                             ?>
                                             </td>

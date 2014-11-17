@@ -296,6 +296,22 @@ class Jobs extends CI_Controller {
             $data['jenis'] = "add";
             $this->load->view('job_ajax_task', $data);
         }
+        else if($this->input->post('jenis')=="total")
+        {
+            $where = array(
+                'jobs.job_id' => $this->input->post('job_id')
+                );
+
+            $tableRelation = "jobs.job_id = jobs_task.job_id";
+
+            $data['jenis'] = $this->input->post('jenis');
+
+            $data['total'] = $this->Midae_model->get_all_rows('jobs',$where, "jobs_task", $tableRelation);
+
+            //$data['percentage'] = $data['total']['']
+
+            $this->load->view('job_ajax_task', $data);
+        }
         
         
         
