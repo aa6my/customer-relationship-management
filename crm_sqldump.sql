@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2014 at 06:20 AM
+-- Generation Time: Nov 18, 2014 at 07:06 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -62,6 +62,24 @@ INSERT INTO `calendar` (`date`, `data`) VALUES
 ('2014-10-15', 'Test123'),
 ('2014-10-21', 'Raining'),
 ('2014-10-23', 'tst');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `catproduct`
+--
+
+CREATE TABLE IF NOT EXISTS `catproduct` (
+`catproduct_id` int(5) NOT NULL,
+  `catproduct_name` varchar(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `catproduct`
+--
+
+INSERT INTO `catproduct` (`catproduct_id`, `catproduct_name`) VALUES
+(1, 'Electronic');
 
 -- --------------------------------------------------------
 
@@ -426,6 +444,144 @@ INSERT INTO `files` (`file_id`, `file_name`, `file_content`, `last_update`) VALU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices` (
+`invoice_id` int(5) NOT NULL,
+  `invoice_total` mediumint(9) NOT NULL,
+  `invoice_date` date NOT NULL,
+  `invoice_status` varchar(20) NOT NULL COMMENT '1-paid, 2-unpaid'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=175 ;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`invoice_id`, `invoice_total`, `invoice_date`, `invoice_status`) VALUES
+(1, 100, '2014-11-18', '1'),
+(2, 2000, '2014-11-13', '2'),
+(3, 100, '2014-11-15', '1'),
+(4, 2000, '2014-11-03', '2'),
+(5, 300, '2014-10-22', '1'),
+(6, 800, '2014-11-07', '2'),
+(7, 700, '2014-11-01', '1'),
+(8, 400, '2014-11-02', '2'),
+(9, 900, '2014-11-03', '1'),
+(10, 2000, '2014-11-04', '2'),
+(11, 3400, '2014-11-05', '1'),
+(12, 56000, '2014-11-06', '2'),
+(13, 700, '2014-11-07', '1'),
+(14, 700, '2014-11-08', '1'),
+(15, 400, '2014-11-09', '2'),
+(16, 900, '2014-11-10', '1'),
+(17, 2000, '2014-11-11', '2'),
+(18, 3400, '2014-11-12', '1'),
+(19, 56000, '2014-11-13', '2'),
+(20, 700, '2014-11-14', '1'),
+(21, 9000, '2014-11-15', '2'),
+(22, 5400, '2014-11-16', '1'),
+(23, 12000, '2014-11-17', '2'),
+(24, 2300, '2014-11-18', '1'),
+(25, 5000, '2014-11-19', '2'),
+(26, 6600, '2014-11-20', '1'),
+(27, 7800, '2014-11-21', '2'),
+(28, 100, '2014-11-22', '1'),
+(29, 2000, '2014-11-23', '2'),
+(30, 100, '2014-11-23', '1'),
+(31, 2000, '2014-11-24', '2'),
+(32, 100, '2014-11-25', '1'),
+(33, 2000, '2014-11-26', '2'),
+(34, 100, '2014-11-27', '1'),
+(35, 3200, '2014-11-28', '2'),
+(36, 3400, '2014-11-29', '1'),
+(37, 4000, '2014-11-30', '2'),
+(38, 800, '2014-10-01', '1'),
+(39, 600, '2014-10-02', '2'),
+(40, 900, '2014-10-03', '1'),
+(41, 8900, '2014-10-04', '2'),
+(42, 560, '2014-10-05', '1'),
+(43, 2000, '2014-10-06', '2'),
+(44, 100, '2014-10-07', '1'),
+(45, 2000, '2014-10-08', '2'),
+(46, 100, '2014-10-09', '1'),
+(47, 2000, '2014-10-11', '2'),
+(48, 100, '2014-10-12', '1'),
+(50, 120, '2013-04-01', '1'),
+(51, 4500, '2013-04-02', '2'),
+(52, 780, '2013-04-03', '1'),
+(53, 5600, '2013-04-04', '2'),
+(54, 3400, '2013-04-05', '1'),
+(55, 2100, '2013-04-06', '2'),
+(56, 340, '2013-04-07', '1'),
+(57, 6700, '2013-04-08', '2'),
+(58, 100, '2013-04-09', '1'),
+(59, 2000, '2013-04-10', '2'),
+(60, 100, '2013-04-11', '1'),
+(61, 2000, '2013-04-12', '2'),
+(62, 100, '2013-04-13', '1'),
+(63, 2000, '2013-04-14', '2'),
+(64, 100, '2013-04-15', '1'),
+(65, 2000, '2013-04-16', '2'),
+(66, 100, '2013-04-17', '1'),
+(67, 600, '2013-04-18', '2'),
+(68, 100, '2013-05-01', '1'),
+(69, 5600, '2013-05-02', '2'),
+(70, 100, '2013-05-03', '1'),
+(71, 2000, '2013-05-04', '2'),
+(72, 100, '2013-05-05', '1'),
+(73, 2000, '2013-05-06', '2'),
+(74, 340, '2013-05-07', '1'),
+(75, 2300, '2013-05-08', '2'),
+(76, 100, '2013-05-09', '1'),
+(77, 2000, '2013-05-10', '2'),
+(78, 100, '2013-05-11', '1'),
+(79, 2000, '2013-05-12', '2'),
+(80, 100, '2013-05-13', '1'),
+(81, 2000, '2013-05-14', '2'),
+(82, 100, '2013-05-15', '1'),
+(83, 2000, '2013-05-16', '2'),
+(84, 100, '2013-05-17', '1'),
+(85, 2000, '2013-05-18', '2'),
+(86, 100, '2013-05-19', '1'),
+(87, 2000, '2013-05-20', '2'),
+(88, 340, '2013-05-21', '1'),
+(89, 2000, '2013-05-22', '2'),
+(90, 100, '2013-05-23', '1'),
+(91, 2000, '2013-05-24', '2'),
+(92, 5600, '2013-05-25', '1'),
+(93, 3400, '2012-07-01', '2'),
+(94, 100, '2012-07-02', '1'),
+(95, 7800, '2012-07-03', '2'),
+(96, 100, '2012-07-04', '1'),
+(97, 2000, '2012-07-05', '2'),
+(98, 100, '2012-07-06', '1'),
+(99, 2000, '2012-07-07', '2'),
+(100, 100, '2012-07-08', '1'),
+(101, 2600, '2012-07-09', '2'),
+(102, 120, '2012-07-10', '1'),
+(103, 2000, '2012-07-11', '2'),
+(104, 1220, '2012-07-12', '1'),
+(105, 3400, '2012-07-13', '2'),
+(106, 700, '2012-07-14', '1'),
+(107, 700, '2012-07-15', '1'),
+(108, 400, '2012-07-16', '2'),
+(109, 900, '2012-07-17', '1'),
+(110, 2000, '2012-07-18', '2'),
+(111, 3400, '2012-07-19', '1'),
+(112, 56000, '2012-07-20', '2'),
+(113, 700, '2012-07-21', '1'),
+(114, 9000, '2012-07-22', '2'),
+(115, 5400, '2012-07-23', '1'),
+(116, 12000, '2012-07-24', '2'),
+(117, 2300, '2012-07-25', '1'),
+(118, 5000, '2012-07-26', '2'),
+(119, 6600, '2012-07-27', '1'),
+(120, 7800, '2012-07-28', '2');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -455,15 +611,14 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `job_discount_name` varchar(50) NOT NULL,
   `job_discount_type` int(5) NOT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `jobs`
 --
 
 INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_date_start`, `job_start_time`, `job_end_time`, `job_due_date`, `job_complete_date`, `user_id`, `job_tax`, `job_currency`, `job_type_id`, `job_status`, `job_description`, `job_note`, `job_hour`, `job_amount`, `job_quote_date`, `job_renewal_date`, `job_task_type`, `job_discount_amount`, `job_discount_name`, `job_discount_type`, `last_update`) VALUES
-(14, 1, 1, 'web services1', '2014-11-07', '12:45:00', '11:23:00', '2014-11-12', '2014-11-13', 1, 5, 0, 2, '1', 'do a lot of CRM tasks', 'we need to regroup this one', 5, 0, '2014-11-06', '2014-11-15', 1, 5, 'this is discount name', 1, '2014-11-10 16:00:00'),
-(15, 0, 0, 'rr', '0000-00-00', '00:00:00', '00:00:00', '0000-00-00', '0000-00-00', 0, 0, 0, 2, '', '', '', 0, 0, '0000-00-00', '0000-00-00', 0, 0, '', 0, '2014-11-10 16:00:00');
+(14, 1, 1, 'web services1', '2014-11-07', '12:45:00', '11:23:00', '2014-11-12', '2014-11-13', 1, 5, 0, 2, '1', 'do a lot of CRM tasks', 'we need to regroup this one', 5, 0, '2014-11-06', '2014-11-15', 1, 5, 'this is discount name', 1, '2014-11-16 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -480,15 +635,15 @@ CREATE TABLE IF NOT EXISTS `jobs_task` (
   `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
   `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
   `job_task_description` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=219 ;
 
 --
 -- Dumping data for table `jobs_task`
 --
 
 INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `job_task_hour`, `job_task_amount`, `job_task_due_date`, `user_id`, `job_task_percentage`, `job_task_description`) VALUES
-(1, 14, 3, 3, '2014-11-12', 2, 4, 'asdasdasdasdasdasdasd'),
-(2, 15, 6, 4, '2014-11-13', 1, 5, 'sdfsdf');
+(214, 14, 2, 40, '0000-00-00', 1, 1, 'bbbb11111'),
+(218, 14, 3, 15, '0000-00-00', 1, 1, 'mmm');
 
 -- --------------------------------------------------------
 
@@ -559,6 +714,28 @@ CREATE TABLE IF NOT EXISTS `member` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `products`
+--
+
+CREATE TABLE IF NOT EXISTS `products` (
+`product_id` int(5) NOT NULL,
+  `product_sku` varchar(20) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_desc` text NOT NULL,
+  `catproduct_id` int(5) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_sku`, `product_name`, `product_desc`, `catproduct_id`) VALUES
+(1, 'GLS3310', 'Gerrad Lamp', 'Lamp...', 1),
+(2, '234234234', 'shaklee', 'all the medicine related', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `system_users`
 --
 
@@ -582,7 +759,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-12 03:14:10', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-18 02:11:33', '::1', NULL, NULL, NULL, 1, 1),
 (10, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 1, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 0, 1);
 
 -- --------------------------------------------------------
@@ -738,6 +915,12 @@ ALTER TABLE `calendar`
  ADD PRIMARY KEY (`date`);
 
 --
+-- Indexes for table `catproduct`
+--
+ALTER TABLE `catproduct`
+ ADD PRIMARY KEY (`catproduct_id`);
+
+--
 -- Indexes for table `config_data`
 --
 ALTER TABLE `config_data`
@@ -768,6 +951,12 @@ ALTER TABLE `files`
  ADD PRIMARY KEY (`file_id`);
 
 --
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+ ADD PRIMARY KEY (`invoice_id`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -796,6 +985,12 @@ ALTER TABLE `leads`
 --
 ALTER TABLE `member`
  ADD PRIMARY KEY (`member_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+ ADD PRIMARY KEY (`product_id`);
 
 --
 -- Indexes for table `system_users`
@@ -849,6 +1044,11 @@ ALTER TABLE `websites`
 ALTER TABLE `address`
 MODIFY `address_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1003;
 --
+-- AUTO_INCREMENT for table `catproduct`
+--
+ALTER TABLE `catproduct`
+MODIFY `catproduct_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
@@ -869,15 +1069,20 @@ MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 ALTER TABLE `files`
 MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=175;
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `jobs_task`
 --
 ALTER TABLE `jobs_task`
-MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=219;
 --
 -- AUTO_INCREMENT for table `job_types`
 --
@@ -893,6 +1098,11 @@ MODIFY `lead_id` smallint(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 ALTER TABLE `member`
 MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `system_users`
 --
