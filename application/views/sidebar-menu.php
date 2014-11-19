@@ -54,21 +54,6 @@
                                 <i class="fa fa-files-o"></i> <span>Files</span>
                             </a>
                         </li>
-                        <li class="<?php if($this->uri->segment(1)=="newsletters"){echo "active";}?>">
-                            <a href="<?php echo base_url(); ?>newsletters">
-                                <i class="fa fa-folder"></i> <span>Newsletters</span>
-                            </a>
-                        </li>
-                        <li class="<?php if($this->uri->segment(1)=="tickets"){echo "active";}?>">
-                            <a href="<?php echo base_url(); ?>tickets">
-                                <i class="fa fa-ticket"></i> <span>Tickets</span>
-                            </a>
-                        </li>
-                        <li class="<?php if($this->uri->segment(1)=="social"){echo "active";}?>">
-                            <a href="<?php echo base_url(); ?>social">
-                                <i class="fa fa-envelope"></i> <span>Social</span>
-                            </a>
-                        </li>
                         <li class="<?php if($this->uri->segment(1)=="finance"){echo "active";}?>">
                             <a href="<?php echo base_url(); ?>finance">
                                 <i class="fa fa-money"></i> <span>Finance</span>
