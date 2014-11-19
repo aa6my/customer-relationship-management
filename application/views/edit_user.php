@@ -39,10 +39,10 @@
                 <section class="content">
                             <div class="box box-primary">
                                 <div class="box-header">
-                                    <h3 class="box-title">Add User</h3>
+                                    <h3 class="box-title">Edit User</h3>
                                 </div><!-- /.box-header -->
                                 <?php $this->load->view('setting-top-menu'); ?>
-                                <form name ="userinput" action="<?php echo base_url(); ?>settings/create_user_now" method="post">
+                                <form name ="userinput" action="<?php echo base_url(); ?>settings/update_user_now/<?php echo $this->uri->segment(4); ?>" method="post">
                                 <div class="box-body">
                                     <div class="form-group">
                                     <label>User role</label>
@@ -55,19 +55,19 @@
                                     </div>
                                     <div class="form-group">
                                     <label>Firstname</label>
-                                    <input type="text" name="firstname" class="form-control" placeholder="Enter ...">
+                                    <input type="text" name="firstname" value="<?php echo $details[0]['first_name']; ?>" class="form-control" placeholder="Enter ..." REQUIRED>
                                     </div>
                                     <div class="form-group">
                                     <label>Lastname</label>
-                                    <input type="text" name="lastname" class="form-control" placeholder="Enter ...">
+                                    <input type="text" name="lastname" value="<?php echo $details[0]['last_name']; ?>" class="form-control" placeholder="Enter ..." REQUIRED>
                                     </div>
                                     <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" name="email" class="form-control" placeholder="Enter ...">
+                                    <input type="email" name="email" value="<?php echo $details[0]['email']; ?>" class="form-control" placeholder="Enter ..." REQUIRED>
                                     </div>
                                     <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="text" name="password" class="form-control" placeholder="Enter ...">
+                                    <label>Password</label> - please insert new password !
+                                    <input type="text" name="password" class="form-control" placeholder="Enter ..." REQUIRED>
                                     </div> 
                                     <div>
                                         <input type="submit" value="Submit" />
