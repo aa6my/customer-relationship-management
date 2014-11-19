@@ -26,8 +26,8 @@ class Jobs extends CI_Controller {
             'index'=>'view',
             'update'=>'edit',
             'ajax_job_task' => 'view',
-            'ajax_job_task_edit' => 'view'
-            //'ajax_job_task' => 'edit'
+            'ajax_job_task_edit' => 'view',
+            'ajax_product' => 'view'
         );
     }
 
@@ -415,6 +415,43 @@ class Jobs extends CI_Controller {
        
        
         
+    }
+
+
+    public function ajax_product(){
+
+        $data['jenis'] = $this->input->post('jenis'); // will display to view part
+        $jenis = $this->input->post('jenis'); //for condition only
+
+        if($jenis=="display")
+        {
+            $table            = "catproduct";
+            $data['category'] = $this->Midae_model->get_all_rows($table,false, false, false);
+            $this->load->view('ajax_product', $data, FALSE);
+        }
+        else if($jenis=="get_product")
+        {
+            $table            = "products";
+            $catproduct_id   = $this->input->post('catproduct_id');
+            $where = array('catproduct_id'=>$catproduct_id);
+            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false);
+            $this->load->view('ajax_product', $data, FALSE);
+
+        }
+        else if($jenis=="assign_product")
+        {
+            $table = "products";
+            $product_id   = $this->input->post('product_id');
+            $where = array('product_id'=>$product_id);
+            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false);
+            return json_encode($data);
+            //$this->load->view('ajax_product', $data, FALSE);
+
+
+        }
+
+        
+
     }
 
 }

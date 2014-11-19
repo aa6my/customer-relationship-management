@@ -1,3 +1,5 @@
+    <!DOCTYPE>
+    <html>
     <head>
         <meta charset="UTF-8">
         <title>[CRM] Customer Relationship Management | <?php echo $this->config->item('sitename'); ?></title>
@@ -11,11 +13,13 @@
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="<?php echo base_url(); ?>assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
-        <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css">
+        <!--<link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css">-->
+        <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/colorbox/colorbox.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        
-        <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js"></script>
-        <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.easing-1.3.pack.js"></script>
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+        <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.colorbox-min.js"></script>
+        <!--<script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js"></script>
+        <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.easing-1.3.pack.js"></script>-->
         <script src="<?php echo base_url() ?>assets/js/job/hour_calculate.js"></script>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -26,4 +30,5 @@
         <![endif]-->
         
     </head>
+
 

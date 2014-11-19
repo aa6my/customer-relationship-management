@@ -635,8 +635,10 @@
                                                  -->
                                             </td>
                                             <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" id="job_task_description">
-                                                
+                                          
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" id="job_task_description"> <span class="fa fa-plus add_product" style="position:absolute;top:95px;left:10px;cursor:pointer"></span>
+                                                    <input type="text" value="" name="pro_id" id="pro_id" class="form-control input-sm">
+                                                   
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control input-sm" placeholder="" name="job_task_hour" id="job_task_hour" style="width:40px;">
@@ -687,8 +689,9 @@
                                         </div><!-- /.box-body -->
                                     </div><!-- /.box -->
                                 </div>
-
-                               
+                                
+                               <!-- <a class="fancybox" rel="group" href="big_image_1.jpg"><img src="small_image_1.jpg" alt="" /></a>
+                                <a class="fancybox" rel="group" href="big_image_2.jpg"><img src="small_image_2.jpg" alt="" /></a> -->
 
 
                                     <!-- <div class="table-responsive">
@@ -713,19 +716,21 @@
                                     </div> -->
                                     
 
-                                    <script>
-                                    $(function()
+                                    <script type="text/javascript">
+                                   
+                                    jQuery(function()
                                     {
                                         /*----------------------------------------------------------------------
-                                        / Fancy BOX
+                                        / ColorBOX
                                         /-----------------------------------------------------------------------*/
+                                       
+                                         $(".add_product").colorbox({ 
+                                                                        href : "<?php echo base_url();?>jobs/ajax_product",
+                                                                        data :{ jenis: 'display'}
 
-                                        /* This is basic - uses default settings */
-    
-                                                //$("#inline").fancybox();
-                                                
-                                                /* Using custom settings */
-                                                
+                                                                        
+                                                                    });
+
                                                
 
                                            
@@ -742,6 +747,7 @@
                                              * default configuration
                                              * Don't modified this if not sure
                                              */
+                                            colorBoxUrl     : '<?php echo base_url();?>jobs/ajax_product',
                                             table_selector  : $('#task'),
                                             loading_part    : $(loading),
                                             idJob           : <?php echo $job_id;?>,
@@ -1073,7 +1079,7 @@
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
