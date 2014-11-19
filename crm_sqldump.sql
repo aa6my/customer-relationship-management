@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2014 at 11:18 AM
+-- Generation Time: Nov 19, 2014 at 11:31 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -788,8 +788,8 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-19 02:36:00', '::1', NULL, NULL, NULL, 1, 1),
-(10, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 2, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 0, 1);
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-19 11:20:22', '::1', NULL, NULL, NULL, 1, 1),
+(2, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 2, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
 

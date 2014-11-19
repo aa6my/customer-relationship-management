@@ -45,6 +45,7 @@
                                 <form name ="userinput" action="<?php echo base_url(); ?>settings/update_user_now/<?php echo $this->uri->segment(4); ?>" method="post">
                                 <div class="box-body">
                                     <div class="form-group">
+                                   
                                     <label>User role</label>
                                     <select class="form-control" name="userrole">
                                     <?php 
