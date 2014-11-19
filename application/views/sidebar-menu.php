@@ -59,9 +59,17 @@
                                 <i class="fa fa-money"></i> <span>Finance</span>
                             </a>
                         </li>
+                        <?php
+                        if($this->ezrbac->getCurrentUser()->user_role_id !=  $this->ezrbac->getCurrentUserID()){
+                            
+                        }else{
+                        ?>
                         <li class="<?php if($this->uri->segment(1)=="settings"){echo "active";}?>">
                             <a href="<?php echo base_url(); ?>settings">
                                 <i class="fa fa-cogs"></i> <span>Settings</span>
                             </a>
                         </li>
+                        <?php
+                        }
+                        ?>
                     </ul>
