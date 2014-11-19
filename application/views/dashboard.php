@@ -38,9 +38,9 @@
                 <section class = "content">
                     <div class = "row">
                     <div class = "col-lg-3 col-xs-6">
-                    <div class = "small-box bg-aqua">
+                    <div class = "small-box bg-maroon">
                     <div class = "inner">
-                    <h3>""</h3>
+                    <h3><?php echo $product; ?></h3>
                     <p>Product</p>
                     </div>
                 <div class = "icon">
@@ -55,13 +55,14 @@
                 </div>
                 <!--/.column-->
                 <div class = "col-lg-3 col-xs-6">
-                <div class = "small-box bg-green">
+                <div class = "small-box bg-yellow">
                 <div class = "inner">
-                <h3>""</h3>
+                <h3><?php echo $customer; ?>
+                </h3>
                 <p>Customer</p>
                 </div>
                 <div class = "icon">
-                <i class = "ion ion-stats-bars"></i>
+                <i class = "ion ion-person"></i>
                 </div>
                 <a href = "#" class = "small-box-footer">
                 More Info
@@ -71,13 +72,13 @@
                 </div>
                 <!--/.column-->
                 <div class = "col-lg-3 col xs-6">
-                <div class = "small-box bg-yellow">
+                <div class = "small-box bg-purple">
                 <div class = "inner">
-                <h3>""</h3>
+                <h3><?php echo $vendor; ?></h3>
                 <p>Vendor</p>
                 </div>
                 <div class = "icon">
-                <i class = "ion ion-person-add">
+                <i class = "ion ion-stats-bars">
                 </i>
                 </div>
                 <a href = "#" class = "small-box-footer">
@@ -88,10 +89,10 @@
                 </div>
                 <!--/.column-->
                 <div class = "col-lg-3 col xs-6">
-                <div class = "small-box bg-red">
+                <div class = "small-box bg-aqua">
                 <div class = "inner">
-                <h3>""</h3>
-                <p>Loads</p>
+                <h3><?php echo $lead; ?></h3>
+                <p>Leads</p>
                 </div>
                 <div class = "icon">
                 <i class="ion ion-pie-graph">
@@ -104,7 +105,7 @@
                 </div>
                 </div>
 
-                <div class ="row">
+                <!--<div class ="row">-->
                 <section class ="col-lg-7 connectedSortable ui-sortable">
                     <div class = "nav-tabs-custom" style="cursor: move;">
                     <ul class = "nav nav-tabs pull-right ui-sortable-handle">
@@ -124,30 +125,36 @@
                     <h3 class="box-title">Bar Chart</h3>
                     </div>
                     <div class="box-body">
-                    <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;"><canvas class="flot-base" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 632px; height: 300px;"></canvas><div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);"><div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;"><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 29px; text-align: center;">January</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 134px; text-align: center;">February</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 248px; text-align: center;">March</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 358px; text-align: center;">April</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 466px; text-align: center;">May</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 571px; text-align: center;">June</div></div><div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;"><div class="flot-tick-label tickLabel" style="position: absolute; top: 269px; left: 7px; text-align: right;">0</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 202px; left: 7px; text-align: right;">5</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 135px; left: 1px; text-align: right;">10</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 68px; left: 1px; text-align: right;">15</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 1px; left: 1px; text-align: right;">20</div></div></div><canvas class="flot-overlay" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 632px; height: 300px;"></canvas></div>
-                        <canvas class = "flot-text" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 632px; height: 300px;">
-                        <div class = "flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
-                            <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-                            <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 29px; text-align: center;">January</div>
-                            <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 134px; text-align: center;">February</div>
-                            <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 248px; text-align: center;">March</div>
-                            <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 358px; text-align: center;">April</div>
-                            <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 466px; text-align: center;">May</div>
-                            <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 571px; text-align: center;">June</div>
-                            </div>
-                            <div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-                                <div class="flot-tick-label tickLabel" style="position: absolute; top: 269px; left: 7px; text-align: right;">0</div>
-                                <div class="flot-tick-label tickLabel" style="position: absolute; top: 202px; left: 7px; text-align: right;">5</div>
-                                <div class="flot-tick-label tickLabel" style="position: absolute; top: 135px; left: 1px; text-align: right;">10</div>
-                                <div class="flot-tick-label tickLabel" style="position: absolute; top: 68px; left: 1px; text-align: right;">15</div>
-                                <div class="flot-tick-label tickLabel" style="position: absolute; top: 1px; left: 1px; text-align: right;">20</div>
-                                </div>
-                                </div>
-                            <canvas class="flot-overlay" width="632"  height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 632px; height: 300px;">
+                    <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;">
+                    <canvas class="flot-base" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;"></canvas>
+                    <div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
+                    <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
+                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 29px; text-align: center;">January</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 134px; text-align: center;">February</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 248px; text-align: center;">March</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 358px; text-align: center;">April</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 466px; text-align: center;">May</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 571px; text-align: center;">June</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 682px; text-align: center;">July</div>
+                    </div>
+                    <div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
+                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 269px; left: 7px; text-align: right;">0</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 202px; left: 7px; text-align: right;">5</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 135px; left: 1px; text-align: right;">10</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 68px; left: 1px; text-align: right;">15</div>
+                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 1px; left: 1px; text-align: right;">20</div>
+                    </div>
+                    <canvas class="flot-overlay" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;">
+                    </div>
+        
                             </div>
                             </div>
                     </div><!-- /.box-body-->
                     </div>
+                
+
+
+
 
                 </section>
                 </section><!-- /.content -->

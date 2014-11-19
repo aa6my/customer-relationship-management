@@ -38,7 +38,16 @@ class Dashboard extends CI_Controller {
         $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
         $data['top_desc'] = "Change your page purpose here"; //function purpose here.
         //End of component
+        $table = "products";
+        $data['product'] = $this->Midae_model->get_count_product($table);
+        $table = "customers";
+        $data['customer'] = $this->Midae_model->get_count_product($table);
+        $table = "vendors";
+        $data['vendor'] = $this->Midae_model->get_count_product($table);
+        $table = 'leads';
+        $data['lead'] = $this->Midae_model->get_count_product($table);
 		$this->load->view('dashboard', $data);
+        //print_r();
 	}
 
     public function access_map(){

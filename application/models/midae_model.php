@@ -54,6 +54,8 @@ class Midae_model extends CI_Model {
             return $data;
     }
 
+
+
     function get_customer()
     {
         $data = array();
@@ -98,6 +100,14 @@ class Midae_model extends CI_Model {
         $this->load->view('popup', $data);
     }
 
+
+    function get_count_product($table)
+    {
+        //$data = array();
+       return  $this->db->count_all_results($table);
+
+        //return $data;
+    }
 
 
 
