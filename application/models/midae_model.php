@@ -358,6 +358,69 @@ class Midae_model extends CI_Model {
     }
 
 
+
+
+    /*---------------------------------------------------------------
+    / Invoices Only
+    /------------------------------------------------------------ */
+
+    function get_invoices($status = 'all')
+    {
+        $this->db->select('*');
+        $this->db->from('ci_invoices');
+        $this->db->join('ci_clients', 'ci_clients.client_id = ci_invoices.client_id');
+        if($status != 'all')
+        {
+        $this->db->where('ci_invoices.invoice_status', $status);
+        }
+        $this->db->order_by('invoice_id', 'DESC');
+        $invoices = $this->db->get()->result_array();
+        $invoice_amount = 0;
+        foreach($invoices as $invoice_count=>$invoice)
+        {
+            $invoice_totals = $this->get_invoice_total_amount($invoice['invoice_id']);
+            $invoices[$invoice_count]['invoice_amount'] = $invoice_totals['item_total'] + $invoice_totals['tax_total'] - $invoice['invoice_discount'];
+            $invoices[$invoice_count]['total_paid'] = $invoice_totals['amount_paid'];
+        }
+        return $invoices;
+    }
+    
+    function get_invoice_total_amount($invoice_id = 0)
+    {
+        $invoice_totals = array();
+        $this->db->select('*');
+        $this->db->from('ci_invoice_items');
+        $this->db->where('ci_invoice_items.invoice_id', $invoice_id);
+        $invoice_items = $this->db->get();
+        $item_total = 0;
+        $tax_total = 0;
+        $items_total_discount = 0;
+        foreach($invoice_items->result_array() as $item_count=>$item)
+        {
+            $item_amount = ($item['item_quantity'] * $item['item_price']) - $item['item_discount'];
+            if($item['item_taxrate_id'] != 0)
+            {
+                $tax_rate = $this->common_model->get_tax($item['item_taxrate_id']);
+                $tax_total += $item_amount * $tax_rate;
+            }
+            $item_total = $item_total + $item_amount;
+            $items_total_discount += $item['item_discount'];
+        }
+
+        $invoice = $this->db->select('invoice_discount')->where('invoice_id', $invoice_id)->get('ci_invoices')->row();
+
+        $amount_paid = $this->get_invoice_paid_amount($invoice_id);
+        $invoice_totals['item_total']           = $item_total;
+        $invoice_totals['tax_total']            = $tax_total;
+        $invoice_totals['sub_total']            = $item_total + $tax_total;
+        $invoice_totals['items_total_discount'] = $items_total_discount;
+        $invoice_totals['amount_paid']          = $amount_paid;
+        $invoice_totals['amount_due']           = $item_total + $tax_total - $amount_paid - $invoice->invoice_discount;
+
+        return $invoice_totals;
+    }
+
+
 }
 
 /* End of file midae_model.php */
