@@ -24,27 +24,13 @@
                                 <li class="user-header bg-light-blue">
                                     <img src="<?php echo base_url(); ?>assets/img/avatar3.png" class="img-circle" alt="User Image" />
                                     <p>
-                                        <?php echo $user_meta['first_name'] .' '. $user_meta['last_name']; ?> - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        <?php echo $user_meta['first_name'] .' '. $user_meta['last_name']; ?>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
-                                <li class="user-body">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Sales</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Friends</a>
-                                    </div>
-                                </li>
+
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
                                     <div class="pull-right">
                                         <a href="<?php echo base_url(); ?>secure/logout" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
