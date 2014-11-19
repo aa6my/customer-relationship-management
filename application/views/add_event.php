@@ -87,7 +87,7 @@
                 </div>
             </div>
 
-             <input style="margin-top: 10px" type="submit" class="pull-right btn btn-success" value="Gurdar evento">
+             <input style="margin-top: 10px" type="submit" class="pull-right btn btn-success" value="Add Event">
             </div>
         </div>
     <?php echo form_close() ?>
