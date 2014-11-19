@@ -5,7 +5,7 @@
                                     <a href="<?php echo base_url(); ?>settings/users" class="btn btn-app">
                                         <i class="fa fa-edit"></i> Users
                                     </a>
-                                    <a href="<?php echo base_url(); ?>settings/loginhistory" class="btn btn-app">
-                                        <i class="fa fa-edit"></i> Login History
+                                    <a href="<?php echo base_url(); ?>settings/email" class="btn btn-app">
+                                        <i class="fa fa-edit"></i> Email
                                     </a>
                                 </div>
