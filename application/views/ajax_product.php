@@ -97,7 +97,10 @@ else if($jenis=="get_product")
                                             });
                                          });
 
-
+                                    /*-------------------------------------------------------------
+                                    /   Insert into description
+                                    /--------------------------------------------------------------*/
+    
                                         $('.product_id').on('change', function(){
 
                                             var product_id = $('.product_id'),
@@ -105,29 +108,31 @@ else if($jenis=="get_product")
                                                 pro_id = $('#pro_id'),
                                                 job_task_description = $('#job_task_description');
 
+                                                pro_id.val(product_id.val());
 
-                                            if(product_id!="")
-                                            {
+                                           
 
-                                                $('.product_id')
+                                              
                                                     $.ajax({
 
                                                     type : 'POST',
                                                     url  : "<?php echo base_url();?>jobs/ajax_product",
+                                                    dataType : 'json',
                                                     data :{ 
                                                             jenis : "assign_product",
                                                             catproduct_id : catproduct_id,
-                                                            product_id : pro_id
+                                                            product_id : product_id.val()
                                                           },
+                                                    dataType : 'json',
                                                     success : function(a){
-                                                        pro_id.val(product_id.val());
-                                                        job_task_description.val()
+                                                        
+                                                        job_task_description.val("[" + a.product[0].catproduct_name + "] " + a.product[0].product_name);
+                                                       //console.log(a);
                                                     }
                                                 });
 
                                                
-                                            }
-
+                                           
 
                                         });
  });

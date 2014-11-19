@@ -637,7 +637,7 @@
                                             <td>
                                           
                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" id="job_task_description"> <span class="fa fa-plus add_product" style="position:absolute;top:95px;left:10px;cursor:pointer"></span>
-                                                    <input type="text" value="" name="pro_id" id="pro_id" class="form-control input-sm">
+                                                    <input type="hidden" value="" name="pro_id" id="pro_id" class="form-control input-sm">
                                                    
                                             </td>
                                             <td>

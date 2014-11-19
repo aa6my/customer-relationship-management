@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2014 at 07:06 AM
+-- Generation Time: Nov 19, 2014 at 11:18 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -72,14 +72,16 @@ INSERT INTO `calendar` (`date`, `data`) VALUES
 CREATE TABLE IF NOT EXISTS `catproduct` (
 `catproduct_id` int(5) NOT NULL,
   `catproduct_name` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `catproduct`
 --
 
 INSERT INTO `catproduct` (`catproduct_id`, `catproduct_name`) VALUES
-(1, 'Electronic');
+(1, 'Electronic'),
+(2, 'COSMETIC'),
+(3, 'SERVICES');
 
 -- --------------------------------------------------------
 
@@ -413,13 +415,13 @@ INSERT INTO `customers` (`customer_id`, `customer_name`, `customer_firstname`, `
 --
 
 CREATE TABLE IF NOT EXISTS `events` (
-  `id` int(10) unsigned NOT NULL,
+`id` int(10) unsigned NOT NULL,
   `title` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
   `body` text COLLATE utf8_spanish_ci NOT NULL,
   `class` varchar(45) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'info',
   `start` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `end` varchar(15) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -448,17 +450,43 @@ INSERT INTO `files` (`file_id`, `file_name`, `file_content`, `last_update`) VALU
 --
 
 CREATE TABLE IF NOT EXISTS `invoices` (
-`invoice_id` int(5) NOT NULL,
-  `invoice_total` mediumint(9) NOT NULL,
-  `invoice_date` date NOT NULL,
-  `invoice_status` varchar(20) NOT NULL COMMENT '1-paid, 2-unpaid'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=175 ;
+`invoice_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `job_id` int(5) NOT NULL,
+  `invoice_status` enum('PAID','UNPAID','CANCELLED') NOT NULL DEFAULT 'UNPAID',
+  `invoice_number` varchar(50) NOT NULL,
+  `invoice_discount` double NOT NULL,
+  `invoice_terms` longtext NOT NULL,
+  `invoice_due_date` datetime NOT NULL,
+  `invoice_date_created` date NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`invoice_id`, `invoice_total`, `invoice_date`, `invoice_status`) VALUES
+INSERT INTO `invoices` (`invoice_id`, `user_id`, `client_id`, `job_id`, `invoice_status`, `invoice_number`, `invoice_discount`, `invoice_terms`, `invoice_due_date`, `invoice_date_created`) VALUES
+(1, 1, 1, 0, 'CANCELLED', '1', 0, '', '2014-11-17 00:00:00', '2014-11-17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoices_test`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices_test` (
+`invoice_id` int(5) NOT NULL,
+  `invoice_total` mediumint(9) NOT NULL,
+  `invoice_date` date NOT NULL,
+  `invoice_status` varchar(20) NOT NULL COMMENT '1-paid, 2-unpaid'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=121 ;
+
+--
+-- Dumping data for table `invoices_test`
+--
+
+INSERT INTO `invoices_test` (`invoice_id`, `invoice_total`, `invoice_date`, `invoice_status`) VALUES
 (1, 100, '2014-11-18', '1'),
 (2, 2000, '2014-11-13', '2'),
 (3, 100, '2014-11-15', '1'),
@@ -635,15 +663,14 @@ CREATE TABLE IF NOT EXISTS `jobs_task` (
   `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
   `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
   `job_task_description` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=219 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=222 ;
 
 --
 -- Dumping data for table `jobs_task`
 --
 
 INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `job_task_hour`, `job_task_amount`, `job_task_due_date`, `user_id`, `job_task_percentage`, `job_task_description`) VALUES
-(214, 14, 2, 40, '0000-00-00', 1, 1, 'bbbb11111'),
-(218, 14, 3, 15, '0000-00-00', 1, 1, 'mmm');
+(218, 14, 3, 15, '0000-00-00', 1, 1, 'mmm111');
 
 -- --------------------------------------------------------
 
@@ -723,7 +750,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_name` varchar(255) NOT NULL,
   `product_desc` text NOT NULL,
   `catproduct_id` int(5) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `products`
@@ -731,7 +758,9 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`product_id`, `product_sku`, `product_name`, `product_desc`, `catproduct_id`) VALUES
 (1, 'GLS3310', 'Gerrad Lamp', 'Lamp...', 1),
-(2, '234234234', 'shaklee', 'all the medicine related', 1);
+(2, '234234234', 'shaklee', 'all the medicine related', 1),
+(3, '555555', 'JAMU', 'Give strength for your body', 2),
+(4, '999999', 'MOVE STUFF', 'Move your stuff into another place', 3);
 
 -- --------------------------------------------------------
 
@@ -759,8 +788,8 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-18 02:11:33', '::1', NULL, NULL, NULL, 1, 1),
-(10, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 1, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 0, 1);
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-19 02:36:00', '::1', NULL, NULL, NULL, 1, 1),
+(10, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 2, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -826,14 +855,15 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 `id` int(5) unsigned NOT NULL,
   `role_name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `default_access` varchar(10) COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `role_name`, `default_access`) VALUES
-(1, 'Admin', '11111');
+(1, 'Admin', '11111'),
+(2, 'Staff', '11111');
 
 -- --------------------------------------------------------
 
@@ -945,6 +975,12 @@ ALTER TABLE `customers`
  ADD PRIMARY KEY (`customer_id`);
 
 --
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `files`
 --
 ALTER TABLE `files`
@@ -954,6 +990,12 @@ ALTER TABLE `files`
 -- Indexes for table `invoices`
 --
 ALTER TABLE `invoices`
+ ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `invoices_test`
+--
+ALTER TABLE `invoices_test`
  ADD PRIMARY KEY (`invoice_id`);
 
 --
@@ -1047,7 +1089,7 @@ MODIFY `address_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT
 -- AUTO_INCREMENT for table `catproduct`
 --
 ALTER TABLE `catproduct`
-MODIFY `catproduct_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `catproduct_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `contacts`
 --
@@ -1064,6 +1106,11 @@ MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=240;
 ALTER TABLE `customers`
 MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
@@ -1072,7 +1119,12 @@ MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=175;
+MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `invoices_test`
+--
+ALTER TABLE `invoices_test`
+MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=121;
 --
 -- AUTO_INCREMENT for table `jobs`
 --
@@ -1082,7 +1134,7 @@ MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT for table `jobs_task`
 --
 ALTER TABLE `jobs_task`
-MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=219;
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=222;
 --
 -- AUTO_INCREMENT for table `job_types`
 --
@@ -1102,7 +1154,7 @@ MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `system_users`
 --
@@ -1112,7 +1164,7 @@ MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `vendors`
 --

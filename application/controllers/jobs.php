@@ -440,11 +440,15 @@ class Jobs extends CI_Controller {
         }
         else if($jenis=="assign_product")
         {
+            header('Content-Type: application/json');
             $table = "products";
             $product_id   = $this->input->post('product_id');
+            $catproduct_id   = $this->input->post('catproduct_id');
             $where = array('product_id'=>$product_id);
-            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false);
-            return json_encode($data);
+            $tableNameToJoin = "catproduct";
+            $tableRelation = "products.catproduct_id = catproduct.catproduct_id";
+            $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation);
+            echo json_encode($return);
             //$this->load->view('ajax_product', $data, FALSE);
 
 
