@@ -166,7 +166,7 @@
                                                
                                                                <div class="col-xs-12">
                                                               <strong>Quote Terms</strong><br/>
-                                                                    <textarea class="form-control" rows="3" placeholder="" name="job_description"></textarea>
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_customer_notes"></textarea>
                                                                 </div>
                                                             
                                               </td>   
@@ -217,34 +217,56 @@
                                                 <th>Discount</th>
                                                 <th>Subtotal</th> 
                                             </tr>
-                                             <tr id="quote_template"><!-- form template -->
+                                             <tr class="toclone"><!-- form template -->
                                                 <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" id="quote_#index#_phone" name="person[phones][#index#][phone]">
+                                                    <input type="text" class="form-control input-sm" placeholder="" id="item_name" name="item_name[]">
                                                     <br/>
-                                                    <button class="btn btn-success btn-sm">Add Item From Products</button>
+                                                    <a class='buttonProduct' href="#inline_content"><!-- <button class="btn btn-success btn-sm buttonProduct">Add Item From Products</button> -->Fetch data from product</a>
                                                     
                                                     </td>
                                                <td>
-                                                    <textarea class="form-control" rows="3" placeholder="" id="quote_#index#_description" name="person[descriptions][#index#][description]"></textarea>
+                                                    <textarea class="form-control" rows="3" placeholder="" id="item_description" name="item_description[]"></textarea>
                                                 </td>
                                                   <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="quote_#index#_description" name="person[descriptions][#index#][quantity]" >
+                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" >
+                                                   
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="quote_#index#_description" name="person[descriptions][#index#][price]">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price[]"  >
                                                 </td>
                                                 
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="quote_#index#_description" name="person[descriptions][#index#][discount]" >
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_discount[]" id="item_discount" >
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="quote_#index#_description" name="person[descriptions][#index#][subtotal]">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_subtotal[]" id="item_subtotal" >
+                                                    <br/>
+                                                    <a href="#" class="clone">
+                                                        <button type="button" class="btn btn-default" >
+                                                        <i class="fa fa-copy"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete">
+                                                    <button type="button" class="btn btn-default" >
+                                                        <i class="fa fa-trash-o"></i>
+                                                        </button>
+                                                    </a>
                                                 </td> 
                                             </tr> <!-- end form template -->
                                                                              
                                         </tbody>
                                     </table>
-                                    
+                                    <div style='display:none'>
+                                        <div id='inline_content' style='padding:10px; background:#fff;'>
+                                        <p><strong>This content comes from a hidden element on this page.</strong></p>
+                                        <p>The inline option preserves bound JavaScript events and changes, and it puts the content back where it came from when it is closed.</p>
+                                        <p><a id="click" href="#" style='padding:5px; background:#ccc;'>Click me, it will be preserved!</a></p>
+                                        
+                                        <p><strong>If you try to open a new Colorbox while it is already open, it will update itself with the new content.</strong></p>
+                                        <p>Updating Content Example:<br />
+                                        <a class="ajax" href="../content/ajax.html">Click here to load new content</a></p>
+                                        </div>
+                                    </div>
 
                                 </div><!-- /.box-body -->
                                 
@@ -254,7 +276,29 @@
                        
                     </div>
 
+<script>
+$(function(){
 
+    $('#quote').cloneya({
+            limit           : 999,
+            cloneThis       : '.toclone',
+            valueClone      : false,
+            dataClone       : false,
+            deepClone       : false,
+            cloneButton     : '.clone',
+            deleteButton    : '.delete',
+            clonePosition   : 'after',
+            serializeID     : true
+    });
+
+     
+
+     $(".buttonProduct").colorbox({inline:true, width:"50%"});
+
+});
+
+
+</script>
 
 
 
