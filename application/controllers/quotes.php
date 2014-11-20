@@ -13,7 +13,7 @@
  * PHP version 5
  *
  * @category   controllers
- * @package    quotes.php
+ * @package    invoices.php
  * @author     Nizam <nizam@segimidae.net>
  * @author     Norlihazmey <norlihazmey@segimidae.net>
  * @license    https://ellislab.com/codeigniter/user-guide/license.html
@@ -22,21 +22,6 @@
 */
 
 class Quotes extends CI_Controller {
-    
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->database();
-        $this->load->helper('url');
-
-        $this->load->library('grocery_CRUD');
-    }
-
-	public function index()
-	{
-
-
-	}
 
     public function access_map(){
         return array(
@@ -45,7 +30,50 @@ class Quotes extends CI_Controller {
         );
     }
 
-}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+        $this->load->helper('url');
+        $this->load->library('grocery_CRUD');
+    }
 
-/* End of file quotes.php */
-/* Location: ./application/controllers/quotes.php */
+    public function index()
+    {
+
+       
+        $this->output->enable_profiler(TRUE); //Profiler Debug
+        $this->load->model('Midae_model');
+        $data['user_meta'] = $this->Midae_model->get_user_meta();
+        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
+        $data['top_desc']  = "Change your page purpose here"; //function purpose here.
+
+        //End of component
+
+        $crud  = new grocery_CRUD();
+        $state = $crud->getState();
+        $crud->set_theme('datatables');
+        $crud->set_table('invoices');
+        $crud->set_subject('Invoices');        
+        //$crud->unset_print();    
+        //$crud->unset_read();
+        //$crud->callback_after_delete(array($this,'delete_job_n_jobtask'));     
+        //$crud->callback_before_insert(array($this,'_last_update'));
+        
+        
+        /** lepas ni tambah mn2 relation **/
+        $crud->columns('invoice_status','invoice_number','invoice_due_date','invoice_date_created','job_status');
+       /* $crud->display_as('job_type_id','Job type');
+        $crud->callback_column('job_type_id',array($this,'crud_job_type'))
+             ->callback_column('job_status',array($this,'crud_job_status'));*/
+        $output = $crud->render();
+        $output = array_merge($data,(array)$output);
+        $this->load->view('cruds.php',$output);
+
+
+        
+    }
+
+    
+
+}

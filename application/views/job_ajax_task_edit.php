@@ -10,6 +10,8 @@
                                             {?>
 
                                                     <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" id="job_task_description1" value="<?php echo $jobs['job_task_description'];?>">
+                                                    <!-- <span class="fa fa-plus edit_product" style="position:relative;top:0;left:0;cursor:pointer" data-add_product="edit"></span> -->
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" id="product_id1" value="<?php echo $jobs['product_id'];?>">
                                            <?php }
                                             else{
                                                 echo $jobs['job_task_description'];
@@ -93,3 +95,23 @@
                                             ?>
                                             
                                             </td>
+
+                                            <script>
+                                            jQuery(function()
+                                            {
+
+
+                                                $(".edit_product").colorbox({ 
+                                                                        href : "<?php echo base_url();?>jobs/ajax_product",
+                                                                        data :{ jenis       : 'display', 
+                                                                                add_product : function(){
+                                                                                    var jenis_proses = $('.edit_product');
+                                                                                    //alert(jenis_proses.attr('class'));
+                                                                            return jenis_proses.data('add_product');
+                                                                                    }
+                                                                                }
+
+                                                                       
+                                                                    });
+                                             });
+                                            </script>

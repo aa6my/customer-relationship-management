@@ -56,6 +56,8 @@ class Products extends CI_Controller {
         $crud->display_as('product_sku','Product SKU')
              ->display_as('product_name','Product Name')
              ->display_as('product_desc','Product Description')
+             ->display_as('product_quantity','Product Quantity')
+             ->display_as('product_amount','Product Amount')
              ->display_as('catproduct_id','Category');
         $crud->unset_texteditor('product_desc','full_text');
         $crud->unset_print();
@@ -68,7 +70,7 @@ class Products extends CI_Controller {
         $this->load->view('cruds.php',$output);
         }
         else{
-        $crud->columns('product_sku','product_name');
+        $crud->columns('product_sku','product_name','product_quantity','product_amount');
         $output = $crud->render();
         $output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);

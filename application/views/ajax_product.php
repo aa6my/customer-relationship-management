@@ -103,12 +103,40 @@ else if($jenis=="get_product")
     
                                         $('.product_id').on('change', function(){
 
-                                            var product_id = $('.product_id'),
-                                                catproduct_id = $(this).val(),
-                                                pro_id = $('#pro_id'),
-                                                job_task_description = $('#job_task_description');
+                                            //var jenis_proses = "<?php echo $add_product;?>";
+                                           // alert(jenis_proses);
+                                          
+                                           // if(jenis_proses=="add")
+                                           // {
 
+
+                                                var product_id       = $('.product_id'),
+                                                catproduct_id        = $(this).val(),
+                                                pro_id               = $('#pro_id'),
+                                                job_task_hour        = $('#job_task_hour'),
+                                                job_task_amount      = $('#job_task_amount'),
+                                                job_task_description = $('#job_task_description');
                                                 pro_id.val(product_id.val());
+                                            //}
+                                           // else if(jenis_proses=="edit")
+                                           // {
+
+                                               
+
+                                            
+
+                                                //var product_id       = $('.product_id'),
+                                                //catproduct_id        = $(this).val(),
+                                               // pro_id               = $('#product_id1'),
+                                               // job_task_hour        = $('#job_task_hour1'),
+                                               // job_task_amount      = $('#job_task_amount1'),
+                                               // job_task_description = $('#job_task_description1');
+                                                //pro_id .val(product_id.val());
+                                            //}
+                                            
+
+                                             
+
 
                                            
 
@@ -127,6 +155,8 @@ else if($jenis=="get_product")
                                                     success : function(a){
                                                         
                                                         job_task_description.val("[" + a.product[0].catproduct_name + "] " + a.product[0].product_name);
+                                                        job_task_hour.val(a.product[0].product_quantity);
+                                                        job_task_amount.val(a.product[0].product_amount);
                                                        //console.log(a);
                                                     }
                                                 });

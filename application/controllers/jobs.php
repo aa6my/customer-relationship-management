@@ -125,7 +125,7 @@ class Jobs extends CI_Controller {
            if($this->input->post('save')) // if save button click
            {
                
-                date_default_timezone_set('Asia/Kuala_Lumpur');
+                //date_default_timezone_set('Asia/Kuala_Lumpur');
                 $this->add_job(); //call add job_job function
                 $this->Midae_model->display_message("record", "jobs");
                 
@@ -322,6 +322,7 @@ class Jobs extends CI_Controller {
             $arrayData = array(
 
                     'job_id'               => $postData['job_id'],
+                    'product_id'           => $postData['product_id'],
                     'job_task_hour'        => $postData['job_task_hour'],
                     'job_task_amount'      => $postData['job_task_amount'],
                     'job_task_due_date'    => $postData['job_task_due_date'],
@@ -387,6 +388,7 @@ class Jobs extends CI_Controller {
                     'job_task_amount'      => $postData['job_task_amount'],
                     'job_task_due_date'    => $postData['job_task_due_date'],
                     'user_id'              => $postData['user_id'],
+                    'product_id'           => $postData['product_id'],
                     'job_task_percentage'  => $postData['job_task_percentage'],
                     'job_task_description' => $postData['job_task_description']
                 );
@@ -421,6 +423,7 @@ class Jobs extends CI_Controller {
     public function ajax_product(){
 
         $data['jenis'] = $this->input->post('jenis'); // will display to view part
+        $data['add_product'] = $this->input->post('add_product');
         $jenis = $this->input->post('jenis'); //for condition only
 
         if($jenis=="display")

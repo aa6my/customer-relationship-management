@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2014 at 11:31 AM
+-- Generation Time: Nov 20, 2014 at 04:59 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -99,8 +99,19 @@ CREATE TABLE IF NOT EXISTS `config_data` (
 --
 
 INSERT INTO `config_data` (`key`, `value`) VALUES
+('charset', 'utf-8'),
+('email', 'YOUR EMAIL'),
+('emailpassword', 'YOUR EMAIL PASSWORD'),
+('mailtype', 'html'),
+('newline', '\\r\\n'),
+('protocol', 'smtp'),
 ('sitedescription', 'Hell Yeah! Wow'),
-('sitename', 'SeGi MiDae');
+('sitename', 'SeGi MiDae'),
+('smtp_host', 'ssl://smtp.googlemail.com'),
+('smtp_port', '465'),
+('smtp_timeout', '30'),
+('timezone', 'Asia/Kuala_Lumpur'),
+('wordwrap', 'TRUE');
 
 -- --------------------------------------------------------
 
@@ -657,20 +668,24 @@ INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_dat
 CREATE TABLE IF NOT EXISTS `jobs_task` (
 `job_task_id` int(5) NOT NULL,
   `job_id` int(5) NOT NULL COMMENT 'from JOBS table',
+  `product_id` int(5) NOT NULL DEFAULT '0',
   `job_task_hour` int(5) NOT NULL,
   `job_task_amount` int(5) NOT NULL,
   `job_task_due_date` date NOT NULL,
   `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
   `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
   `job_task_description` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=222 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=230 ;
 
 --
 -- Dumping data for table `jobs_task`
 --
 
-INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `job_task_hour`, `job_task_amount`, `job_task_due_date`, `user_id`, `job_task_percentage`, `job_task_description`) VALUES
-(218, 14, 3, 15, '0000-00-00', 1, 1, 'mmm111');
+INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `product_id`, `job_task_hour`, `job_task_amount`, `job_task_due_date`, `user_id`, `job_task_percentage`, `job_task_description`) VALUES
+(223, 14, 3, 7, 45, '0000-00-00', 1, 0, '[COSMETIC] JAMU'),
+(225, 14, 0, 4, 20, '2014-11-12', 1, 1, 'fghfgh'),
+(226, 14, 2, 3, 34, '0000-00-00', 1, 0, '[Electronic] shaklee'),
+(229, 14, 4, 5, 12, '0000-00-00', 1, 0, '[SERVICES] MOVE STUFF');
 
 -- --------------------------------------------------------
 
@@ -749,6 +764,8 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_sku` varchar(20) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `product_desc` text NOT NULL,
+  `product_quantity` int(5) NOT NULL,
+  `product_amount` int(5) NOT NULL,
   `catproduct_id` int(5) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -756,11 +773,11 @@ CREATE TABLE IF NOT EXISTS `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `product_sku`, `product_name`, `product_desc`, `catproduct_id`) VALUES
-(1, 'GLS3310', 'Gerrad Lamp', 'Lamp...', 1),
-(2, '234234234', 'shaklee', 'all the medicine related', 1),
-(3, '555555', 'JAMU', 'Give strength for your body', 2),
-(4, '999999', 'MOVE STUFF', 'Move your stuff into another place', 3);
+INSERT INTO `products` (`product_id`, `product_sku`, `product_name`, `product_desc`, `product_quantity`, `product_amount`, `catproduct_id`) VALUES
+(1, 'GLS3310', 'Gerrad Lamp', 'Lamp...', 4, 23, 1),
+(2, '234234234', 'shaklee', 'all the medicine related', 3, 34, 1),
+(3, '555555', 'JAMU', 'Give strength for your body', 7, 45, 2),
+(4, '999999', 'MOVE STUFF', 'Move your stuff into another place', 5, 12, 3);
 
 -- --------------------------------------------------------
 
@@ -781,15 +798,15 @@ CREATE TABLE IF NOT EXISTS `system_users` (
   `reset_request_ip` varchar(64) COLLATE utf8_bin DEFAULT NULL,
   `verification_status` tinyint(1) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `system_users`
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-19 11:20:22', '::1', NULL, NULL, NULL, 1, 1),
-(2, 'test@test.com', 'aadc739fc927ffea5fbe6888d54102e7b3686f8d', '543e011fd8a4e4.63777989', 2, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 1, 1);
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-20 02:15:59', '::1', NULL, NULL, NULL, 1, 1),
+(2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1134,7 +1151,7 @@ MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT for table `jobs_task`
 --
 ALTER TABLE `jobs_task`
-MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=222;
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=230;
 --
 -- AUTO_INCREMENT for table `job_types`
 --
@@ -1159,7 +1176,7 @@ MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `system_users`
 --
 ALTER TABLE `system_users`
-MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `user_role`
 --

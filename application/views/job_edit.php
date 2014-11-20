@@ -636,7 +636,7 @@
                                             </td>
                                             <td>
                                           
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" id="job_task_description"> <span class="fa fa-plus add_product" style="position:absolute;top:95px;left:10px;cursor:pointer"></span>
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" id="job_task_description"> <span class="fa fa-plus add_product" style="position:absolute;top:95px;left:10px;cursor:pointer" data-add_product="add"></span>
                                                     <input type="hidden" value="" name="pro_id" id="pro_id" class="form-control input-sm">
                                                    
                                             </td>
@@ -726,9 +726,15 @@
                                        
                                          $(".add_product").colorbox({ 
                                                                         href : "<?php echo base_url();?>jobs/ajax_product",
-                                                                        data :{ jenis: 'display'}
+                                                                        data :{ jenis       : 'display', 
+                                                                                add_product : function(){
+                                                                                    var jenis_proses = $('.add_product');
+                                                                                    //alert(jenis_proses.attr('class'));
+                                                                            return jenis_proses.data('add_product');
+                                                                                    }
+                                                                                }
 
-                                                                        
+                                                                       
                                                                     });
 
                                                
@@ -820,6 +826,14 @@
                                         ,
                                         dispTotal          : function(){
                                             $('#total').load('<?php echo base_url();?>jobs/ajax_job_task',{job_id : myObj.idJob, jenis : 'total'});
+                                        },
+                                        resetForm           : function(){
+                                            /*$('#job_task_description').val("");
+                                            $('')*/
+                                            $('#task input[type!=button]').each(function(index, el) {
+                                                
+                                                $(this).val("");
+                                            });
                                         }
                                         
                                         
@@ -867,7 +881,7 @@
                                                 job_task_amount          = $('#job_task_amount').val(),
                                                 job_task_due_date        = $('#job_task_due_date').val(),
                                                 user_id                  = $('#user_id').val(),
-                                                //job_task_percentage      = $('#job_task_percentage').val(),
+                                                product_id                   = $('#pro_id').val(),
                                                 csrf_test_name           = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
 
                                                 var checkbox_p = $('#job_task_percentage');
@@ -893,12 +907,14 @@
                                                                  "&job_task_amount="+job_task_amount+
                                                                  "&job_task_due_date="+job_task_due_date+
                                                                  "&user_id="+user_id+
+                                                                 "&product_id="+product_id+
                                                                  "&job_task_percentage="+job_task_percentage+
                                                                  "&csrf_test_name="+csrf_test_name;
 
                                                 /** part that want to display the data  after insert **/
                                                 var display_part =   myObj.table_selector.find('tbody'); 
                                                 myObj.addEditContent(url,dataString, display_part, 'edit');
+                                                myObj.resetForm();
                                                 
                                         });
                                         /* end adding content */
@@ -948,7 +964,9 @@
                                                 job_task_amount          = $('#job_task_amount1').val(),
                                                 job_task_due_date        = $('#job_task_due_date1').val(),
                                                 user_id                  = $('#user_id1').val(),
+                                                product_id               = $('#product_id1').val(),
                                                 csrf_test_name           = $('#<?php echo $this->security->get_csrf_token_name(); ?>').val();
+
 
                                                 /** want to check either chekcbok is tick or not**/
                                                 var checkbox_p = $('#job_task_percentage1');
@@ -973,6 +991,7 @@
                                                                  "&job_task_hour="+job_task_hour+
                                                                  "&job_task_amount="+job_task_amount+
                                                                  "&job_task_due_date="+job_task_due_date+
+                                                                 "&product_id="+product_id+
                                                                  "&user_id="+user_id+
                                                                  "&job_task_percentage="+job_task_percentage+
                                                                  "&csrf_test_name="+csrf_test_name;
