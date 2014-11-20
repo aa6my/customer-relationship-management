@@ -47,7 +47,7 @@
                 <i class ="ion ion-bag">
                 </i>
                 </div>
-                <a href = "<?php echo base_url(); ?>/products" class = "small-box-footer">
+                <a href = "<?php echo base_url(); ?>products" class = "small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
@@ -64,7 +64,7 @@
                 <div class = "icon">
                 <i class = "ion ion-person-stalker"></i>
                 </div>
-                <a href = "<?php echo base_url(); ?>/customers" class = "small-box-footer">
+                <a href = "<?php echo base_url(); ?>customers" class = "small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
@@ -81,7 +81,7 @@
                 <i class = "ion ion-network">
                 </i>
                 </div>
-                <a href = "<?php echo base_url(); ?>/vendors" class = "small-box-footer">
+                <a href = "<?php echo base_url(); ?>vendors" class = "small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
@@ -98,7 +98,7 @@
                 <i class="ion ion-thumbsup">
                 </i>
                 </div>
-                <a href="<?php echo base_url(); ?>/leads" class = "small-box-footer">
+                <a href="<?php echo base_url(); ?>leads" class = "small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
@@ -115,7 +115,7 @@
                 <i class="ion ion-briefcase">
                 </i>
                 </div>
-                <a href="<?php echo base_url(); ?>/jobs" class="small-box-footer">
+                <a href="<?php echo base_url(); ?>jobs" class="small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
@@ -132,7 +132,7 @@
                 <i class ="ion ion-clipboard">
                 </i>
                 </div>
-                <a href="<?php echo base_url(); ?>/events" class="small-box-footer">
+                <a href="<?php echo base_url(); ?>events" class="small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
@@ -149,7 +149,7 @@
                 <i class = "ion ion-cash">
                 </i>
                 </div>
-                <a href="<?php echo base_url(); ?>/invoices" class="small-box-footer">
+                <a href="<?php echo base_url(); ?>invoices" class="small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
@@ -167,7 +167,7 @@
                 <i class ="ion ion-pricetag">
                 </i>
                 </div>
-                <a href="<?php echo base_url(); ?>/quotes" class="small-box-footer">
+                <a href="<?php echo base_url(); ?>quotes" class="small-box-footer">
                 <span>More Info</span>
                 <i class ="fa fa-arrow-circle-right"></i>
                 </a>

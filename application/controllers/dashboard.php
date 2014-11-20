@@ -49,7 +49,7 @@ class Dashboard extends CI_Controller {
         $data['job'] =$this->Midae_model->get_count_product($table);
         $table = "events";
         $data['event'] =$this->Midae_model->get_count_product($table);
-        $table = "invoices_test";
+        $table = "invoices";
         $data['invoice'] =$this->Midae_model->get_count_product($table);
         $this->load->view('dashboard', $data);
         //print_r();
