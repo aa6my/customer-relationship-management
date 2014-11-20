@@ -1,5 +1,26 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+
+    +-+-+-+-+ +-+-+-+-+-+
+    |S|E|G|I| |M|i|D|a|e|
+    +-+-+-+-+ +-+-+-+-+-+
+
+ * Customer Relationship Management [CRM]
+ *
+ * http://www.segimidae.net
+ *
+ * PHP version 5
+ *
+ * @category   controllers
+ * @package    customers.php
+ * @author     Nizam <nizam@segimidae.net>
+ * @author     Norlihazmey <norlihazmey@segimidae.net>
+ * @license    https://ellislab.com/codeigniter/user-guide/license.html
+ * @copyright  2014 SEGI MiDae
+ * @version    0.4.1
+*/
+
 class Customers extends CI_Controller {
 
     public function access_map(){
@@ -73,5 +94,5 @@ class Customers extends CI_Controller {
 
 }
 
-/* End of file dashboard.php */
-/* Location: ./application/controllers/Customers.php */
+/* End of file customers.php */
+/* Location: ./application/controllers/customers.php */

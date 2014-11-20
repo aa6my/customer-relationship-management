@@ -54,11 +54,10 @@
                         <button class="btn btn-warning" data-calendar-view="year">Year</button>
                         <button class="btn btn-warning active" data-calendar-view="month">Month</button>
                         <button class="btn btn-warning" data-calendar-view="week">Week</button>
-                        <button class="btn btn-warning" data-calendar-view="day">Day</button>
                     </div>
                 </div>
             </div>  
-        </div><hr>
+        </div>
         <div class="row">
             <div id="calendar"></div>
         </div>

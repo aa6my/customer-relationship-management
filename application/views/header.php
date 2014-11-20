@@ -1,3 +1,5 @@
+    <!DOCTYPE>
+    <html>
     <head>
         <meta charset="UTF-8">
         <title>[CRM] Customer Relationship Management | <?php echo $this->config->item('sitename'); ?></title>
@@ -11,37 +13,15 @@
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="<?php echo base_url(); ?>assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
-        <style>
-        .calendar {
-            font-family: Arial;
-            font-size:   12px;
-        }
-
-        table.calendar {
-            margin:          auto;
-            border-collapse: collapse;
-        }
-
-        .calendar .days td {
-            width:            80px;
-            height:           80px;
-            padding:          4px;
-            border:           1px solid #999;
-            vertical-align:   top;
-            background-color: #DEF;
-        }
-
-        .calendar .days td:hover {
-            background-color: #FFF;
-        }
-
-        .calendar .highlight {
-            font-weight: bold;
-            color:       #00F;
-        }
-        </style>
-
+        <!--<link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css">-->
+        <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/colorbox/colorbox.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+        <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.colorbox-min.js"></script>
+        <!--<script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js"></script>
+        <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.easing-1.3.pack.js"></script>-->
+        <script src="<?php echo base_url() ?>assets/js/job/hour_calculate.js"></script>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -50,4 +30,5 @@
         <![endif]-->
         
     </head>
+
 

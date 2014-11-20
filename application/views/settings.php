@@ -25,13 +25,12 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Blank page
-                        <small>it all starts here</small>
+                        <?php echo $top_title;?>
+                        <small><?php echo $top_desc;?></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Examples</a></li>
-                        <li class="active">Blank page</li>
+                        <li class="active"><?php echo $top_title;?></li>
                     </ol>
                 </section>
 				
@@ -55,6 +54,10 @@
                                             <label for="exampleInputEmail1">Site Description</label>
                                             <input type="text" class="form-control" id="sitedescription" name="sitedescription" value="<?php echo $this->config->item('sitedescription'); ?>">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Time Zone</label>&nbsp;<a href="http://php.net/manual/en/timezones.php" target="_blank">[Timezone]</a>
+                                            <input type="text" class="form-control" id="sitedescription" name="timezone" value="<?php echo $this->config->item('timezone'); ?>">
+                                        </div>
                                     </div><!-- /.box-body -->
 
                                     <div class="box-footer">
@@ -66,6 +69,8 @@
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
     </body>

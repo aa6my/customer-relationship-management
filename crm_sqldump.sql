@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2014 at 04:37 AM
+-- Generation Time: Nov 20, 2014 at 04:59 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -66,6 +66,26 @@ INSERT INTO `calendar` (`date`, `data`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `catproduct`
+--
+
+CREATE TABLE IF NOT EXISTS `catproduct` (
+`catproduct_id` int(5) NOT NULL,
+  `catproduct_name` varchar(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `catproduct`
+--
+
+INSERT INTO `catproduct` (`catproduct_id`, `catproduct_name`) VALUES
+(1, 'Electronic'),
+(2, 'COSMETIC'),
+(3, 'SERVICES');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `config_data`
 --
 
@@ -79,8 +99,19 @@ CREATE TABLE IF NOT EXISTS `config_data` (
 --
 
 INSERT INTO `config_data` (`key`, `value`) VALUES
+('charset', 'utf-8'),
+('email', 'YOUR EMAIL'),
+('emailpassword', 'YOUR EMAIL PASSWORD'),
+('mailtype', 'html'),
+('newline', '\\r\\n'),
+('protocol', 'smtp'),
 ('sitedescription', 'Hell Yeah! Wow'),
-('sitename', 'SeGi MiDae');
+('sitename', 'SeGi MiDae'),
+('smtp_host', 'ssl://smtp.googlemail.com'),
+('smtp_port', '465'),
+('smtp_timeout', '30'),
+('timezone', 'Asia/Kuala_Lumpur'),
+('wordwrap', 'TRUE');
 
 -- --------------------------------------------------------
 
@@ -398,18 +429,10 @@ CREATE TABLE IF NOT EXISTS `events` (
 `id` int(10) unsigned NOT NULL,
   `title` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
   `body` text COLLATE utf8_spanish_ci NOT NULL,
-  `url` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
   `class` varchar(45) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'info',
   `start` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `end` varchar(15) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=20 ;
-
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`id`, `title`, `body`, `url`, `class`, `start`, `end`) VALUES
-(19, 'Ayam', 'Ayam', 'http://www.google.com', 'event-info', '1415608560000', '1415608560000');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -422,15 +445,178 @@ CREATE TABLE IF NOT EXISTS `files` (
   `file_name` varchar(30) NOT NULL,
   `file_content` mediumblob NOT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `files`
 --
 
 INSERT INTO `files` (`file_id`, `file_name`, `file_content`, `last_update`) VALUES
-(1, 'asdad', 0x35313732622d6c6963656e73652e747874, '0000-00-00 00:00:00'),
-(2, 'test', 0x65316663632d702e747874, '2014-11-06 17:17:10');
+(1, 'asdad', 0x35313732622d6c6963656e73652e747874, '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices` (
+`invoice_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `job_id` int(5) NOT NULL,
+  `invoice_status` enum('PAID','UNPAID','CANCELLED') NOT NULL DEFAULT 'UNPAID',
+  `invoice_number` varchar(50) NOT NULL,
+  `invoice_discount` double NOT NULL,
+  `invoice_terms` longtext NOT NULL,
+  `invoice_due_date` datetime NOT NULL,
+  `invoice_date_created` date NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`invoice_id`, `user_id`, `client_id`, `job_id`, `invoice_status`, `invoice_number`, `invoice_discount`, `invoice_terms`, `invoice_due_date`, `invoice_date_created`) VALUES
+(1, 1, 1, 0, 'CANCELLED', '1', 0, '', '2014-11-17 00:00:00', '2014-11-17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoices_test`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices_test` (
+`invoice_id` int(5) NOT NULL,
+  `invoice_total` mediumint(9) NOT NULL,
+  `invoice_date` date NOT NULL,
+  `invoice_status` varchar(20) NOT NULL COMMENT '1-paid, 2-unpaid'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=121 ;
+
+--
+-- Dumping data for table `invoices_test`
+--
+
+INSERT INTO `invoices_test` (`invoice_id`, `invoice_total`, `invoice_date`, `invoice_status`) VALUES
+(1, 100, '2014-11-18', '1'),
+(2, 2000, '2014-11-13', '2'),
+(3, 100, '2014-11-15', '1'),
+(4, 2000, '2014-11-03', '2'),
+(5, 300, '2014-10-22', '1'),
+(6, 800, '2014-11-07', '2'),
+(7, 700, '2014-11-01', '1'),
+(8, 400, '2014-11-02', '2'),
+(9, 900, '2014-11-03', '1'),
+(10, 2000, '2014-11-04', '2'),
+(11, 3400, '2014-11-05', '1'),
+(12, 56000, '2014-11-06', '2'),
+(13, 700, '2014-11-07', '1'),
+(14, 700, '2014-11-08', '1'),
+(15, 400, '2014-11-09', '2'),
+(16, 900, '2014-11-10', '1'),
+(17, 2000, '2014-11-11', '2'),
+(18, 3400, '2014-11-12', '1'),
+(19, 56000, '2014-11-13', '2'),
+(20, 700, '2014-11-14', '1'),
+(21, 9000, '2014-11-15', '2'),
+(22, 5400, '2014-11-16', '1'),
+(23, 12000, '2014-11-17', '2'),
+(24, 2300, '2014-11-18', '1'),
+(25, 5000, '2014-11-19', '2'),
+(26, 6600, '2014-11-20', '1'),
+(27, 7800, '2014-11-21', '2'),
+(28, 100, '2014-11-22', '1'),
+(29, 2000, '2014-11-23', '2'),
+(30, 100, '2014-11-23', '1'),
+(31, 2000, '2014-11-24', '2'),
+(32, 100, '2014-11-25', '1'),
+(33, 2000, '2014-11-26', '2'),
+(34, 100, '2014-11-27', '1'),
+(35, 3200, '2014-11-28', '2'),
+(36, 3400, '2014-11-29', '1'),
+(37, 4000, '2014-11-30', '2'),
+(38, 800, '2014-10-01', '1'),
+(39, 600, '2014-10-02', '2'),
+(40, 900, '2014-10-03', '1'),
+(41, 8900, '2014-10-04', '2'),
+(42, 560, '2014-10-05', '1'),
+(43, 2000, '2014-10-06', '2'),
+(44, 100, '2014-10-07', '1'),
+(45, 2000, '2014-10-08', '2'),
+(46, 100, '2014-10-09', '1'),
+(47, 2000, '2014-10-11', '2'),
+(48, 100, '2014-10-12', '1'),
+(50, 120, '2013-04-01', '1'),
+(51, 4500, '2013-04-02', '2'),
+(52, 780, '2013-04-03', '1'),
+(53, 5600, '2013-04-04', '2'),
+(54, 3400, '2013-04-05', '1'),
+(55, 2100, '2013-04-06', '2'),
+(56, 340, '2013-04-07', '1'),
+(57, 6700, '2013-04-08', '2'),
+(58, 100, '2013-04-09', '1'),
+(59, 2000, '2013-04-10', '2'),
+(60, 100, '2013-04-11', '1'),
+(61, 2000, '2013-04-12', '2'),
+(62, 100, '2013-04-13', '1'),
+(63, 2000, '2013-04-14', '2'),
+(64, 100, '2013-04-15', '1'),
+(65, 2000, '2013-04-16', '2'),
+(66, 100, '2013-04-17', '1'),
+(67, 600, '2013-04-18', '2'),
+(68, 100, '2013-05-01', '1'),
+(69, 5600, '2013-05-02', '2'),
+(70, 100, '2013-05-03', '1'),
+(71, 2000, '2013-05-04', '2'),
+(72, 100, '2013-05-05', '1'),
+(73, 2000, '2013-05-06', '2'),
+(74, 340, '2013-05-07', '1'),
+(75, 2300, '2013-05-08', '2'),
+(76, 100, '2013-05-09', '1'),
+(77, 2000, '2013-05-10', '2'),
+(78, 100, '2013-05-11', '1'),
+(79, 2000, '2013-05-12', '2'),
+(80, 100, '2013-05-13', '1'),
+(81, 2000, '2013-05-14', '2'),
+(82, 100, '2013-05-15', '1'),
+(83, 2000, '2013-05-16', '2'),
+(84, 100, '2013-05-17', '1'),
+(85, 2000, '2013-05-18', '2'),
+(86, 100, '2013-05-19', '1'),
+(87, 2000, '2013-05-20', '2'),
+(88, 340, '2013-05-21', '1'),
+(89, 2000, '2013-05-22', '2'),
+(90, 100, '2013-05-23', '1'),
+(91, 2000, '2013-05-24', '2'),
+(92, 5600, '2013-05-25', '1'),
+(93, 3400, '2012-07-01', '2'),
+(94, 100, '2012-07-02', '1'),
+(95, 7800, '2012-07-03', '2'),
+(96, 100, '2012-07-04', '1'),
+(97, 2000, '2012-07-05', '2'),
+(98, 100, '2012-07-06', '1'),
+(99, 2000, '2012-07-07', '2'),
+(100, 100, '2012-07-08', '1'),
+(101, 2600, '2012-07-09', '2'),
+(102, 120, '2012-07-10', '1'),
+(103, 2000, '2012-07-11', '2'),
+(104, 1220, '2012-07-12', '1'),
+(105, 3400, '2012-07-13', '2'),
+(106, 700, '2012-07-14', '1'),
+(107, 700, '2012-07-15', '1'),
+(108, 400, '2012-07-16', '2'),
+(109, 900, '2012-07-17', '1'),
+(110, 2000, '2012-07-18', '2'),
+(111, 3400, '2012-07-19', '1'),
+(112, 56000, '2012-07-20', '2'),
+(113, 700, '2012-07-21', '1'),
+(114, 9000, '2012-07-22', '2'),
+(115, 5400, '2012-07-23', '1'),
+(116, 12000, '2012-07-24', '2'),
+(117, 2300, '2012-07-25', '1'),
+(118, 5000, '2012-07-26', '2'),
+(119, 6600, '2012-07-27', '1'),
+(120, 7800, '2012-07-28', '2');
 
 -- --------------------------------------------------------
 
@@ -451,27 +637,27 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `user_id` int(5) NOT NULL COMMENT 'from user_meta table',
   `job_tax` int(5) NOT NULL,
   `job_currency` int(5) NOT NULL,
-  `job_type` varchar(10) NOT NULL,
+  `job_type_id` int(5) NOT NULL COMMENT 'from table JOB_TYPES',
   `job_status` varchar(10) NOT NULL,
   `job_description` text NOT NULL,
+  `job_note` text NOT NULL,
   `job_hour` double NOT NULL,
   `job_amount` int(5) NOT NULL,
   `job_quote_date` date NOT NULL,
   `job_renewal_date` date NOT NULL,
   `job_task_type` int(5) NOT NULL,
   `job_discount_amount` int(5) NOT NULL,
-  `job_discount_name` varchar(20) NOT NULL,
+  `job_discount_name` varchar(50) NOT NULL,
   `job_discount_type` int(5) NOT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_date_start`, `job_start_time`, `job_end_time`, `job_due_date`, `job_complete_date`, `user_id`, `job_tax`, `job_currency`, `job_type`, `job_status`, `job_description`, `job_hour`, `job_amount`, `job_quote_date`, `job_renewal_date`, `job_task_type`, `job_discount_amount`, `job_discount_name`, `job_discount_type`, `last_update`) VALUES
-(2, 1, 1, 'sdf', '0000-00-00', '00:00:00', '00:00:00', '0000-00-00', '0000-00-00', 0, 0, 0, '', '', '', 0, 0, '0000-00-00', '0000-00-00', 0, 0, '', 0, '2014-11-07 11:49:56'),
-(3, 1, 1, 'web development', '2014-11-08', '05:28:00', '04:34:00', '2014-11-09', '2014-11-10', 2000, 2, 2, 'Database d', '1', 'we develop', 4, 0, '2014-11-07', '2014-11-12', 1, 34, 'discouint test', 1, '2014-11-06 16:00:00');
+INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_date_start`, `job_start_time`, `job_end_time`, `job_due_date`, `job_complete_date`, `user_id`, `job_tax`, `job_currency`, `job_type_id`, `job_status`, `job_description`, `job_note`, `job_hour`, `job_amount`, `job_quote_date`, `job_renewal_date`, `job_task_type`, `job_discount_amount`, `job_discount_name`, `job_discount_type`, `last_update`) VALUES
+(14, 1, 1, 'web services1', '2014-11-07', '12:45:00', '11:23:00', '2014-11-12', '2014-11-13', 1, 5, 0, 2, '1', 'do a lot of CRM tasks', 'we need to regroup this one', 5, 0, '2014-11-06', '2014-11-15', 1, 5, 'this is discount name', 1, '2014-11-16 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -481,14 +667,44 @@ INSERT INTO `jobs` (`job_id`, `customer_id`, `website_id`, `job_title`, `job_dat
 
 CREATE TABLE IF NOT EXISTS `jobs_task` (
 `job_task_id` int(5) NOT NULL,
-  `job_id` int(5) NOT NULL,
+  `job_id` int(5) NOT NULL COMMENT 'from JOBS table',
+  `product_id` int(5) NOT NULL DEFAULT '0',
   `job_task_hour` int(5) NOT NULL,
   `job_task_amount` int(5) NOT NULL,
   `job_task_due_date` date NOT NULL,
-  `user_id` int(5) NOT NULL,
-  `job_task_percentage` int(5) NOT NULL,
+  `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
+  `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
   `job_task_description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=230 ;
+
+--
+-- Dumping data for table `jobs_task`
+--
+
+INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `product_id`, `job_task_hour`, `job_task_amount`, `job_task_due_date`, `user_id`, `job_task_percentage`, `job_task_description`) VALUES
+(223, 14, 3, 7, 45, '0000-00-00', 1, 0, '[COSMETIC] JAMU'),
+(225, 14, 0, 4, 20, '2014-11-12', 1, 1, 'fghfgh'),
+(226, 14, 2, 3, 34, '0000-00-00', 1, 0, '[Electronic] shaklee'),
+(229, 14, 4, 5, 12, '0000-00-00', 1, 0, '[SERVICES] MOVE STUFF');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_types`
+--
+
+CREATE TABLE IF NOT EXISTS `job_types` (
+`job_type_id` int(5) NOT NULL,
+  `job_type_name` varchar(30) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `job_types`
+--
+
+INSERT INTO `job_types` (`job_type_id`, `job_type_name`) VALUES
+(1, 'Web development'),
+(2, 'Developing CRM');
 
 -- --------------------------------------------------------
 
@@ -540,6 +756,32 @@ CREATE TABLE IF NOT EXISTS `member` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `products`
+--
+
+CREATE TABLE IF NOT EXISTS `products` (
+`product_id` int(5) NOT NULL,
+  `product_sku` varchar(20) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_desc` text NOT NULL,
+  `product_quantity` int(5) NOT NULL,
+  `product_amount` int(5) NOT NULL,
+  `catproduct_id` int(5) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_sku`, `product_name`, `product_desc`, `product_quantity`, `product_amount`, `catproduct_id`) VALUES
+(1, 'GLS3310', 'Gerrad Lamp', 'Lamp...', 4, 23, 1),
+(2, '234234234', 'shaklee', 'all the medicine related', 3, 34, 1),
+(3, '555555', 'JAMU', 'Give strength for your body', 7, 45, 2),
+(4, '999999', 'MOVE STUFF', 'Move your stuff into another place', 5, 12, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `system_users`
 --
 
@@ -556,14 +798,15 @@ CREATE TABLE IF NOT EXISTS `system_users` (
   `reset_request_ip` varchar(64) COLLATE utf8_bin DEFAULT NULL,
   `verification_status` tinyint(1) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `system_users`
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-10 03:02:26', '::1', NULL, NULL, NULL, 1, 1);
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-20 02:15:59', '::1', NULL, NULL, NULL, 1, 1),
+(2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -616,7 +859,8 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
 --
 
 INSERT INTO `user_meta` (`user_id`, `first_name`, `last_name`, `phone`) VALUES
-(1, 'Saiful', 'Nizam', NULL);
+(1, 'Saiful', 'Nizam', NULL),
+(2, 'First', 'Last', NULL);
 
 -- --------------------------------------------------------
 
@@ -628,7 +872,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 `id` int(5) unsigned NOT NULL,
   `role_name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `default_access` varchar(10) COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `user_role`
@@ -636,7 +880,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 INSERT INTO `user_role` (`id`, `role_name`, `default_access`) VALUES
 (1, 'Admin', '11111'),
-(3, '1', NULL);
+(2, 'Staff', '11111');
 
 -- --------------------------------------------------------
 
@@ -718,6 +962,12 @@ ALTER TABLE `calendar`
  ADD PRIMARY KEY (`date`);
 
 --
+-- Indexes for table `catproduct`
+--
+ALTER TABLE `catproduct`
+ ADD PRIMARY KEY (`catproduct_id`);
+
+--
 -- Indexes for table `config_data`
 --
 ALTER TABLE `config_data`
@@ -754,6 +1004,18 @@ ALTER TABLE `files`
  ADD PRIMARY KEY (`file_id`);
 
 --
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+ ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `invoices_test`
+--
+ALTER TABLE `invoices_test`
+ ADD PRIMARY KEY (`invoice_id`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -766,6 +1028,12 @@ ALTER TABLE `jobs_task`
  ADD PRIMARY KEY (`job_task_id`);
 
 --
+-- Indexes for table `job_types`
+--
+ALTER TABLE `job_types`
+ ADD PRIMARY KEY (`job_type_id`);
+
+--
 -- Indexes for table `leads`
 --
 ALTER TABLE `leads`
@@ -776,6 +1044,12 @@ ALTER TABLE `leads`
 --
 ALTER TABLE `member`
  ADD PRIMARY KEY (`member_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+ ADD PRIMARY KEY (`product_id`);
 
 --
 -- Indexes for table `system_users`
@@ -829,6 +1103,11 @@ ALTER TABLE `websites`
 ALTER TABLE `address`
 MODIFY `address_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1003;
 --
+-- AUTO_INCREMENT for table `catproduct`
+--
+ALTER TABLE `catproduct`
+MODIFY `catproduct_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
@@ -847,22 +1126,37 @@ MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `invoices_test`
+--
+ALTER TABLE `invoices_test`
+MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=121;
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `jobs_task`
 --
 ALTER TABLE `jobs_task`
-MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT;
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=230;
+--
+-- AUTO_INCREMENT for table `job_types`
+--
+ALTER TABLE `job_types`
+MODIFY `job_type_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `leads`
 --
@@ -874,15 +1168,20 @@ MODIFY `lead_id` smallint(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 ALTER TABLE `member`
 MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `system_users`
 --
 ALTER TABLE `system_users`
-MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `vendors`
 --
