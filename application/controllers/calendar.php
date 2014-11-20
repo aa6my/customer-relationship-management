@@ -84,7 +84,7 @@ class Calendar extends CI_Controller {
  
     public function _callback_timetostr($value)
     {
-        date_default_timezone_set($this->config->item('timezone'));
+        //date_default_timezone_set($this->config->item('timezone'));
         $date = $value / 1000;
         return date('d-m-Y h:i A', $date);
     }
