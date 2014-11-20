@@ -92,9 +92,7 @@
                                                         <option value="0">APPROVED</option>
                                                         <option value="1">REJECTED</option>
                                                         <option value="2">CANCEL</option>
-                                                       
-                                                        
-                                                        
+                                                          
                                                     </select>
                                                 </div>
                                             </td>
@@ -204,7 +202,7 @@
                             <!-- Primary box -->
                             <div class="box box-primary">
                                 <div class="box-header" data-toggle="tooltip" title="" data-original-title="Item from task job or products">
-                                    <h3 class="box-title"><strong>Quote Items</strong> <button class="btn btn-success btn-sm">Add Item From Products</button></h3>
+                                    <h3 class="box-title"><strong>Quote Items</strong> <!-- <button class="btn btn-success btn-sm">Add Item From Products</button> --></h3>
                                     
                                 </div>
                                 <div class="box-body">
@@ -217,33 +215,36 @@
                                                 <th>Quantity</th>
                                                 <th>Unit Price</th>
                                                 <th>Discount</th>
-                                                <th>Subtotal</th>
+                                                <th>Subtotal</th> 
                                             </tr>
-                                             <tr>
+                                             <tr id="quote_template"><!-- form template -->
                                                 <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description">
+                                                    <input type="text" class="form-control input-sm" placeholder="" id="quote_#index#_phone" name="person[phones][#index#][phone]">
+                                                    <br/>
+                                                    <button class="btn btn-success btn-sm">Add Item From Products</button>
                                                     
                                                     </td>
-                                                <td>
-                                                    <textarea class="form-control" rows="3" placeholder="" name="job_description"></textarea>
+                                               <td>
+                                                    <textarea class="form-control" rows="3" placeholder="" id="quote_#index#_description" name="person[descriptions][#index#][description]"></textarea>
+                                                </td>
+                                                  <td align="center">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="quote_#index#_description" name="person[descriptions][#index#][quantity]" >
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount" >
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="quote_#index#_description" name="person[descriptions][#index#][price]">
+                                                </td>
+                                                
+                                                <td align="center">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="quote_#index#_description" name="person[descriptions][#index#][discount]" >
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount" st>
-                                                </td>
-                                                <!-- <td>Done Date</td> -->
-                                                <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount" >
-                                                </td>
-                                                <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount" disabled="">
-                                                </td>
-                                            </tr>
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="quote_#index#_description" name="person[descriptions][#index#][subtotal]">
+                                                </td> 
+                                            </tr> <!-- end form template -->
                                                                              
                                         </tbody>
                                     </table>
+                                    
 
                                 </div><!-- /.box-body -->
                                 
@@ -273,9 +274,7 @@
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- AdminLTE App -->
-        <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
+       
+
     </body>
 </html>

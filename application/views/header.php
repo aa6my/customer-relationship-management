@@ -16,10 +16,16 @@
         <!--<link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css">-->
         <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/colorbox/colorbox.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
+        
+
         <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
         <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.colorbox-min.js"></script>
         <!--<script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js"></script>
         <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.easing-1.3.pack.js"></script>-->
+         <!--<script src="<?php echo base_url() ?>assets/js/clone/jquery.sheepItPlugin-1.1.1.js"></script>-->
+
         <script src="<?php echo base_url() ?>assets/js/job/hour_calculate.js"></script>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -28,6 +34,11 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+
+         
+        
+        <!-- AdminLTE App -->
+        
         
     </head>
 
