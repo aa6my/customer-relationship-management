@@ -38,6 +38,8 @@ class Quotes extends CI_Controller {
         $this->load->library('grocery_CRUD');
     }
 
+
+
     public function index()
     {
 
@@ -53,25 +55,67 @@ class Quotes extends CI_Controller {
         $crud  = new grocery_CRUD();
         $state = $crud->getState();
         $crud->set_theme('datatables');
-        $crud->set_table('invoices');
-        $crud->set_subject('Invoices');        
-        //$crud->unset_print();    
-        //$crud->unset_read();
-        //$crud->callback_after_delete(array($this,'delete_job_n_jobtask'));     
-        //$crud->callback_before_insert(array($this,'_last_update'));
+        $crud->set_table('quotes');
+        $crud->set_subject('Quotes');        
         
         
-        /** lepas ni tambah mn2 relation **/
-        $crud->columns('invoice_status','invoice_number','invoice_due_date','invoice_date_created','job_status');
-       /* $crud->display_as('job_type_id','Job type');
-        $crud->callback_column('job_type_id',array($this,'crud_job_type'))
-             ->callback_column('job_status',array($this,'crud_job_status'));*/
-        $output = $crud->render();
-        $output = array_merge($data,(array)$output);
-        $this->load->view('cruds.php',$output);
+       /**********************************************
+        *  Rendering in datatables
+        */
+        $crud->columns('quote_status','quote_id','quote_date_created','invoice_date_created','quote_valid_until','job_task_id')
+             ->display_as('quote_id','Quotes no.')
+             ->display_as('invoice_date_created','Date issued')
+             ->display_as('quote_valid_until','Valid until')
+             ->display_as('job_task_id','Item');
+
+        
+
+      
+
+         /**********************************************
+        * When Add button clicked ==> View this part
+        */
+         if($state=="add"){
+
+            $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
+            $data['top_desc']  = "Change your page purpose here"; //function purpose here.*/
+            //$data['groupData'] = $this->get_temporary_data();
+            $this->load->view('quote_add',$data);
+         }
+         else if($state=="edit"){
+         }
+         else{
+            $output = $crud->render();
+            $output = array_merge($data,(array)$output);
+            $this->load->view('cruds.php',$output);
+         }
 
 
         
+
+
+
+
+
+
+
+
+       /**********************************************
+        * Callback before insert ==> Change form elements into customs element
+        */
+        
+        /*$crud->field_type('quote_status','dropdown', array('0' => 'draft',
+                                                           '1' => 'sent',
+                                                           '2' => 'viewed',
+                                                           '3' => 'approved' , 
+                                                           '4' => 'rejected',
+                                                           '5' => 'canceled'));*/
+
+
+        
+        
+
+
     }
 
     
