@@ -1,62 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>404 Page Not Found</title>
-<style type="text/css">
+<html style="min-height: 749px;"><head>
+        <meta charset="UTF-8">
+        <title>404 Page not found</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <!-- Ionicons -->
+        <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css">
+        <!-- Theme style -->
+        <link href="<?php echo base_url(); ?>assets/css/AdminLTE.css" rel="stylesheet" type="text/css">
 
-::selection{ background-color: #E13300; color: white; }
-::moz-selection{ background-color: #E13300; color: white; }
-::webkit-selection{ background-color: #E13300; color: white; }
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="skin-blue  pace-done" style="min-height: 749px;"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+  <div class="pace-progress-inner"></div>
+</div>
+<div class="pace-activity"></div></div>
+        <!-- header logo: style can be found in header.less -->
+        <header class="header">
+          
+            <!-- Header Navbar: style can be found in header.less -->
+            
+                <!-- Sidebar toggle button-->
+                
+        </header>
+        <div class="wrapper row-offcanvas row-offcanvas-left" style="min-height: 749px;">
+            <!-- Left side column. contains the logo and sidebar -->
+          
 
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
+            <!-- Right side column. Contains the navbar and content of the page -->
 
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
+                <!-- Content Header (Page header) -->
+                <!--<section class="content-header">-->
+                   
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
+                <!-- Main content -->
+                <section class="content">
 
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
+                    <div class="error-page">
+                        <h2 class="headline text-info">404</h2>
+                        <div class="error-content">
+                            <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
+                            <p>
+                                We could not find the page you were looking for.
+                                Meanwhile, you may <a href="http://localhost/customer-relationship-management">return to dashboard.</a> 
+                                
+                            </p>
+                            <button class="btn btn-primary btn-sm"onclick="goBack()">Go Back</button>
+                            <script>
+                            function goBack() {
+                            	window.history.back()
+                            }
+                            </script>
 
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	-webkit-box-shadow: 0 0 8px #D0D0D0;
-}
+                        </div><!-- /.error-content -->
+                    </div><!-- /.error-page -->
 
-p {
-	margin: 12px 15px 12px 15px;
-}
-</style>
-</head>
-<body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
-	</div>
+                </section><!-- /.content -->
+            
+        </div><!-- ./wrapper -->
+
+        <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js"></script>
+        <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.easing-1.3.pack.js"></script>
+        <script src="<?php echo base_url() ?>assets/js/job/hour_calculate.js"></script>
+
+<div class="no-print" style="padding: 10px; 
+position: fixed; top: 130px; right: -200px; border: 3px solid rgba(0, 0, 0, 0.701961); width: 200px; z-index: 999999; background: rgb(255, 255, 255);">
+<h4 style="margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;">Layout Options</h4><div 
+class="form-group no-margin">
+<div class=".checkbox"><label><input type="checkbox" onchange="change_layout();"> Fixed layout</label>
+</div>
+</div>
+<h4 style="margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;">Skins</h4>
+<div class="form-group no-margin"><div class=".radio"><label>
+<input name="skins" type="radio" onchange="change_skin(&quot;skin-black&quot;);"> Black</label>
+</div>
+</div>
+<div class="form-group no-margin"><div class=".radio">
+<label>
+<input name="skins" type="radio" onchange="change_skin(&quot;skin-blue&quot;);" checked="checked"> Blue</label>
+</div>
+</div>
+</div>
 </body>
 </html>

@@ -41,14 +41,14 @@
                     <div class = "small-box bg-maroon">
                     <div class = "inner">
                     <h3><?php echo $product; ?></h3>
-                    <p>Product</p>
+                    <p>Products</p>
                     </div>
                 <div class = "icon">
                 <i class ="ion ion-bag">
                 </i>
                 </div>
-                <a href = "#" class = "small-box-footer">
-                More Info
+                <a href = "<?php echo base_url(); ?>/products" class = "small-box-footer">
+                <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
                 </div>
@@ -59,30 +59,30 @@
                 <div class = "inner">
                 <h3><?php echo $customer; ?>
                 </h3>
-                <p>Customer</p>
+                <p>Customers</p>
                 </div>
                 <div class = "icon">
-                <i class = "ion ion-person"></i>
+                <i class = "ion ion-person-stalker"></i>
                 </div>
-                <a href = "#" class = "small-box-footer">
-                More Info
+                <a href = "<?php echo base_url(); ?>/customers" class = "small-box-footer">
+                <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
                 </div>
                 </div>
                 <!--/.column-->
                 <div class = "col-lg-3 col xs-6">
-                <div class = "small-box bg-purple">
+                <div class = "small-box bg-orange">
                 <div class = "inner">
                 <h3><?php echo $vendor; ?></h3>
-                <p>Vendor</p>
+                <p>Vendors</p>
                 </div>
                 <div class = "icon">
-                <i class = "ion ion-stats-bars">
+                <i class = "ion ion-network">
                 </i>
                 </div>
-                <a href = "#" class = "small-box-footer">
-                More Info
+                <a href = "<?php echo base_url(); ?>/vendors" class = "small-box-footer">
+                <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
                 </div>
@@ -95,67 +95,135 @@
                 <p>Leads</p>
                 </div>
                 <div class = "icon">
-                <i class="ion ion-pie-graph">
+                <i class="ion ion-thumbsup">
                 </i>
                 </div>
-                <a href="#" class = "small-box-footer">
-                More Info
+                <a href="<?php echo base_url(); ?>/leads" class = "small-box-footer">
+                <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
                 </div>
                 </div>
+                <!--/.column-->
+                <div class="col-lg-3 col xs-6">
+                <div class="small-box bg-purple">
+                <div class="inner">
+                <h3><?php echo $job; ?></h3>
+                <p>Jobs</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-briefcase">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>/jobs" class="small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class="col-lg-3 col xs-6">
+                <div class="small-box bg-red">
+                <div class="inner">
+                <h3><?php echo $event; ?></h3>
+                <p>Events</p>
+                </div>
+                <div class="icon">
+                <i class ="ion ion-clipboard">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>/events" class="small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class="col-lg-3 col xs-6">
+                <div class="small-box bg-green">
+                <div class="inner">
+                <h3><?php echo $invoice; ?></h3>
+                <p>Invoices</p>
+                </div>
+                <div class="icon">
+                <i class = "ion ion-cash">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>/invoices" class="small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class="col-lg-3 col xs-6">
+                <div class="small-box bg-blue">
+                <div class="inner">
+               
+                <h3>""</h3>
+                <p>Quotes</p>
+                </div>
+                <div class="icon">
+                <i class ="ion ion-pricetag">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>/quotes" class="small-box-footer">
+                <span>More Info</span>
+                <i class ="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+
 
                 <!--<div class ="row">-->
                 <section class ="col-lg-7 connectedSortable ui-sortable">
                     <div class = "nav-tabs-custom" style="cursor: move;">
                     <ul class = "nav nav-tabs pull-right ui-sortable-handle">
+                     
                     <li class="active">
-                        <a href="#bar-chart" data-toggle="tab">Bar Chart</a>
+                <a href="#revenue-chart data-toggle="tab"">Year</a>
+                
+                        <label>
+                        <select size="1" name="546c075c38f60_length" aria-controls="546c075c38f60">
+                        <?php 
+                        $end = 2015;
+                        $j = 2007;
+                        for($i=2007; $i<=$end; $i++)
+                        { ?>
+                             <option value="<?php echo $i;?>"><?php echo $j++;?></option>
+                       <?php  }
+
+                        ?>
+                       </select>
+                       
+                        </label></a>
                     </li>
                 <li class = "pull-left header">
                     <i class="fa fa-inbox"></i>
                     Sales
                     </li>
                     </ul>
-                <div class="tab-content no padding">
+                <div class="tab-content ">
                 <!--Bar Chat-->
-                <div class="box box-primary">
+                <div class="box box-primary id="bar-chart" style="position:relative; height: 300px;"">
                     <div class="box-header">
-                    <i class="fa fa-bar-chart-o"></i>
-                    <h3 class="box-title">Bar Chart</h3>
                     </div>
                     <div class="box-body">
                     <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;">
                     <canvas class="flot-base" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;"></canvas>
                     <div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
                     <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 29px; text-align: center;">January</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 134px; text-align: center;">February</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 248px; text-align: center;">March</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 358px; text-align: center;">April</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 466px; text-align: center;">May</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 571px; text-align: center;">June</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; max-width: 105px; top: 282px; left: 682px; text-align: center;">July</div>
+             
                     </div>
                     <div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 269px; left: 7px; text-align: right;">0</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 202px; left: 7px; text-align: right;">5</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 135px; left: 1px; text-align: right;">10</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 68px; left: 1px; text-align: right;">15</div>
-                    <div class="flot-tick-label tickLabel" style="position: absolute; top: 1px; left: 1px; text-align: right;">20</div>
+              
                     </div>
                     <canvas class="flot-overlay" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;">
-                    </div>
-        
-                            </div>
-                            </div>
-                    </div><!-- /.box-body-->
-                    </div>
+                </div>
+            </div>
+            <!--box-body-->
+        </div>
                 
-
-
-
-
                 </section>
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->

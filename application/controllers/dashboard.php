@@ -29,7 +29,6 @@ class Dashboard extends CI_Controller {
         parent::__construct();
     }
 
-
 	public function index()
 	{
         // Component
@@ -44,9 +43,15 @@ class Dashboard extends CI_Controller {
         $data['customer'] = $this->Midae_model->get_count_product($table);
         $table = "vendors";
         $data['vendor'] = $this->Midae_model->get_count_product($table);
-        $table = 'leads';
+        $table = "leads";
         $data['lead'] = $this->Midae_model->get_count_product($table);
-		$this->load->view('dashboard', $data);
+        $table = "jobs";
+        $data['job'] =$this->Midae_model->get_count_product($table);
+        $table = "events";
+        $data['event'] =$this->Midae_model->get_count_product($table);
+        $table = "invoices_test";
+        $data['invoice'] =$this->Midae_model->get_count_product($table);
+        $this->load->view('dashboard', $data);
         //print_r();
 	}
 
