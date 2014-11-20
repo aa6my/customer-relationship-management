@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2014 at 04:59 AM
+-- Generation Time: Nov 20, 2014 at 11:11 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -782,6 +782,42 @@ INSERT INTO `products` (`product_id`, `product_sku`, `product_name`, `product_de
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `quotes`
+--
+
+CREATE TABLE IF NOT EXISTS `quotes` (
+`quote_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `job_task_id` int(11) NOT NULL,
+  `quote_subject` varchar(300) NOT NULL,
+  `quote_date_created` date NOT NULL,
+  `quote_valid_until` date NOT NULL,
+  `quote_discount` double NOT NULL,
+  `quote_customer_notes` text NOT NULL,
+  `quote_status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quotes_items`
+--
+
+CREATE TABLE IF NOT EXISTS `quotes_items` (
+`item_id` int(11) NOT NULL,
+  `quote_id` int(11) NOT NULL,
+  `item_name` varchar(300) NOT NULL,
+  `item_description` text NOT NULL,
+  `item_price` double NOT NULL,
+  `item_quantity` double NOT NULL,
+  `Item_tax_rate_id` int(11) NOT NULL,
+  `item_discount` double NOT NULL,
+  `item_order` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `system_users`
 --
 
@@ -1052,6 +1088,18 @@ ALTER TABLE `products`
  ADD PRIMARY KEY (`product_id`);
 
 --
+-- Indexes for table `quotes`
+--
+ALTER TABLE `quotes`
+ ADD PRIMARY KEY (`quote_id`);
+
+--
+-- Indexes for table `quotes_items`
+--
+ALTER TABLE `quotes_items`
+ ADD PRIMARY KEY (`item_id`);
+
+--
 -- Indexes for table `system_users`
 --
 ALTER TABLE `system_users`
@@ -1172,6 +1220,16 @@ MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `products`
 MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `quotes`
+--
+ALTER TABLE `quotes`
+MODIFY `quote_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `quotes_items`
+--
+ALTER TABLE `quotes_items`
+MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `system_users`
 --
