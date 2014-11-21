@@ -252,20 +252,20 @@
                                                     <textarea class="form-control" rows="3" placeholder="" id="item_description" name="item_description[]"></textarea>
                                                 </td>
                                                   <td align="center">
-                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" >
+                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" data-calculate="a">
                                                    
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price[]"  >
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price" data-calculate="a">
                                                 </td>
                                                 
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_discount[]" id="item_discount" >
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_discount[]" id="item_discount" data-calculate="a">
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_subtotal[]" id="item_subtotal" >
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_subtotal[]" id="item_subtotal" disabled="">
                                                     <br/>
-                                                    <a href="#" class="clone">
+                                                    <a href="#" class="clone" data-subTotal="subtotal">
                                                         <button type="button" class="btn btn-default" >
                                                         <i class="fa fa-copy"></i>
                                                         </button>
@@ -280,17 +280,55 @@
                                                                              
                                         </tbody>
                                     </table>
-                                    <div style='display:none'>
-                                        <div id='inline_content' style='padding:10px; background:#fff;'>
-                                        <p><strong>This content comes from a hidden element on this page.</strong></p>
-                                        <p>The inline option preserves bound JavaScript events and changes, and it puts the content back where it came from when it is closed.</p>
-                                        <p><a id="click" href="#" style='padding:5px; background:#ccc;'>Click me, it will be preserved!</a></p>
-                                        
-                                        <p><strong>If you try to open a new Colorbox while it is already open, it will update itself with the new content.</strong></p>
-                                        <p>Updating Content Example:<br />
-                                        <a class="ajax" href="../content/ajax.html">Click here to load new content</a></p>
-                                        </div>
-                                    </div>
+                                    <br />
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            
+                                             <tr class="toclone" id="current_row"><!-- form template -->
+                                                
+                                                
+                                                <td align="right" width="88.5%" >
+                                                    Item Sub Total :
+                                                </td>
+                                                <td align="center">
+                                                   RM <span id="subtotal"></span> 
+                                                   <input type="text" id="subtotal_temp" value="0">
+                                                   <input type="text" id="subtotal_temp_2" value="0">
+                                                </td> 
+                                            </tr>
+                                            <tr class="toclone" id="current_row"><!-- form template -->
+                                                
+                                                
+                                                <td align="right" width="88.5%">
+                                                    Discount : 
+                                                </td>
+                                                <td align="center">
+                                                   RM <span id="copy_discount"></span>
+                                                </td> 
+                                            </tr>
+                                            <tr class="toclone" id="current_row"><!-- form template -->
+                                                
+                                                
+                                                <td align="right" width="88.5%">
+                                                    New Sub Total :
+                                                </td>
+                                                <td align="center">
+                                                   RM <span id="newsubtotal"></span>
+                                                </td> 
+                                            </tr> 
+                                            <tr class="toclone" id="current_row"><!-- form template -->
+                                                
+                                                
+                                                <td align="right" width="88.5%">
+                                                    Total :
+                                                </td>
+                                                <td align="center">
+                                                   RM <span id="total"></span>
+                                                </td> 
+                                            </tr><!-- end form template -->
+                                                                             
+                                        </tbody>
+                                    </table>
 
                                 </div><!-- /.box-body -->
                                 
@@ -302,6 +340,8 @@
 
 <script>
 $(function(){
+
+    var  jum = 0;
 
     $('#quote').cloneya({
             limit           : 999,
@@ -315,6 +355,61 @@ $(function(){
             serializeID     : true
     });
 
+
+
+    $('input[type=text]').on('keyup', function(){
+
+        var current = $(this);
+           
+           
+
+            if(current.data('calculate')){
+                
+                var currentId = current.attr('id'),
+                    num = currentId.replace(/\D/g,'');
+
+
+                    num = (num == "") ? "" : num;
+
+
+                var  price = ($('#'+ 'item_price' + num)!= "") ? $('#'+ 'item_price' + num).val() : "", 
+                     qtty = ($('#'+ 'item_quantity' + num)!= "") ? $('#'+ 'item_quantity' + num).val() : "",
+                     disc = ($('#'+ 'item_discount' + num)!= "") ? $('#'+ 'item_discount' + num).val() : "",
+                     subtot = $('#'+ 'item_subtotal' + num),
+                     subtotal_temp = $('#subtotal_temp'),
+                     subtotal_temp_2 = $('#subtotal_temp_2');
+
+                    
+                     if(qtty || price || disc){
+                       subtot.val((Number(qtty) * Number(price)) - Number(disc)); //subtotal in rows
+                       jum = Number(jum) + Number(subtot.val());
+                    }
+                       /*if(jum > subtot.val()){
+                            jum = (Number(subtot.val())*2) - Number(disc);
+                       }
+                       else
+                       {
+
+                       }*/
+
+                       
+                      
+                      
+                     
+                     subtotal_temp_2.val(subtot.val());
+                     subtotal_temp.val(jum);
+                     
+                    
+                    
+
+            }
+            else{
+                
+            }
+
+      
+       
+    })
      
 
     

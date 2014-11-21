@@ -16,7 +16,7 @@ if($jenis=="display")
                                                     <td style="width:10px">:</td>
                                                     <td>
                                                         <div class="col-xs-13">
-                                                         <input type="text" value="<?php echo $id_table_row;?>" name="<?php echo $id_table_row.$current_no;?>" id="<?php echo $id_table_row.$current_no;?>">
+                                                         <!-- <input type="text" value="<?php echo $current_no;?>" name="<?php echo $id_table_row;?>" id="<?php echo $id_table_row;?>"> -->
                                                         <select class="form-control catproduct_id" name="catproduct_id" required="">
                                                             <option value="">Please select</option>
                                                                                                                     
@@ -37,10 +37,11 @@ if($jenis=="display")
                                                     <th>Product</th>
                                                     <td>:</td>
                                                     <td>
-                                                        <div class="col-xs-13">
-                                                        <select class="form-control product_id" name="product_id" required="">
+                                                        <div class="col-xs-13" id="o_product">
+                                                        <!-- <select class="form-control product_id" name="product_id" required="">
                                                             <option value="">Please select</option>                                 
-                                                        </select>
+                                                        </select> -->
+                                                        
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -53,15 +54,19 @@ if($jenis=="display")
 <?php }
 else if($jenis=="get_product") 
     { ?>
-
+<!-- <input type="text" value="<?php echo $current_no;?>" name="<?php echo $id_table_row.$current_no;?>" id="<?php echo $id_table_row.$current_no;?>">  -->
+                                                           <select class="form-control product_id" name="product_id" required="">
+                                                           
                                                             <option value="">Please select</option>
                                                                                                                     
                                                             <?php 
                                                             foreach($product as $value){
                                                             ?>
-                                                                <option value="<?php echo $value['product_id'];?>"><?php echo $value['product_name'];?></option>
+                                                                <option value="<?php echo $value['product_id'];?>"><?php echo $value['product_name'];?>
+                                                            </option>
 <?php
                                                             }
+                                                            echo '</select>';
    }
  ?>
 
@@ -81,12 +86,13 @@ else if($jenis=="get_product")
 
 
                                             var catproduct_id = $(this).val(),
-                                                product_id    = $('.product_id');
+                                                product_id    = $('.product_id'),
+                                                o_product    = $('#o_product');
 
                                             var id_table_row = '<?php echo $id_table_row; ?>';
-                                            var current_no = '<?php echo $id_table_row; ?>';
+                                            var current_no = '<?php echo $current_no; ?>';
 
-
+                                            //alert(current_no);
                                                 
                                             $.ajax({
 
@@ -94,10 +100,12 @@ else if($jenis=="get_product")
                                                 url  : "<?php echo base_url();?>quotes/ajax_product",
                                                 data :{ 
                                                         jenis : "get_product",
-                                                        catproduct_id : catproduct_id
+                                                        catproduct_id : catproduct_id,
+                                                        id_table : id_table_row,
+                                                        no : current_no
                                                       },
                                                 success : function(a){
-                                                    product_id.html(a);
+                                                    o_product.html(a);
                                                      }
                                             });
                                          });
@@ -112,20 +120,26 @@ else if($jenis=="get_product")
                                                 var product_id       = $('.product_id'),
                                                 catproduct_id        = $(this).val();
 
-                                                var item_name = $('#<?php echo $id_table_row;?>'+'<?php echo $current_no;?>').find('input').attr('id');
+                                                var id_table_row = '<?php echo $id_table_row; ?>';
+                                                var current_no = '<?php echo $current_no; ?>';
 
-                                                alert(item_name);
-                                                //pro_id.val(product_id.val());
-                                            
+                                                var item_name = $('#item_name'+current_no),
+                                                    item_description = $('#item_description'+current_no),
+                                                    item_quantity = $('#item_quantity'+current_no),
+                                                    item_price = $('#item_price'+current_no),
+                                                    item_subtotal = $('#item_subtotal'+current_no),
+                                                    subtotal_temp = $('#subtotal_temp'), //subtotal_temp temporaray value for subtotal
+                                                    subtotal = $('#subtotal'), //display total for subtotal item
+                                                    total = $('#total'); /** display total for All **/
 
 
-                                           
+                                                    var sumtotal = 0;
+                                                                                       
 
-                                              
-                                                    /*$.ajax({
+                                                    $.ajax({
 
                                                     type : 'POST',
-                                                    url  : "<?php echo base_url();?>jobs/ajax_product",
+                                                    url  : "<?php echo base_url();?>quotes/ajax_product",
                                                     dataType : 'json',
                                                     data :{ 
                                                             jenis : "assign_product",
@@ -135,12 +149,21 @@ else if($jenis=="get_product")
                                                     dataType : 'json',
                                                     success : function(a){
                                                         
-                                                        job_task_description.val("[" + a.product[0].catproduct_name + "] " + a.product[0].product_name);
-                                                        job_task_hour.val(a.product[0].product_quantity);
-                                                        job_task_amount.val(a.product[0].product_amount);
-                                                      
+                                                        item_name.val("[" + a.product[0].catproduct_name + "] " + a.product[0].product_name);
+                                                        item_description.val(a.product[0].product_desc);
+                                                        item_quantity.val(a.product[0].product_quantity);
+                                                        item_price.val(a.product[0].product_amount);
+
+                                                        var total_subtotal = item_quantity.val() * item_price.val();
+                                                            item_subtotal.val(total_subtotal);
+
+
+                                                        //sumtotal = total_subtotal + total.val();
+                                                        subtotal_temp.val(Number(subtotal_temp.val()) + Number(total_subtotal));
+                                                        subtotal.html(subtotal_temp.val());
+                                                        
                                                     }
-                                                });*/
+                                                });
 
                                                
                                            

@@ -113,8 +113,8 @@ class Quotes extends CI_Controller {
         else if($jenis=="get_product")
         {
             $table            = "products";
-            $data['id_table_row'] = $this->input->post('id_table_row');
-            $data['current_no'] = $this->input->post('current_no');
+            $data['id_table_row'] = $this->input->post('id_table');
+            $data['current_no'] = $this->input->post('no');
             $catproduct_id   = $this->input->post('catproduct_id');
             $where = array('catproduct_id'=>$catproduct_id);
             $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false);

@@ -19,7 +19,7 @@
  * @copyright  2014 SEGI MiDae
  * @version    0.4.1
 */
-class Jobs extends CI_Controller {
+class Jobs extends MY_Controller {
 
     public function access_map(){
         return array(
@@ -93,14 +93,7 @@ class Jobs extends CI_Controller {
     public function index()
     {
 
-        // Component
-        $this->output->enable_profiler(TRUE); //Profiler Debug
-        $this->load->model('Midae_model');
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc']  = "Job Form"; //function purpose here.
-
-        //End of component
+        
 
         $crud  = new grocery_CRUD();
         $state = $crud->getState();
@@ -236,7 +229,7 @@ class Jobs extends CI_Controller {
                 
                
            }
-            $data['token_val'] = $this->security->get_csrf_hash();
+           $data['token_val'] = $this->security->get_csrf_hash();
            $this->load->view('job_edit.php', $data);
 
         }
@@ -248,7 +241,7 @@ class Jobs extends CI_Controller {
             $crud->callback_column('job_type_id',array($this,'crud_job_type'))
                  ->callback_column('job_status',array($this,'crud_job_status'));
             $output = $crud->render();
-            $output = array_merge($data,(array)$output);
+            //$output = array_merge($data,(array)$output);
             $this->load->view('cruds.php',$output);
         }
 
