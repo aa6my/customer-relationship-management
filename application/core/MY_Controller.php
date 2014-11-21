@@ -40,6 +40,7 @@ class MY_Controller extends CI_Controller {
              'top_desc' => $td
 
         ));
+        $this->output->enable_profiler(TRUE);
     }   
 }
 

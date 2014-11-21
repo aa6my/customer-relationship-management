@@ -33,21 +33,42 @@
                         <li class="active"><?php echo $top_title;?></li>
                     </ol>
                 </section>
-                <div class="pad margin no-print">
-                    <div class="alert alert-info" style="margin-bottom: 0!important;">
-                        <i class="fa fa-info"></i>
-                        <b>Note:</b> This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
-                    </div>
-                </div>				
+                
 
                 <!-- Main content -->
+                <section class="content">
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title">Preferences</h3>
+                                </div><!-- /.box-header -->
+                                <?php $this->load->view('setting-top-menu'); ?>
+                                <!-- form start -->
+                                <?php $attributes = array('role' => 'form'); ?>
+                                <?php echo form_open("settings/updatesetting", $attributes); ?>
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Sitename</label>
+                                            <input type="text" class="form-control" id="sitename" name="sitename" value="<?php echo $this->config->item('sitename'); ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Site Description</label>
+                                            <input type="text" class="form-control" id="sitedescription" name="sitedescription" value="<?php echo $this->config->item('sitedescription'); ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Time Zone</label>&nbsp;<a href="http://php.net/manual/en/timezones.php" target="_blank">[Timezone]</a>
+                                            <input type="text" class="form-control" id="sitedescription" name="timezone" value="<?php echo $this->config->item('timezone'); ?>">
+                                        </div>
+                                    </div><!-- /.box-body -->
 
+                                    <div class="box-footer">
+                                        <button type="submit" value="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                <?php echo form_close(); ?>
+                            </div>
+                </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- AdminLTE App -->
-        <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
     </body>
 </html>

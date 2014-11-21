@@ -21,7 +21,7 @@
  * @version    0.4.1
 */
 
-class Settings extends CI_Controller {
+class Settings extends MY_Controller {
 
     public function access_map(){
         return array(
@@ -40,8 +40,6 @@ class Settings extends CI_Controller {
     public function __construct() 
     {
         parent::__construct();
-        $this->load->helper('form');
-        $this->load->helper('url');
     }
 
     public function index() //setting
@@ -50,12 +48,8 @@ class Settings extends CI_Controller {
         if($this->ezrbac->getCurrentUser()->user_role_id !=  $this->ezrbac->getCurrentUserID()){
             show_error('you do not have permission to access this resource', 403);
         }else{
-            // Component
-            $data['user_meta'] = $this->Midae_model->get_user_meta();
-            $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-            $data['top_desc'] = "Control Panel"; //function purpose here.
-            //End of component
-            $this->load->view('settings', $data);
+
+            $this->load->view('settings');
         }
 
     }
@@ -65,13 +59,6 @@ class Settings extends CI_Controller {
         if($this->ezrbac->getCurrentUser()->user_role_id !=  $this->ezrbac->getCurrentUserID()){
             show_error('you do not have permission to access this resource', 403);
         }else{
-            // Component
-            $data['user_meta'] = $this->Midae_model->get_user_meta();
-            $data['top_title'] = ucwords(strtolower($this->uri->segment('2'))); //URI title.
-            $data['top_desc'] = "Change your page purpose here"; //function purpose here.
-            $this->output->enable_profiler(TRUE); //Profiler Debug
-            //End of component
-     
             $crud = new grocery_CRUD();
             $state = $crud->getState();
             $crud->set_theme('datatables');
@@ -100,7 +87,7 @@ class Settings extends CI_Controller {
             }else{
             $crud->columns('email','user_role_id','last_login','last_login_ip');
             $output = $crud->render();
-            $output = array_merge($data,(array)$output);
+            //$output = array_merge($data,(array)$output);
             $this->load->view('users.php',$output);
             }
         }
@@ -130,14 +117,8 @@ class Settings extends CI_Controller {
     function email() {
         if($this->ezrbac->getCurrentUser()->user_role_id !=  $this->ezrbac->getCurrentUserID()){
             show_error('you do not have permission to access this resource', 403);
-        }else{
-            // Component
-            $data['user_meta'] = $this->Midae_model->get_user_meta();
-            $data['top_title'] = ucwords(strtolower($this->uri->segment('2'))); //URI title.
-            $data['top_desc'] = "Change your page purpose here"; //function purpose here.
-            //End of component 
-            
-            $this->load->view('setting-email', $data);
+        }else{    
+            $this->load->view('setting-email');
         }
     }
         

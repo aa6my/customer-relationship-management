@@ -21,7 +21,7 @@
  * @version    0.4.1
 */
 
-class Products extends CI_Controller {
+class Products extends MY_Controller {
 
     public function access_map(){
         return array(
@@ -40,13 +40,6 @@ class Products extends CI_Controller {
 
     public function index()
     {
-        // Component
-        $this->output->enable_profiler(TRUE); //Profiler Debug
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "Product & Goods"; //function purpose here.
-        //End of component
-
         $crud = new grocery_CRUD();
         $state = $crud->getState();
         $crud->set_theme('datatables');
@@ -66,13 +59,13 @@ class Products extends CI_Controller {
        	
         $crud->callback_before_insert(array($this,'_last_update'));
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         }
         else{
         $crud->columns('product_sku','product_name','product_quantity','product_amount');
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         } 
 
@@ -81,14 +74,6 @@ class Products extends CI_Controller {
 
     public function category()
     {
-
-        // Component
-        //$this->output->enable_profiler(TRUE); //Profiler Debug
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "Product Category"; //function purpose here.
-        //End of component
-
         $crud = new grocery_CRUD();
         $state = $crud->getState();
         $crud->set_theme('datatables');
@@ -98,26 +83,9 @@ class Products extends CI_Controller {
         $crud->unset_print();
 
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         
-
-    }
-
-    public function test()
-    {
-		global $midae;
-       	print_r($midae);	
-        //print_r($data);
-        //
-        $data['test1'] = "ayam";
-        $data['test2'] = "lembu";
-        echo "<br>";
-        //echo $midae[0]['first_name'];
-
-        //$this->load->view($data);
-
-
 
     }
 

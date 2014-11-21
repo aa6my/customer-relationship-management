@@ -21,7 +21,7 @@
  * @version    0.4.1
 */
 
-class Calendar extends CI_Controller {
+class Calendar extends MY_Controller {
 
     public function __construct()
     {
@@ -40,22 +40,10 @@ class Calendar extends CI_Controller {
 
     public function index(){
 
-        // Component
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "List of Planned Events"; //function purpose here.
-        //End of component
-        $this->load->view('calendar', $data);
+        $this->load->view('calendar');
     }
 
     public function view(){
-
-        // Component
-        // $this->output->enable_profiler(TRUE); //Profiler Debug
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "Change your page purpose here"; //function purpose here.
-        //End of component
 
         $crud = new grocery_CRUD();
         $state = $crud->getState();
@@ -71,7 +59,7 @@ class Calendar extends CI_Controller {
 
         if($state == "add" | $state == "edit"){
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         }elseif ($state == "read") {
         redirect(base_url() . "calendar");
@@ -91,12 +79,7 @@ class Calendar extends CI_Controller {
 
     public function events(){
 
-        // Component
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "Change your page purpose here"; //function purpose here.
-        //End of component
-        $this->load->view('add_event', $data);
+        $this->load->view('add_event');
 
     }
 

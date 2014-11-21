@@ -86,9 +86,6 @@
         </div><!-- ./wrapper -->
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- AdminLTE App -->
-        <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
         <script src="<?php echo base_url() ?>assets/calendar/underscore/underscore-min.js"></script>
         <script src="<?php echo base_url() ?>assets/calendar/bootstrap-calendar/js/calendar.js"></script>
         <script type="text/javascript">
