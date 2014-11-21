@@ -26,7 +26,8 @@ class Quotes extends CI_Controller {
     public function access_map(){
         return array(
             'index'=>'view',
-            'update'=>'edit'
+            'update'=>'edit',
+            'ajax_product' => 'view'
         );
     }
 
@@ -91,30 +92,52 @@ class Quotes extends CI_Controller {
          }
 
 
+
+    }
+
+
+    public function ajax_product(){
+
+        $data['jenis'] = $this->input->post('jenis'); // will display to view part
+        //$data['add_product'] = $this->input->post('add_product');
+        $jenis = $this->input->post('jenis'); //for condition only
+
+        if($jenis=="display")
+        {
+            $table            = "catproduct";
+            $data['id_table_row'] = $this->input->post('id_table_row');
+            $data['current_no'] = $this->input->post('current_no');
+            $data['category'] = $this->Midae_model->get_all_rows($table,false, false, false);
+            $this->load->view('quote_ajax_product', $data, FALSE);
+        }
+        else if($jenis=="get_product")
+        {
+            $table            = "products";
+            $data['id_table_row'] = $this->input->post('id_table_row');
+            $data['current_no'] = $this->input->post('current_no');
+            $catproduct_id   = $this->input->post('catproduct_id');
+            $where = array('catproduct_id'=>$catproduct_id);
+            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false);
+            $this->load->view('quote_ajax_product', $data, FALSE);
+
+        }
+        else if($jenis=="assign_product")
+        {
+            header('Content-Type: application/json');
+            $table = "products";
+            $product_id   = $this->input->post('product_id');
+            $catproduct_id   = $this->input->post('catproduct_id');
+            $where = array('product_id'=>$product_id);
+            $tableNameToJoin = "catproduct";
+            $tableRelation = "products.catproduct_id = catproduct.catproduct_id";
+            $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation);
+            echo json_encode($return);
+            //$this->load->view('ajax_product', $data, FALSE);
+
+
+        }
+
         
-
-
-
-
-
-
-
-
-       /**********************************************
-        * Callback before insert ==> Change form elements into customs element
-        */
-        
-        /*$crud->field_type('quote_status','dropdown', array('0' => 'draft',
-                                                           '1' => 'sent',
-                                                           '2' => 'viewed',
-                                                           '3' => 'approved' , 
-                                                           '4' => 'rejected',
-                                                           '5' => 'canceled'));*/
-
-
-        
-        
-
 
     }
 

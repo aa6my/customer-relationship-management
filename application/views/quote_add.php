@@ -217,12 +217,36 @@
                                                 <th>Discount</th>
                                                 <th>Subtotal</th> 
                                             </tr>
-                                             <tr class="toclone"><!-- form template -->
+                                             <tr class="toclone" id="current_row"><!-- form template -->
                                                 <td>
                                                     <input type="text" class="form-control input-sm" placeholder="" id="item_name" name="item_name[]">
                                                     <br/>
-                                                    <a class='buttonProduct' href="#inline_content"><!-- <button class="btn btn-success btn-sm buttonProduct">Add Item From Products</button> -->Fetch data from product</a>
-                                                    
+                                                    <a class='buttonProduct' href="#inline_content" id="papar_product"><!-- <button class="btn btn-success btn-sm buttonProduct">Add Item From Products</button> -->Fetch data from product</a>
+                                                    <script>
+                                                    $(function(){
+
+                                                        
+                                                        $('a.buttonProduct').on('click',function(){
+
+                                                            var current_id = $(this);
+                                                            var id_table_row = current_id.closest('tr').attr('id');
+                                                            var current_no = id_table_row.replace(/\D/g,'');
+                                                            //alert(current_no);
+                                                            
+
+                                                           $('#'+current_id.attr('id')).colorbox({ 
+                                                                        href : "<?php echo base_url();?>quotes/ajax_product",
+                                                                        data :{ jenis       : 'display',
+                                                                                id_table_row : id_table_row,
+                                                                                current_no  : current_no}
+                                                                           
+                                                                    });
+
+                                                        });
+
+                                                         
+                                                    });
+                                                    </script>
                                                     </td>
                                                <td>
                                                     <textarea class="form-control" rows="3" placeholder="" id="item_description" name="item_description[]"></textarea>
@@ -293,7 +317,7 @@ $(function(){
 
      
 
-     $(".buttonProduct").colorbox({inline:true, width:"50%"});
+    
 
 });
 
