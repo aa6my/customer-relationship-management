@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2014 at 11:11 AM
+-- Generation Time: Nov 21, 2014 at 11:05 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -795,7 +795,7 @@ CREATE TABLE IF NOT EXISTS `quotes` (
   `quote_discount` double NOT NULL,
   `quote_customer_notes` text NOT NULL,
   `quote_status` tinyint(4) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -806,6 +806,7 @@ CREATE TABLE IF NOT EXISTS `quotes` (
 CREATE TABLE IF NOT EXISTS `quotes_items` (
 `item_id` int(11) NOT NULL,
   `quote_id` int(11) NOT NULL,
+  `product_id` int(5) NOT NULL DEFAULT '0' COMMENT 'from product table',
   `item_name` varchar(300) NOT NULL,
   `item_description` text NOT NULL,
   `item_price` double NOT NULL,
@@ -813,7 +814,7 @@ CREATE TABLE IF NOT EXISTS `quotes_items` (
   `Item_tax_rate_id` int(11) NOT NULL,
   `item_discount` double NOT NULL,
   `item_order` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -841,7 +842,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-20 02:15:59', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-21 07:44:38', '::1', NULL, NULL, NULL, 1, 1),
 (2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
@@ -1224,12 +1225,12 @@ MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `quotes`
 --
 ALTER TABLE `quotes`
-MODIFY `quote_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `quote_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `quotes_items`
 --
 ALTER TABLE `quotes_items`
-MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `system_users`
 --
