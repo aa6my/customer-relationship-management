@@ -2,6 +2,9 @@ RewriteEngine on
 
 RewriteCond %{HTTPS} off
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+#SSLCertificateFile /path/to/your_domain_name.crt
+#SSLCertificateKeyFile /path/to/your_private.key
+#SSLCertificateChainFile /path/to/DigiCertCA.crt
 
 RewriteBase /customer-relationship-management/
 RewriteCond $1 !^(index\.php|resources|robots\.txt)
