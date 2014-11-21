@@ -35,7 +35,7 @@ class Dashboard extends CI_Controller {
         $this->load->model('Midae_model');
         $data['user_meta'] = $this->Midae_model->get_user_meta();
         $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "Change your page purpose here"; //function purpose here.
+        $data['top_desc'] = "Instant Display"; //function purpose here.
         //End of component
         $table = "products";
         $data['product'] = $this->Midae_model->get_count_product($table);
