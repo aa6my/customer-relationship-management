@@ -129,7 +129,7 @@ else if($jenis=="get_product")
                                                     item_price       = $('#item_price'+current_no),
                                                     item_subtotal    = $('#item_subtotal'+current_no),
                                                     quote_product_id = $('#quote_product_id'+current_no),
-                                                    subtotal_temp    = $('#subtotal_temp'), //subtotal_temp temporaray value for subtotal
+                                                    //subtotal_temp    = $('#subtotal_temp'), //subtotal_temp temporaray value for subtotal
                                                     subtotal         = $('#subtotal'), //display total for subtotal item
                                                     total            = $('#total'); /** display total for All **/
                                                     
@@ -162,8 +162,9 @@ else if($jenis=="get_product")
 
 
                                                         //sumtotal = total_subtotal + total.val();
-                                                        subtotal_temp.val(Number(subtotal_temp.val()) + Number(total_subtotal));
-                                                        subtotal.html(subtotal_temp.val());
+                                                       // subtotal_temp.val(Number(subtotal_temp.val()) + Number(total_subtotal));
+                                                        //subtotal.html(subtotal.val());
+                                                        calculateGrandTotal_ajax();
                                                         
                                                     }
                                                 });
@@ -172,5 +173,14 @@ else if($jenis=="get_product")
                                            
 
                                         });
+
+
+                                     function calculateGrandTotal_ajax() {
+                                        var grandTotal = 0;
+                                        $('#quote [id *=item_subtotal]').each(function(x,y){
+                                            grandTotal += +Number($(this).val());
+                                        });
+                                        $('#subtotal').html(grandTotal);
+                                    }
  });
  </script>

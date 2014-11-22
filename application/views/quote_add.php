@@ -250,7 +250,7 @@
                                                     </td>
                                                <td>
                                                     <textarea class="form-control" rows="3" placeholder="" id="item_description" name="item_description[]"></textarea>
-                                                    <input type="text" name="quote_product_id[]" id="quote_product_id">
+                                                    <input type="hidden" name="quote_product_id[]" id="quote_product_id">
                                                 </td>
                                                   <td align="center">
                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" data-calculate="a">
@@ -293,8 +293,8 @@
                                                 </td>
                                                 <td align="center">
                                                    RM <span id="subtotal"></span>
-                                                   <input type="text" id="subtotal_temp" value="0">
-                                                   <input type="text" id="subtotal_temp_2" value="0">
+                                                   <!-- <input type="text" id="subtotal_temp" value="0">
+                                                   <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>
                                             </tr>
                                             <tr class="toclone" id="current_row"><!-- form template -->
@@ -350,6 +350,10 @@ $(function(){
 
     var  jum = 0;
 
+    /****************************************************
+    *   clone row table
+    *   
+    ****************************************************/
     $('#quote').cloneya({
             limit           : 999,
             cloneThis       : '.toclone',
@@ -360,6 +364,17 @@ $(function(){
             deleteButton    : '.delete',
             clonePosition   : 'after',
             serializeID     : true
+    });
+
+
+    /****************************************************
+    * Trigered when delete button was clicked
+    * 
+    ****************************************************/
+     $('#quote').on( 'clone_after_delete', function(e,newclone){
+        
+        calculateGrandTotal();
+        
     });
 
 
@@ -385,40 +400,31 @@ $(function(){
                      subtot = $('#'+ 'item_subtotal' + num),
                      subtotal_temp = $('#subtotal_temp'),
                      subtotal_temp_2 = $('#subtotal_temp_2');
+                     //table_quote =$('#quote');
 
 
                      if(qtty || price || disc){
                        subtot.val((Number(qtty) * Number(price)) - Number(disc)); //subtotal in rows
-                       jum = Number(jum) + Number(subtot.val());
+                      calculateGrandTotal();
+
+
                     }
-                       /*if(jum > subtot.val()){
-                            jum = (Number(subtot.val())*2) - Number(disc);
-                       }
-                       else
-                       {
-
-                       }*/
-
-
-
-
-
-                     subtotal_temp_2.val(subtot.val());
-                     subtotal_temp.val(jum);
-
-
-
 
             }
             else{
                 // do nothing
             }
 
-
-
     })
 
 
+    function calculateGrandTotal() {
+        var grandTotal = 0;
+        $('#quote [id *=item_subtotal]').each(function(x,y){
+            grandTotal += +Number($(this).val());
+        });
+        $('#subtotal').html(grandTotal);
+    }
 
 
 });
