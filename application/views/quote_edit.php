@@ -62,7 +62,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_date_created">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_date_created" value="<?php echo $quote['quote_date_created'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -77,7 +77,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_valid_until">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_valid_until" value="<?php echo $quote['quote_valid_until'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -89,10 +89,10 @@
                                             <td>
                                                 <div class="col-xs-5">
                                                     <select class="form-control" name="quote_status">
-                                                        <option value="0">DRAFT</option>
-                                                        <option value="1">APPROVED</option>
-                                                        <option value="2">REJECTED</option>
-                                                        <option value="3">CANCEL</option>
+                                                        <option value="0" <?php if($quote['quote_status']==0) echo 'selected';?>>DRAFT</option>
+                                                        <option value="1" <?php if($quote['quote_status']==1) echo 'selected';?>>APPROVED</option>
+                                                        <option value="2" <?php if($quote['quote_status']==2) echo 'selected';?>>REJECTED</option>
+                                                        <option value="3" <?php if($quote['quote_status']==3) echo 'selected';?>>CANCEL</option>
 
                                                     </select>
                                                 </div>
@@ -153,7 +153,7 @@
 
                                                                <div class="col-xs-12">
                                                                <strong>Quote Subject</strong><br/>
-                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_subject"></textarea>
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_subject"><?php echo $quote['quote_subject'];?></textarea>
                                                                 </div>
 
                                               </td>
@@ -167,7 +167,7 @@
 
                                                                <div class="col-xs-12">
                                                               <strong>Quote Terms</strong><br/>
-                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_customer_notes"></textarea>
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_customer_notes"><?php echo $quote['quote_customer_notes'];?></textarea>
                                                                 </div>
 
                                               </td>
@@ -218,9 +218,14 @@
                                                 <th>Discount</th>
                                                 <th>Subtotal</th>
                                             </tr>
+                                            <?php
+                                            foreach($quote_items as $data)
+                                            {?>
                                              <tr class="toclone" id="current_row"><!-- form template -->
                                                 <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" id="item_name" name="item_name[]">
+                                                    <input type="text" class="form-control input-sm" placeholder="" id="item_name" name="item_name[]" value="<?php echo $data['quote_item_name'];?>">
+                                                    <input type="text" name="quote_product_id[]" id="quote_product_id" value="<?php echo $data['product_id'];?>">
+                                                    <input type="text" name="quote_item_id[]" id="quote_item_id" value="<?php echo $data['quote_item_id'];?>">
                                                     <br/>
                                                     <a class='buttonProduct' href="#inline_content" id="papar_product"><!-- <button class="btn btn-success btn-sm buttonProduct">Add Item From Products</button> -->Fetch data from product</a>
                                                     <script>
@@ -250,22 +255,22 @@
                                                     </script>
                                                     </td>
                                                <td>
-                                                    <textarea class="form-control" rows="3" placeholder="" id="item_description" name="item_description[]"></textarea>
-                                                    <input type="hidden" name="quote_product_id[]" id="quote_product_id">
+                                                    <textarea class="form-control" rows="3" placeholder="" id="item_description" name="item_description[]"><?php echo $data['quote_item_description'];?></textarea>
+                                                    
                                                 </td>
                                                   <td align="center">
-                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" data-calculate="a">
+                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" data-calculate="a" value="<?php echo $data['quote_item_quantity'];?>">
 
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price" data-calculate="a">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price" data-calculate="a" value="<?php echo $data['quote_item_price'];?>">
                                                 </td>
 
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_discount[]" id="item_discount" data-calculate="a">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_discount[]" id="item_discount" data-calculate="a" value="<?php echo $data['quote_item_discount'];?>">
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_subtotal[]" id="item_subtotal" readonly="readonly">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_subtotal[]" id="item_subtotal" readonly="readonly" value="<?php echo $data['quote_item_subtotal'];?>">
                                                     <br/>
                                                     <a href="#" class="clone" data-subTotal="subtotal">
                                                         <button type="button" class="btn btn-default" >
@@ -279,7 +284,9 @@
                                                     </a>
                                                 </td>
                                             </tr> <!-- end form template -->
-
+                                            <?php
+                                        }
+                                        ?>
                                         </tbody>
                                     </table>
                                     <br />
@@ -298,36 +305,7 @@
                                                    <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>
                                             </tr>
-                                            <!-- <tr class="toclone" id="current_row">
-
-
-                                                <td align="right" width="88.5%">
-                                                    Discount :
-                                                </td>
-                                                <td align="center">
-                                                   RM <span id="copy_discount"></span>
-                                                </td>
-                                            </tr>
-                                            <tr class="toclone" id="current_row">
-
-
-                                                <td align="right" width="88.5%">
-                                                    New Sub Total :
-                                                </td>
-                                                <td align="center">
-                                                   RM <span id="newsubtotal"></span>
-                                                </td>
-                                            </tr>
-                                            <tr class="toclone" id="current_row">
-
-
-                                                <td align="right" width="88.5%">
-                                                    Total :
-                                                </td>
-                                                <td align="center">
-                                                   RM <span id="total"></span>
-                                                </td>
-                                            </tr> -->
+                                            
 
                                         </tbody>
                                     </table>
@@ -349,6 +327,7 @@
 <script>
 $(function(){
 
+    calculateGrandTotal();
     var  jum = 0;
 
     /****************************************************
@@ -374,10 +353,22 @@ $(function(){
     ****************************************************/
      $('#quote').on( 'clone_after_delete', function(e,newclone){
         
+        var parent = $(this).attr('class');
+        //alert(parent);
         calculateGrandTotal();
+        console.log(e);
+        
+        /* $('.delete').on( 'click', function(e,newclone){
+        
+            var parent = $(this).attr('class');
+            alert(parent);
+            
+        
+        });*/
         
     });
 
+    
 
 
     $('input[type=text]').on('keyup', function(){

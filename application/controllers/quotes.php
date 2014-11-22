@@ -62,13 +62,15 @@ class Quotes extends CI_Controller {
        /**********************************************
         *  Rendering in datatables
         */
-        $crud->columns('quote_status','quote_id','quote_date_created','invoice_date_created','quote_valid_until','job_task_id')
-             ->display_as('quote_id','Quotes no.')
-             ->display_as('invoice_date_created','Date issued')
+        $crud->columns('quote_status','quote_id','quote_date_created','quote_valid_until','job_task_id')
+             ->display_as('quote_id','Quotes no(#)')
+             ->display_as('quote_date_created','Date issued')
              ->display_as('quote_valid_until','Valid until')
              ->display_as('job_task_id','Item');
 
-        $crud->callback_after_delete(array($this,'delete_quote_n_quoteitems')); 
+
+
+        $crud->callback_after_delete(array($this,'delete_quote_n_quoteitems'));
 
          /**********************************************
         * When Add button clicked ==> View this part
@@ -116,16 +118,52 @@ class Quotes extends CI_Controller {
 
             }
          }
-         else if($state=="edit"){
+         else if($state=="edit")
+         {
+             $data['top_title']   = ucwords(strtolower($this->uri->segment('1'))); //URI title.
+             $data['top_desc']    = "Change your page purpose here"; /** function purpose here.**/
+
+             $data['quote_id']    = $this->uri->segment(4) ;
+             $table               = "quotes";
+             $where               = array('quote_id' => $data['quote_id']);
+             $data['quote']       = $this->Midae_model->get_specified_row($table,$where,false);
+             $table               = "quote_items";
+             $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false);
+             $this->load->view('quote_edit',$data);
+        }
+        else
+        {
+
+             $crud->callback_column('quote_status',array($this,'crud_quote_status'));
+             $output              = $crud->render();
+             $output              = array_merge($data,(array)$output);
+             $this->load->view('cruds.php',$output);
          }
-         else{
-            $output = $crud->render();
-            $output = array_merge($data,(array)$output);
-            $this->load->view('cruds.php',$output);
-         }
 
 
 
+    }
+
+    public function crud_quote_status($value, $row)
+    {
+        $stat = "";
+        $status = array(0 => '<font color="blue"><strong>DRAFT</strong></font>',
+                        1 => '<font color="green"><strong>ACCEPTED</strong></font>',
+                        2 => '<font color="red"><strong>REJECTED</strong></font>',
+                        3 => '<font color="yellow"><strong>CANCELED</strong></font>'
+                        );
+
+        foreach($status as $key => $val){
+
+            if($value==$key){
+                $stat = $val;
+                break;
+            }
+        }
+
+
+
+        return $stat;
     }
 
     function delete_quote_n_quoteitems($quote_id){

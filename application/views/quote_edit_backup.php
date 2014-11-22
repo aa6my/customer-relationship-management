@@ -62,7 +62,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_date_created">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_date_created" value="<?php echo $quote['quote_date_created'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -77,7 +77,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_valid_until">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_valid_until" value="<?php echo $quote['quote_valid_until'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -89,10 +89,10 @@
                                             <td>
                                                 <div class="col-xs-5">
                                                     <select class="form-control" name="quote_status">
-                                                        <option value="0">DRAFT</option>
-                                                        <option value="1">APPROVED</option>
-                                                        <option value="2">REJECTED</option>
-                                                        <option value="3">CANCEL</option>
+                                                        <option value="0" <?php if($quote['quote_status']==0) echo 'selected';?>>DRAFT</option>
+                                                        <option value="1" <?php if($quote['quote_status']==1) echo 'selected';?>>APPROVED</option>
+                                                        <option value="2" <?php if($quote['quote_status']==2) echo 'selected';?>>REJECTED</option>
+                                                        <option value="3" <?php if($quote['quote_status']==3) echo 'selected';?>>CANCEL</option>
 
                                                     </select>
                                                 </div>
@@ -153,7 +153,7 @@
 
                                                                <div class="col-xs-12">
                                                                <strong>Quote Subject</strong><br/>
-                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_subject"></textarea>
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_subject"><?php echo $quote['quote_subject'];?></textarea>
                                                                 </div>
 
                                               </td>
@@ -167,7 +167,7 @@
 
                                                                <div class="col-xs-12">
                                                               <strong>Quote Terms</strong><br/>
-                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_customer_notes"></textarea>
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_customer_notes"><?php echo $quote['quote_customer_notes'];?></textarea>
                                                                 </div>
 
                                               </td>
