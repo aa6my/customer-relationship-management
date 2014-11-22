@@ -44,7 +44,7 @@ class Quotes extends CI_Controller {
     public function index()
     {
 
-       
+
         $this->output->enable_profiler(TRUE); //Profiler Debug
         $this->load->model('Midae_model');
         $data['user_meta'] = $this->Midae_model->get_user_meta();
@@ -57,9 +57,8 @@ class Quotes extends CI_Controller {
         $state = $crud->getState();
         $crud->set_theme('datatables');
         $crud->set_table('quotes');
-        $crud->set_subject('Quotes');        
-        
-        
+        $crud->set_subject('Quotes');
+
        /**********************************************
         *  Rendering in datatables
         */
@@ -69,9 +68,7 @@ class Quotes extends CI_Controller {
              ->display_as('quote_valid_until','Valid until')
              ->display_as('job_task_id','Item');
 
-        
-
-      
+        $crud->callback_after_delete(array($this,'delete_quote_n_quoteitems')); 
 
          /**********************************************
         * When Add button clicked ==> View this part
@@ -79,9 +76,45 @@ class Quotes extends CI_Controller {
          if($state=="add"){
 
             $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-            $data['top_desc']  = "Change your page purpose here"; //function purpose here.*/
-            //$data['groupData'] = $this->get_temporary_data();
+            $data['top_desc']  = "Change your page purpose here"; /** function purpose here.**/
+
             $this->load->view('quote_add',$data);
+
+            if($this->input->post('save')) //when save button clicked
+            {
+                $postData = $this->input->post();
+                $bil      = count($postData['item_name']);
+
+                /** insert into quote table **/
+                $arrayData = array('quote_subject'          => $postData['quote_subject'],
+                                   'quote_date_created'     => $postData['quote_date_created'],
+                                   'quote_valid_until'      => $postData['quote_valid_until'],
+                                   /*'quote_discount'         => $postData['quote_discount'],*/
+                                   'quote_customer_notes'   => $postData['quote_customer_notes'],
+                                   'quote_status'           => $postData['quote_status']
+                                   );
+                $insert = $this->Midae_model->insert_new_data($arrayData,"quotes");
+                $quote_id = $insert;
+
+                /** insert into quote items table **/
+                for($i = 0; $i < $bil; $i++ ){
+
+                    $arrayData = array( 'quote_id'                  => $quote_id,
+                                        'product_id'                => $postData['quote_product_id'][$i],
+                                        'quote_item_name'           => $postData['item_name'][$i],
+                                        'quote_item_description'    => $postData['item_description'][$i],
+                                        'quote_item_price'          => $postData['item_price'][$i],
+                                        'quote_item_quantity'       => $postData['item_quantity'][$i],
+                                        'quote_item_discount'       => $postData['item_discount'][$i],
+                                        'quote_item_subtotal'       => $postData['item_subtotal'][$i]
+                                      );
+                     $this->Midae_model->insert_new_data($arrayData,"quote_items");
+
+                }
+
+                $this->Midae_model->display_message("save", "quotes");
+
+            }
          }
          else if($state=="edit"){
          }
@@ -95,12 +128,28 @@ class Quotes extends CI_Controller {
 
     }
 
+    function delete_quote_n_quoteitems($quote_id){
+
+        if($quote_id)
+        {
+            $where = array(
+                'quote_id' => $quote_id
+                );
+            $this->Midae_model-> delete_data("quote_items", $where);
+            return true;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
+
 
     public function ajax_product(){
 
-        $data['jenis'] = $this->input->post('jenis'); // will display to view part
-        //$data['add_product'] = $this->input->post('add_product');
-        $jenis = $this->input->post('jenis'); //for condition only
+        $data['jenis']         = $this->input->post('jenis'); // will display to view part
+        $jenis                 = $this->input->post('jenis'); //for condition only
 
         if($jenis=="display")
         {
@@ -137,10 +186,10 @@ class Quotes extends CI_Controller {
 
         }
 
-        
+
 
     }
 
-    
+
 
 }

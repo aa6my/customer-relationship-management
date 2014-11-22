@@ -85,12 +85,12 @@ else if($jenis=="get_product")
                                          $('.catproduct_id').on('change',function(){
 
 
-                                            var catproduct_id = $(this).val(),
-                                                product_id    = $('.product_id'),
-                                                o_product    = $('#o_product');
-
-                                            var id_table_row = '<?php echo $id_table_row; ?>';
-                                            var current_no = '<?php echo $current_no; ?>';
+                                                var catproduct_id = $(this).val(),
+                                                product_id        = $('.product_id'),
+                                                o_product         = $('#o_product');
+                                                
+                                                var id_table_row  = '<?php echo $id_table_row; ?>';
+                                                var current_no    = '<?php echo $current_no; ?>';
 
                                             //alert(current_no);
                                                 
@@ -117,23 +117,24 @@ else if($jenis=="get_product")
                                         $('.product_id').on('change', function(){
 
                                             
-                                                var product_id       = $('.product_id'),
-                                                catproduct_id        = $(this).val();
-
-                                                var id_table_row = '<?php echo $id_table_row; ?>';
-                                                var current_no = '<?php echo $current_no; ?>';
-
-                                                var item_name = $('#item_name'+current_no),
+                                                    var product_id   = $('.product_id'),
+                                                    catproduct_id    = $(this).val();
+                                                    
+                                                    var id_table_row = '<?php echo $id_table_row; ?>';
+                                                    var current_no   = '<?php echo $current_no; ?>';
+                                                    
+                                                    var item_name    = $('#item_name'+current_no),
                                                     item_description = $('#item_description'+current_no),
-                                                    item_quantity = $('#item_quantity'+current_no),
-                                                    item_price = $('#item_price'+current_no),
-                                                    item_subtotal = $('#item_subtotal'+current_no),
-                                                    subtotal_temp = $('#subtotal_temp'), //subtotal_temp temporaray value for subtotal
-                                                    subtotal = $('#subtotal'), //display total for subtotal item
-                                                    total = $('#total'); /** display total for All **/
-
-
-                                                    var sumtotal = 0;
+                                                    item_quantity    = $('#item_quantity'+current_no),
+                                                    item_price       = $('#item_price'+current_no),
+                                                    item_subtotal    = $('#item_subtotal'+current_no),
+                                                    quote_product_id = $('#quote_product_id'+current_no),
+                                                    subtotal_temp    = $('#subtotal_temp'), //subtotal_temp temporaray value for subtotal
+                                                    subtotal         = $('#subtotal'), //display total for subtotal item
+                                                    total            = $('#total'); /** display total for All **/
+                                                    
+                                                    
+                                                    var sumtotal     = 0;
                                                                                        
 
                                                     $.ajax({
@@ -153,6 +154,8 @@ else if($jenis=="get_product")
                                                         item_description.val(a.product[0].product_desc);
                                                         item_quantity.val(a.product[0].product_quantity);
                                                         item_price.val(a.product[0].product_amount);
+                                                        quote_product_id.val(a.product[0].product_id);
+
 
                                                         var total_subtotal = item_quantity.val() * item_price.val();
                                                             item_subtotal.val(total_subtotal);

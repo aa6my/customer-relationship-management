@@ -121,8 +121,9 @@ class Midae_model extends CI_Model {
     {
 
         $this->db->insert($table,$arrayData);
-        $this->db->_error_message();
-        return  $this->db->_error_message();
+        //$this->db->_error_message();
+       // return  $this->db->_error_message();
+        return $this->db->insert_id();
     }
 
 
