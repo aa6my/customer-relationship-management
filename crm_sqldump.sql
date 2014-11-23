@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2014 at 11:05 AM
+-- Generation Time: Nov 23, 2014 at 03:55 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -787,34 +787,51 @@ INSERT INTO `products` (`product_id`, `product_sku`, `product_name`, `product_de
 
 CREATE TABLE IF NOT EXISTS `quotes` (
 `quote_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL COMMENT 'from customer table',
   `job_task_id` int(11) NOT NULL,
   `quote_subject` varchar(300) NOT NULL,
   `quote_date_created` date NOT NULL,
   `quote_valid_until` date NOT NULL,
   `quote_discount` double NOT NULL,
   `quote_customer_notes` text NOT NULL,
-  `quote_status` tinyint(4) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `quote_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0-draft,1-approved,2-rejected,3-canceled'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `quotes`
+--
+
+INSERT INTO `quotes` (`quote_id`, `customer_id`, `job_task_id`, `quote_subject`, `quote_date_created`, `quote_valid_until`, `quote_discount`, `quote_customer_notes`, `quote_status`) VALUES
+(10, 0, 0, 'website development1', '2014-11-23', '2014-11-24', 0, 'this is quotaion1', 1),
+(11, 0, 0, 'fgg', '2014-11-25', '2014-11-27', 0, 'ttt', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quotes_items`
+-- Table structure for table `quote_items`
 --
 
-CREATE TABLE IF NOT EXISTS `quotes_items` (
-`item_id` int(11) NOT NULL,
-  `quote_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `quote_items` (
+`quote_item_id` int(11) NOT NULL,
+  `quote_id` int(11) NOT NULL COMMENT 'from quote table',
   `product_id` int(5) NOT NULL DEFAULT '0' COMMENT 'from product table',
-  `item_name` varchar(300) NOT NULL,
-  `item_description` text NOT NULL,
-  `item_price` double NOT NULL,
-  `item_quantity` double NOT NULL,
-  `Item_tax_rate_id` int(11) NOT NULL,
-  `item_discount` double NOT NULL,
-  `item_order` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `quote_item_name` varchar(300) NOT NULL,
+  `quote_item_description` text NOT NULL,
+  `quote_item_price` double NOT NULL,
+  `quote_item_quantity` double NOT NULL,
+  `quote_item_discount` double NOT NULL,
+  `quote_item_subtotal` int(5) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `quote_items`
+--
+
+INSERT INTO `quote_items` (`quote_item_id`, `quote_id`, `product_id`, `quote_item_name`, `quote_item_description`, `quote_item_price`, `quote_item_quantity`, `quote_item_discount`, `quote_item_subtotal`) VALUES
+(10, 10, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
+(11, 10, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 0, 315),
+(12, 11, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 2, 90),
+(13, 11, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 3, 312);
 
 -- --------------------------------------------------------
 
@@ -842,7 +859,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-21 07:44:38', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-23 09:29:57', '::1', NULL, NULL, NULL, 1, 1),
 (2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
@@ -1095,10 +1112,10 @@ ALTER TABLE `quotes`
  ADD PRIMARY KEY (`quote_id`);
 
 --
--- Indexes for table `quotes_items`
+-- Indexes for table `quote_items`
 --
-ALTER TABLE `quotes_items`
- ADD PRIMARY KEY (`item_id`);
+ALTER TABLE `quote_items`
+ ADD PRIMARY KEY (`quote_item_id`);
 
 --
 -- Indexes for table `system_users`
@@ -1225,12 +1242,12 @@ MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `quotes`
 --
 ALTER TABLE `quotes`
-MODIFY `quote_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `quote_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT for table `quotes_items`
+-- AUTO_INCREMENT for table `quote_items`
 --
-ALTER TABLE `quotes_items`
-MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `quote_items`
+MODIFY `quote_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `system_users`
 --

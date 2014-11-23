@@ -324,7 +324,6 @@ class Midae_model extends CI_Model {
     }
 
 
-
     /**
      * [display_message display flash message data in view part]
      * @param  [string] $messageType [what type of message you want to display]

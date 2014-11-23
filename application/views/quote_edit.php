@@ -210,7 +210,7 @@
 
                                     <table class="table table-bordered" id="quote">
                                         <tbody>
-                                            <tr>
+                                            <tr bgcolor="#F9F9F9">
                                                 <th width="300">Item</th>
                                                 <th width="400">Description</th>
                                                 <th>Quantity</th>
@@ -289,7 +289,7 @@
                                             $a++;
                                         }
                                         ?>
-                                        <tr>
+                                        <tr bgcolor="#F9F9F9">
                                             <td colspan="6" align="center"> <strong>Insert New Data (New Entry)</strong></td>
                                         </tr>
 
@@ -397,12 +397,20 @@
 <script>
 $(function(){
 
+    /****************************************************
+    * call this method at initial start loading of this page
+    *****************************************************/
     calculateGrandTotal();
-    var  jum = 0;
+
 
     /****************************************************
-    *   clone row table
-    *
+    * global variable access in keyup function
+    *****************************************************/
+    var  jum = 0;
+
+
+    /****************************************************
+    *   clone row table 
     ****************************************************/
     $('#quote').cloneya({
             limit           : 999,
@@ -450,9 +458,6 @@ $(function(){
                     }
                 });
 
-                //alert(q_id);
-                //console.log(quote_item_id);
-                //alert(quote_item_id.length);
             $.ajax({
                 type : "POST",
                 url : "<?php echo base_url();?>quotes/ajax_quote_delete",
