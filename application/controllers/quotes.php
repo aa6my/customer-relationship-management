@@ -130,6 +130,66 @@ class Quotes extends CI_Controller {
              $table               = "quote_items";
              $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false);
              $this->load->view('quote_edit',$data);
+
+             if($this->input->post('save')) //when save button clicked
+            {
+                $postData = $this->input->post();
+                           
+                $columnToUpdate = array('quote_subject'          => $postData['quote_subject'],
+                                        'quote_date_created'     => $postData['quote_date_created'],
+                                        'quote_valid_until'      => $postData['quote_valid_until'],                                   
+                                        'quote_customer_notes'   => $postData['quote_customer_notes'],
+                                        'quote_status'           => $postData['quote_status']
+                                        );
+                $usingCondition = array('quote_id' => $data['quote_id']);
+                $table = "quotes";
+                $update = $this->Midae_model->update_data($columnToUpdate, $table, $usingCondition);
+                
+
+                $bil      = count($postData['item_name']);
+                for($i = 0; $i < $bil; $i++ )
+                {
+                    if($postData['quote_product_id'][$i] =="" && $postData['quote_item_id'][$i] == "")
+                    {
+                        /** no need to insert the empty rows **/
+                    }
+                    else if($postData['quote_product_id'][$i]!="" && $postData['quote_item_id'][$i] =="")
+                    {
+                        /** insert the new entry into quote_items table **/
+                        $arrayData = array( 'quote_id'                  => $data['quote_id'],
+                                            'product_id'                => $postData['quote_product_id'][$i],
+                                            'quote_item_name'           => $postData['item_name'][$i],
+                                            'quote_item_description'    => $postData['item_description'][$i],
+                                            'quote_item_price'          => $postData['item_price'][$i],
+                                            'quote_item_quantity'       => $postData['item_quantity'][$i],
+                                            'quote_item_discount'       => $postData['item_discount'][$i],
+                                            'quote_item_subtotal'       => $postData['item_subtotal'][$i]
+                                          );
+                        $table = "quote_items";
+                        $this->Midae_model->insert_new_data($arrayData,$table);
+                    }
+                    else if($postData['quote_product_id'][$i]!="" && $postData['quote_item_id'][$i] !="")
+                    {
+                        /** update the current rows, row by row **/
+                        $columnToUpdate = array( //'quote_id'                  => $quote_id,
+                                            'product_id'                => $postData['quote_product_id'][$i],
+                                            'quote_item_name'           => $postData['item_name'][$i],
+                                            'quote_item_description'    => $postData['item_description'][$i],
+                                            'quote_item_price'          => $postData['item_price'][$i],
+                                            'quote_item_quantity'       => $postData['item_quantity'][$i],
+                                            'quote_item_discount'       => $postData['item_discount'][$i],
+                                            'quote_item_subtotal'       => $postData['item_subtotal'][$i]
+                                          );
+                        $usingCondition = array('quote_item_id' => $postData['quote_item_id'][$i]);
+                        $table = "quote_items";
+                        $this->Midae_model->update_data($columnToUpdate, $table, $usingCondition);
+                    }
+
+                }
+
+                $this->Midae_model->display_message("record", "quotes");
+
+            }
         }
         else
         {

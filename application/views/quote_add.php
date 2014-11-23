@@ -90,7 +90,7 @@
                                                 <div class="col-xs-5">
                                                     <select class="form-control" name="quote_status">
                                                         <option value="0">DRAFT</option>
-                                                        <option value="1">APPROVED</option>
+                                                        <option value="1">ACCEPTED</option>
                                                         <option value="2">REJECTED</option>
                                                         <option value="3">CANCEL</option>
 

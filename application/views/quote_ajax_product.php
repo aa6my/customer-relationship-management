@@ -129,6 +129,7 @@ else if($jenis=="get_product")
                                                     item_price       = $('#item_price'+current_no),
                                                     item_subtotal    = $('#item_subtotal'+current_no),
                                                     quote_product_id = $('#quote_product_id'+current_no),
+                                                    item_discount    = $('#item_discount'+current_no),
                                                     //subtotal_temp    = $('#subtotal_temp'), //subtotal_temp temporaray value for subtotal
                                                     subtotal         = $('#subtotal'), //display total for subtotal item
                                                     total            = $('#total'); /** display total for All **/
@@ -154,6 +155,7 @@ else if($jenis=="get_product")
                                                         item_description.val(a.product[0].product_desc);
                                                         item_quantity.val(a.product[0].product_quantity);
                                                         item_price.val(a.product[0].product_amount);
+                                                        item_discount.val("");
                                                         quote_product_id.val(a.product[0].product_id);
 
 
