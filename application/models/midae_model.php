@@ -347,7 +347,7 @@ class Midae_model extends CI_Model {
         }
         else if($messageType=="record")
         {
-             $this->session->set_flashdata('record', 'New Job successfully recorded');
+             $this->session->set_flashdata('record', 'Data successfully recorded');
         }
         else if($messageType=="error")
         {

@@ -24,11 +24,13 @@
 class Quotes extends CI_Controller {
 
     public function access_map(){
+
         return array(
-            'index'=>'view',
-            'update'=>'edit',
-            'ajax_product' => 'view'
-        );
+                        'index'             =>'view',
+                        'update'            =>'edit',
+                        'ajax_product'      => 'view',
+                        'ajax_quote_delete' => 'view'
+                    );
     }
 
     public function __construct()
@@ -133,7 +135,7 @@ class Quotes extends CI_Controller {
 
              if($this->input->post('save')) //when save button clicked
             {
-                $postData = $this->input->post();
+                $postData       = $this->input->post();
                            
                 $columnToUpdate = array('quote_subject'          => $postData['quote_subject'],
                                         'quote_date_created'     => $postData['quote_date_created'],
@@ -142,11 +144,11 @@ class Quotes extends CI_Controller {
                                         'quote_status'           => $postData['quote_status']
                                         );
                 $usingCondition = array('quote_id' => $data['quote_id']);
-                $table = "quotes";
-                $update = $this->Midae_model->update_data($columnToUpdate, $table, $usingCondition);
+                $table          = "quotes";
+                $update         = $this->Midae_model->update_data($columnToUpdate, $table, $usingCondition);
                 
-
-                $bil      = count($postData['item_name']);
+                
+                $bil            = count($postData['item_name']);
                 for($i = 0; $i < $bil; $i++ )
                 {
                     if($postData['quote_product_id'][$i] =="" && $postData['quote_item_id'][$i] == "")
@@ -251,41 +253,50 @@ class Quotes extends CI_Controller {
 
         if($jenis=="display")
         {
-            $table            = "catproduct";
+            $table                = "catproduct";
             $data['id_table_row'] = $this->input->post('id_table_row');
-            $data['current_no'] = $this->input->post('current_no');
-            $data['category'] = $this->Midae_model->get_all_rows($table,false, false, false);
+            $data['current_no']   = $this->input->post('current_no');
+            $data['category']     = $this->Midae_model->get_all_rows($table,false, false, false);
             $this->load->view('quote_ajax_product', $data, FALSE);
         }
         else if($jenis=="get_product")
         {
-            $table            = "products";
+            $table                = "products";
             $data['id_table_row'] = $this->input->post('id_table');
-            $data['current_no'] = $this->input->post('no');
-            $catproduct_id   = $this->input->post('catproduct_id');
-            $where = array('catproduct_id'=>$catproduct_id);
-            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false);
+            $data['current_no']   = $this->input->post('no');
+            $catproduct_id        = $this->input->post('catproduct_id');
+            $where                = array('catproduct_id'=>$catproduct_id);
+            $data['product']      = $this->Midae_model->get_all_rows($table,$where, false, false);
             $this->load->view('quote_ajax_product', $data, FALSE);
 
         }
         else if($jenis=="assign_product")
         {
             header('Content-Type: application/json');
-            $table = "products";
-            $product_id   = $this->input->post('product_id');
-            $catproduct_id   = $this->input->post('catproduct_id');
-            $where = array('product_id'=>$product_id);
-            $tableNameToJoin = "catproduct";
-            $tableRelation = "products.catproduct_id = catproduct.catproduct_id";
+            $table             = "products";
+            $product_id        = $this->input->post('product_id');
+            $catproduct_id     = $this->input->post('catproduct_id');
+            $where             = array('product_id'=>$product_id);
+            $tableNameToJoin   = "catproduct";
+            $tableRelation     = "products.catproduct_id = catproduct.catproduct_id";
             $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation);
             echo json_encode($return);
-            //$this->load->view('ajax_product', $data, FALSE);
+            
 
 
         }
 
 
 
+    }
+
+
+    public function ajax_quote_delete(){
+
+        $quote_item_id = $this->input->post('quote_item_id');
+        $table = "quote_items";
+        $where = array('quote_item_id' => $quote_item_id);
+        $this->Midae_model->delete_data($table, $where);
     }
 
 

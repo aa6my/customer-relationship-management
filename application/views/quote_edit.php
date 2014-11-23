@@ -257,7 +257,7 @@
                                                     </td>
                                                <td>
                                                     <textarea class="form-control" rows="3" placeholder="" id="item_description<?php echo $a;?>" name="item_description[]"><?php echo $data['quote_item_description'];?></textarea>
-                                                    
+
                                                 </td>
                                                   <td align="center">
                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity<?php echo $a;?>" data-calculate="a" value="<?php echo $data['quote_item_quantity'];?>">
@@ -278,7 +278,7 @@
                                                         <i class="fa fa-copy"></i>
                                                         </button>
                                                     </a> -->
-                                                    <a href="#" class="delete">
+                                                    <a href="#" class="delete_row">
                                                     <button type="button" class="btn btn-default" >
                                                         <i class="fa fa-trash-o"></i>
                                                         </button>
@@ -310,7 +310,7 @@
                                                             var current_id = $(this);
                                                             var id_table_row = current_id.closest('tr').attr('id');
                                                             var current_no = id_table_row.replace(/\D/g,'');
-                                                           
+
 
 
                                                            $('#'+current_id.attr('id')).colorbox({
@@ -329,7 +329,7 @@
                                                     </td>
                                                <td>
                                                     <textarea class="form-control" rows="3" placeholder="" id="item_description" name="item_description[]"></textarea>
-                                                    
+
                                                 </td>
                                                   <td align="center">
                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" data-calculate="a" value="">
@@ -375,7 +375,7 @@
                                                    <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>
                                             </tr>
-                                            
+
 
                                         </tbody>
                                     </table>
@@ -402,7 +402,7 @@ $(function(){
 
     /****************************************************
     *   clone row table
-    *   
+    *
     ****************************************************/
     $('#quote').cloneya({
             limit           : 999,
@@ -418,29 +418,61 @@ $(function(){
 
 
     /****************************************************
-    * Trigered when delete button was clicked
-    * 
+    * Trigered when delete button was clicked - toclone class only
+    *
     ****************************************************/
      $('#quote').on( 'clone_after_delete', function(e,newclone){
-        
+
         var parent = $(this).attr('class');
         //alert(parent);
         calculateGrandTotal();
-        console.log(e);
-        
-        /* $('.delete').on( 'click', function(e,newclone){
-        
-            var parent = $(this).attr('class');
-            alert(parent);
-            
-        
-        });*/
-        
+        //console.log(e);
+
+
+
     });
 
-    
+
+     /****************************************************
+    * Trigered when delete button was clicked - not for toclone class
+    *****************************************************/
+      $('.delete_row').on( 'click', function(e,newclone){
+
+            var parent = $(this).closest('tr'),
+                input_text = parent.find('input'),
+                q_id = "";
+
+                $(input_text).each(function(x,y){
+                    if($(this).attr('id') =="quote_item_id"){
+
+                        q_id = $(this).val();
+                        return true;
+                    }
+                });
+
+                //alert(q_id);
+                //console.log(quote_item_id);
+                //alert(quote_item_id.length);
+            $.ajax({
+                type : "POST",
+                url : "<?php echo base_url();?>quotes/ajax_quote_delete",
+                data : "quote_item_id="+q_id,
+                success : function(){
+                    $('#'+parent.attr('id')).remove();
+                    calculateGrandTotal();
+                }
+            });
 
 
+
+        });
+
+
+
+    /****************************************************
+    * Trigered when input type keyup then find if have the data attribute or not
+    *
+    ****************************************************/
     $('input[type=text]').on('keyup', function(){
 
             var current = $(this);
@@ -462,8 +494,6 @@ $(function(){
                      subtot = $('#'+ 'item_subtotal' + num),
                      subtotal_temp = $('#subtotal_temp'),
                      subtotal_temp_2 = $('#subtotal_temp_2');
-                     //table_quote =$('#quote');
-
 
                      if(qtty || price || disc){
                        subtot.val((Number(qtty) * Number(price)) - Number(disc)); //subtotal in rows
@@ -480,6 +510,10 @@ $(function(){
     })
 
 
+    /****************************************************
+    * function to calculated total subtotal and grand total
+    *
+    ****************************************************/
     function calculateGrandTotal() {
         var grandTotal = 0;
         $('#quote [id *=item_subtotal]').each(function(x,y){
