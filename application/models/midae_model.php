@@ -182,7 +182,7 @@ class Midae_model extends CI_Model {
     * @param  [array] $where [condition to apply]
     * @return [type]        [return data sets]
     */
-    function get_all_rows($table,$where, $tableNameToJoin, $tableRelation)
+    function get_all_rows($table,$where, $tableNameToJoin, $tableRelation, $likes, $places)
     {
             //$data = array();
             //$query = $this->db->query("SELECT *FROM $table");
@@ -194,9 +194,13 @@ class Midae_model extends CI_Model {
                $this->db->where($where);
             }
            
-           if($tableNameToJoin && $tableRelation){
+           if($tableNameToJoin!=false && $tableRelation!=false){
 
                 $this->db->join($tableNameToJoin, $tableRelation);
+           }
+
+           if($likes!=false){
+            $this->db->like($likes, 'after'); 
            }
             /*foreach ($query->result_array() as $row)
             {
@@ -283,7 +287,7 @@ class Midae_model extends CI_Model {
      * @param  [array] $order_by [order by]
      * @return [type] [return sepcified row]
      */
-    function get_specified_row($table,$where,$order_by)
+    function get_specified_row($table,$where,$order_by,$tableNameToJoin, $tableRelation)
     {
         
         $this->db->select('*');
@@ -298,6 +302,11 @@ class Midae_model extends CI_Model {
         {
             $this->db->order_by($order_by);
         }
+
+        if($tableNameToJoin && $tableRelation){
+
+                $this->db->join($tableNameToJoin, $tableRelation);
+           }
 
         $query = $this->db->get();
         return $query->row_array();    

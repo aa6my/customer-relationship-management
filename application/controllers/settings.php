@@ -81,7 +81,7 @@ class Settings extends MY_Controller {
             $tableNameToJoin = 'user_meta';
             $tableRelation = 'user_meta.user_id = system_users.id';
             $where = array('user_meta.user_id' => $this->uri->segment(4));
-            $data['details'] = $this->Midae_model->get_all_rows('system_users',$where, $tableNameToJoin, $tableRelation);
+            $data['details'] = $this->Midae_model->get_all_rows('system_users',$where, $tableNameToJoin, $tableRelation, false, false);
             $data['user_role'] = $this->Midae_model->get_setting_userrole();
             $this->load->view('edit_user', $data);
             }else{
