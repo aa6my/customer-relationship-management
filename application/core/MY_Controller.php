@@ -33,16 +33,30 @@ class MY_Controller extends CI_Controller {
         $CI->load->library('session');
         $um = $CI->Midae_model->get_user_meta();
         $tt = ucwords(strtolower($CI->uri->segment('1'))); //URI title.
-        $td = "Change your page purpose here"; //function purpose here.
+        $td = "rendered in <strong>{elapsed_time}</strong> seconds"; //function purpose here.
+        $is = $this->is_https();
 
         $this->load->vars(array( 
              'user_meta' => $um,
              'top_title' => $tt,
-             'top_desc' => $td
+             'top_desc' => $td,
+             'is' => $is
 
         ));
         $this->output->enable_profiler(TRUE);
     }   
+    function is_https(){ 
+        if ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) 
+        {   
+            $protocol = "https";
+            return $protocol; 
+        }
+        else 
+        {
+            $protocol = "http";
+            return $protocol; 
+        }
+    } 
 }
 
 /* End of file MY_Controller.php */
