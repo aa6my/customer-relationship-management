@@ -43,7 +43,11 @@ class MY_Controller extends CI_Controller {
              'is' => $is
 
         ));
-        $this->output->enable_profiler(TRUE);
+
+        //handle conflix ajax request
+        if(!$this->input->is_ajax_request()) {
+            $this->output->enable_profiler(TRUE);
+        }
     }   
     function is_https(){ 
         if ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) 
