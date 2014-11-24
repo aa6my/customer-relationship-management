@@ -47,7 +47,7 @@ class Quotes extends MY_Controller {
     public function index()
     {
 
-
+        //$this->output->enable_profiler(false);
         $crud  = new grocery_CRUD();
         $state = $crud->getState();
         $crud->set_theme('datatables');
