@@ -100,6 +100,58 @@
 
                                         </tr>
 
+                                        <tr>
+
+                                            <td align="right">Customer</td>
+                                            <td>
+                                                <div class="col-xs-5">
+                                                    <input id="country_name" class="form-control txt-auto"/>
+                                                    <input type="text" id="customer_id" name="customer_id">
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <script>
+                                        $(function(){
+
+
+                                        $('#country_name').autocomplete({
+                                            source: function( request, response ) {
+                                                $.ajax({
+                                                    url : '<?php echo base_url();?>quotes/ajax_quote_customer',
+                                                    dataType: "json",
+                                                    data: {
+                                                       name_startsWith: request.term
+                                                       //type: 'country'
+                                                    },
+                                                     success: function( data ) {
+
+                                                         response( $.map( data, function( item ) {
+                                                                
+                                                            var value = {
+                                                                label: item.customer_name,
+                                                                value: item.customer_name,
+                                                                id : item.customer_id}
+
+                                                                return value;
+                                                            
+                                                           
+                                                        }));
+                                                    }
+                                                });
+                                            },
+                                            select : function(event, ui){
+                                                $('#customer_id').val(ui.item.id);
+                                                //console.log(ui);
+                                            },
+                                            autoFocus: true,
+                                            minLength: 0,
+                                            delay : 0        
+                                          });
+
+                                        });
+                                        </script>
+
 
 
 

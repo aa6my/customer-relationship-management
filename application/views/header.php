@@ -4,9 +4,15 @@
         <meta charset="UTF-8">
         <title>[CRM] Customer Relationship Management | <?php echo $this->config->item('sitename'); ?></title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<<<<<<< HEAD
 
         <link href="<?php echo $is; ?>://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $is; ?>://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+=======
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+>>>>>>> 4a36d55cfd1cc532ec0949f2379407ca811241fb
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/calendar/bootstrap-calendar/css/calendar.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/calendar/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" />
         <!-- Ionicons -->
@@ -15,9 +21,15 @@
         <link href="<?php echo base_url(); ?>assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <!--<link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css">-->
         <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>/assets/grocery_crud/css/colorbox/colorbox.css">
+<<<<<<< HEAD
         <!--script src="<?php echo $is; ?>://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="<?php echo $is; ?>://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+=======
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+>>>>>>> 4a36d55cfd1cc532ec0949f2379407ca811241fb
         <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
         
 

@@ -21,7 +21,7 @@
  * @version    0.4.1
 */
 
-class Quotes extends CI_Controller {
+class Quotes extends MY_Controller {
 
     public function access_map(){
 
@@ -29,7 +29,8 @@ class Quotes extends CI_Controller {
                         'index'             =>'view',
                         'update'            =>'edit',
                         'ajax_product'      => 'view',
-                        'ajax_quote_delete' => 'view'
+                        'ajax_quote_delete' => 'view',
+                        'ajax_quote_customer' => 'view'
                     );
     }
 
@@ -46,14 +47,6 @@ class Quotes extends CI_Controller {
     public function index()
     {
 
-
-        $this->output->enable_profiler(TRUE); //Profiler Debug
-        $this->load->model('Midae_model');
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc']  = "Sales Quote"; //function purpose here.
-
-        //End of component
 
         $crud  = new grocery_CRUD();
         $state = $crud->getState();
@@ -93,7 +86,7 @@ class Quotes extends CI_Controller {
                 $arrayData = array('quote_subject'          => $postData['quote_subject'],
                                    'quote_date_created'     => $postData['quote_date_created'],
                                    'quote_valid_until'      => $postData['quote_valid_until'],
-                                   /*'quote_discount'         => $postData['quote_discount'],*/
+                                   'customer_id'            => $postData['customer_id'],
                                    'quote_customer_notes'   => $postData['quote_customer_notes'],
                                    'quote_status'           => $postData['quote_status']
                                    );
@@ -128,9 +121,11 @@ class Quotes extends CI_Controller {
              $data['quote_id']    = $this->uri->segment(4) ;
              $table               = "quotes";
              $where               = array('quote_id' => $data['quote_id']);
-             $data['quote']       = $this->Midae_model->get_specified_row($table,$where,false);
+             $tableNameToJoin = "customers";
+             $tableRelation = "quotes.customer_id = customers.customer_id";
+             $data['quote']       = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
              $table               = "quote_items";
-             $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false);
+             $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false,false, false);
              $this->load->view('quote_edit',$data);
 
              if($this->input->post('save')) //when save button clicked
@@ -139,7 +134,8 @@ class Quotes extends CI_Controller {
                            
                 $columnToUpdate = array('quote_subject'          => $postData['quote_subject'],
                                         'quote_date_created'     => $postData['quote_date_created'],
-                                        'quote_valid_until'      => $postData['quote_valid_until'],                                   
+                                        'quote_valid_until'      => $postData['quote_valid_until'],
+                                        'customer_id'            => $postData['customer_id'],                                   
                                         'quote_customer_notes'   => $postData['quote_customer_notes'],
                                         'quote_status'           => $postData['quote_status']
                                         );
@@ -193,6 +189,14 @@ class Quotes extends CI_Controller {
 
             }
         }
+        else if($state=="read"){
+
+             $data['top_title']   = ucwords(strtolower($this->uri->segment('1'))); //URI title.
+             $data['top_desc']    = "Change your page purpose here"; /** function purpose here.**/
+             $this->load->view('quote',$data);
+
+        }
+
         else
         {
 
@@ -256,7 +260,7 @@ class Quotes extends CI_Controller {
             $table                = "catproduct";
             $data['id_table_row'] = $this->input->post('id_table_row');
             $data['current_no']   = $this->input->post('current_no');
-            $data['category']     = $this->Midae_model->get_all_rows($table,false, false, false);
+            $data['category']     = $this->Midae_model->get_all_rows($table,false, false, false, false, false);
             $this->load->view('quote_ajax_product', $data, FALSE);
         }
         else if($jenis=="get_product")
@@ -266,7 +270,7 @@ class Quotes extends CI_Controller {
             $data['current_no']   = $this->input->post('no');
             $catproduct_id        = $this->input->post('catproduct_id');
             $where                = array('catproduct_id'=>$catproduct_id);
-            $data['product']      = $this->Midae_model->get_all_rows($table,$where, false, false);
+            $data['product']      = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
             $this->load->view('quote_ajax_product', $data, FALSE);
 
         }
@@ -279,7 +283,7 @@ class Quotes extends CI_Controller {
             $where             = array('product_id'=>$product_id);
             $tableNameToJoin   = "catproduct";
             $tableRelation     = "products.catproduct_id = catproduct.catproduct_id";
-            $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation);
+            $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation, false, false);
             echo json_encode($return);
             
 
@@ -297,6 +301,28 @@ class Quotes extends CI_Controller {
         $table = "quote_items";
         $where = array('quote_item_id' => $quote_item_id);
         $this->Midae_model->delete_data($table, $where);
+    }
+
+
+    public function ajax_quote_customer(){
+
+           $name = $this->input->post('name_startsWith');
+           $table = "customers";
+           $where = array('customer_name LIKE' => $name.'%');
+           //$likes = array('customer_name'=>$name);
+           //$places = "after";
+           $data['customer'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+
+           // if($_GET['type'] == 'country'){
+               /* $result = mysql_query("SELECT name FROM country where name LIKE '".strtoupper($_GET['name_startsWith'])."%'");  
+                $data = array();
+                while ($row = mysql_fetch_array($result)) {
+                    array_push($data, $row['name']);    
+                }   */
+          echo json_encode($data['customer']);
+            //}
+
+
     }
 
 

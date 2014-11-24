@@ -85,11 +85,6 @@ class Jobs extends MY_Controller {
     }
 
     
-
-     
-
-
-
     public function index()
     {
 
@@ -173,7 +168,7 @@ class Jobs extends MY_Controller {
             
             $data['job_id']    = $this->uri->segment(4) ; // get the last segment parameter from url
             $where             = array('job_id' => $data['job_id']);
-            $data['jobs']      = $this->Midae_model->get_specified_row("jobs",$where,false);            
+            $data['jobs']      = $this->Midae_model->get_specified_row("jobs",$where,false,false,false);            
             
 
 
@@ -222,7 +217,7 @@ class Jobs extends MY_Controller {
                $this->Midae_model->update_data($columnToUpdate,"jobs", $usingCondition);
 
                //after changes was made, fetch the data again from job table
-               $data['jobs'] = $this->Midae_model->get_specified_row("jobs",$where,false);
+               $data['jobs'] = $this->Midae_model->get_specified_row("jobs",$where,false,false,false);
                $this->Midae_model->display_message("save", current_url());
                
                
@@ -256,7 +251,7 @@ class Jobs extends MY_Controller {
                 'job_type_id' => $value
             );
 
-        $job_type = $this->Midae_model->get_specified_row("job_types",$where,false);
+        $job_type = $this->Midae_model->get_specified_row("job_types",$where,false,false,false);
        
         return $job_type['job_type_name'];
     }
