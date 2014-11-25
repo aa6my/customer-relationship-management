@@ -31,22 +31,27 @@ class MY_Controller extends CI_Controller {
         //will have $news in their views
         $CI =& get_instance();
         $CI->load->library('session');
+        $CI->load->model('Midae_model');
         $um = $CI->Midae_model->get_user_meta();
         $tt = ucwords(strtolower($CI->uri->segment('1'))); //URI title.
         $td = "rendered in <strong>{elapsed_time}</strong> seconds"; //function purpose here.
         $is = $this->is_https();
+        $dbg = $this->is_debug();
 
         $this->load->vars(array( 
              'user_meta' => $um,
              'top_title' => $tt,
              'top_desc' => $td,
-             'is' => $is
+             'is' => $is,
+             'debug' => $dbg
 
         ));
 
-        //handle conflix ajax request
-        if(!$this->input->is_ajax_request()) {
+        //handle conflix ajax request with debug profiler
+        if(!$this->input->is_ajax_request() && $dbg['value'] == 'TRUE') {
             $this->output->enable_profiler(TRUE);
+        }elseif (!$this->input->is_ajax_request() && $dbg['value'] == 'FALSE') {
+            $this->output->enable_profiler(FALSE);
         }
     }   
     function is_https(){ 
@@ -61,6 +66,13 @@ class MY_Controller extends CI_Controller {
             return $protocol; 
         }
     } 
+
+    function is_debug(){ 
+        $where = array('key'=>'debug');
+        $debug = $this->Midae_model->get_specified_row("config_data",$where,false,false,false);
+        return $debug;
+    } 
+
 }
 
 /* End of file MY_Controller.php */

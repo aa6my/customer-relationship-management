@@ -58,6 +58,19 @@
                                             <label for="exampleInputEmail1">Time Zone</label>&nbsp;<a href="http://php.net/manual/en/timezones.php" target="_blank">[Timezone]</a>
                                             <input type="text" class="form-control" id="sitedescription" name="timezone" value="<?php echo $this->config->item('timezone'); ?>">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="Debug">Debug</label>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="debug" id="optionsRadios1" value="TRUE" <?php if ($this->config->item('debug') == "TRUE") echo "checked"; ?>>
+                                                    Yes
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="debug" id="optionsRadios2" value="FALSE" <?php if ($this->config->item('debug') == "FALSE") echo "checked"; ?>>
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div><!-- /.box-body -->
 
                                     <div class="box-footer">
@@ -68,7 +81,5 @@
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     </body>
 </html>
