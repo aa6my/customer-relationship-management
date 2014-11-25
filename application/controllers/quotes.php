@@ -261,12 +261,17 @@ class Quotes extends MY_Controller {
 
 
     public function convert_to_invoive(){
+
+        /**
+         * will call this function to fetch data from quote and quote items table, then insert all of them into invoice and invoices item
+         * after all. delete all the data from quote table
+         */
         $data['quote_id'] = $this->uri->segment(3) ;
         $table            = "quotes";
         $where            = array('quote_id' => $data['quote_id']);
         $quotes           = $this->Midae_model->get_specified_row($table,$where,false,false, false);
         $invoice          = $this->get_invoice_number();
-        $invoice_number   = ($invoice['invoice_number']) ? $invoice['invoice_number'] : "";
+        $invoice_number   = ($invoice=="") ? $invoice['invoice_number'] : "";
         $invoice_number   = ($invoice_number!="") ? $invoice_number + 1 : 10001;
         $arrayData        = array( 'customer_id'            =>$quotes['customer_id'],
                                    'invoice_subject'        => $quotes['quote_subject'],
@@ -279,14 +284,13 @@ class Quotes extends MY_Controller {
         $table            = "invoices";
         
         $invoice_id = $this->Midae_model->insert_new_data($arrayData,$table);
-        /**
-         * buat delete invoices lepas ni
-         */
+        
     
         $table               = "quote_items";
         $quote_items = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+        $bil = count($quote_items);
        
-        for($i = 0; $i <= count($quote_items); $i++)
+        for($i = 0; $i < $bil; $i++)
         {
 
             $arrayData = array('invoice_id'                 => $invoice_id,
@@ -303,7 +307,9 @@ class Quotes extends MY_Controller {
                 
         }
 
-        $this->Midae_model->display_message("convert", "invoices/index/edit/ ");
+        $this->Midae_model->delete_data("quotes", array('quote_id' => $data['quote_id']));
+        $this->Midae_model->delete_data("quote_items", array('quote_id' => $data['quote_id']));
+        $this->Midae_model->display_message("convert", "invoices/index/edit/$invoice_id");
        
     }
 

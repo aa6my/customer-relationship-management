@@ -36,7 +36,54 @@
 
                 <!-- Main content -->
                 <section class="content">
+                    <?php
 
+                if($this->session->flashdata('save'))
+
+                {
+                    ?>
+
+              
+                                    <div class="alert alert-success alert-dismissable">
+                                        <i class="fa fa-check"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b><?php echo $this->session->flashdata('save');?> </b> 
+                                    </div>
+                <?php
+                }
+                else if($this->session->flashdata('record'))
+                {
+                ?>
+                                    <div class="alert alert-success alert-dismissable">
+                                        <i class="fa fa-check"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b><?php echo $this->session->flashdata('record');?> </b> 
+                                    </div>
+                <?php
+                }
+                
+                else if($this->session->flashdata('error'))
+                {
+                ?>
+                                   <div class="alert alert-danger alert-dismissable">
+                                        <i class="fa fa-ban"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b><?php echo $this->session->flashdata('error');?> </b> 
+                                    </div>
+                <?php
+                }
+                
+                else if($this->session->flashdata('convert'))
+                {
+                ?>
+                                   <div class="alert alert-danger alert-dismissable">
+                                        <i class="fa fa-ban"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b><?php echo $this->session->flashdata('convert');?> </b> 
+                                    </div>
+                <?php
+                }
+                ?>
                 <form action="<?php echo base_url()."invoices/index/edit/$invoice_id"; ?>" method="post">
                 <div class="row">
 
@@ -277,8 +324,8 @@
                                              <tr id="current_row<?php echo $a;?>"><!-- form template -->
                                                 <td>
                                                     <input type="text" class="form-control input-sm" placeholder="" id="item_name<?php echo $a;?>" name="item_name[]" value="<?php echo $data['invoice_item_name'];?>">
-                                                    <input type="text" name="quote_product_id[]" id="quote_product_id<?php echo $a;?>" value="<?php echo $data['product_id'];?>">
-                                                    <input type="text" name="quote_item_id[]" id="quote_item_id" value="<?php echo $data['invoice_item_id'];?>">
+                                                    <input type="hidden" name="quote_product_id[]" id="quote_product_id<?php echo $a;?>" value="<?php echo $data['product_id'];?>">
+                                                    <input type="hidden" name="quote_item_id[]" id="quote_item_id" value="<?php echo $data['invoice_item_id'];?>">
                                                     <br/>
                                                     <a class='buttonProduct' href="#inline_content" id="papar_product<?php echo $a;?>"><!-- <button class="btn btn-success btn-sm buttonProduct">Add Item From Products</button> -->Fetch data from product</a>
                                                     <script>
@@ -349,8 +396,8 @@
                                         <tr class="toclone" id="current_row">
                                                 <td>
                                                     <input type="text" class="form-control input-sm" placeholder="" id="item_name" name="item_name[]" value="">
-                                                    <input type="text" name="quote_product_id[]" id="quote_product_id" >
-                                                    <input type="text" name="quote_item_id[]" id="quote_item_id">
+                                                    <input type="hidden" name="quote_product_id[]" id="quote_product_id" >
+                                                    <input type="hidden" name="quote_item_id[]" id="quote_item_id">
                                                     <br/>
                                                     <a class='buttonProduct' href="#inline_content" id="papar_product">Fetch data from product</a>
                                                     <script>
