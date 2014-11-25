@@ -122,8 +122,8 @@ class Quotes extends MY_Controller {
              $data['quote_id']    = $this->uri->segment(4) ;
              $table               = "quotes";
              $where               = array('quote_id' => $data['quote_id']);
-             $tableNameToJoin = "customers";
-             $tableRelation = "quotes.customer_id = customers.customer_id";
+             $tableNameToJoin     = "customers";
+             $tableRelation       = "quotes.customer_id = customers.customer_id";
              $data['quote']       = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
              $table               = "quote_items";
              $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false,false, false);
@@ -252,9 +252,9 @@ class Quotes extends MY_Controller {
 
     public function get_invoice_number(){
 
-        $table               = "invoices";
+        $table    = "invoices";
         $order_by = array('invoice_id','desc');
-        $data = $this->Midae_model->get_specified_row($table,false,$order_by,false, false);
+        $data     = $this->Midae_model->get_specified_row($table,false,$order_by,false, false);
 
         return $data;
     }

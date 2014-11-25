@@ -102,7 +102,7 @@
 
                                          <tr>
 
-                                            <td align="right">Quote Date</td>
+                                            <td align="right">Invoice Date</td>
                                             <td>
                                                <div class="col-xs-5">
                                                     <div class="input-group">
@@ -251,7 +251,7 @@
 
 
                                                                <div class="col-xs-12">
-                                                               <strong>Quote Subject</strong><br/>
+                                                               <strong>Invoice Subject</strong><br/>
                                                                     <textarea class="form-control" rows="3" placeholder="" name="invoice_subject"><?php echo $invoice['invoice_subject'];?></textarea>
                                                                 </div>
 
@@ -265,7 +265,7 @@
 
 
                                                                <div class="col-xs-12">
-                                                              <strong>Quote Terms</strong><br/>
+                                                              <strong>Invoice Terms</strong><br/>
                                                                     <textarea class="form-control" rows="3" placeholder="" name="invoice_customer_notes"><?php echo $invoice['invoice_customer_notes'];?></textarea>
                                                                 </div>
 
@@ -274,19 +274,6 @@
 
 
 
-
-                                        <!--  <tr>
-
-                                            <td align="right"></td>
-                                            <td>
-                                            <div class="col-xs-7">
-                                                <button class="btn btn-warning btn-sm" type="reset">Reset</button>
-                                               <input class="btn btn-primary btn-sm" name="save" type="submit" value="Save">
-
-                                            </div>
-                                            </td>
-
-                                        </tr> -->
 
                                     </tbody></table>
                             </div><!-- /.box-body -->
@@ -301,15 +288,15 @@
                         <div class="col-md-12">
                             <!-- Primary box -->
                             <div class="box box-primary">
-                                <div class="box-header" data-toggle="tooltip" title="" data-original-title="Item from task job or products">
-                                    <h3 class="box-title"><strong>Quote Items</strong> <!-- <button class="btn btn-success btn-sm">Add Item From Products</button> --></h3>
+                                <div class="box-header" data-toggle="tooltip" title="" data-original-title="Item from products or mannual insert">
+                                    <h3 class="box-title"><strong>Invoice Items</strong> <!-- <button class="btn btn-success btn-sm">Add Item From Products</button> --></h3>
 
                                 </div>
                                 <div class="box-body">
 
                                     <table class="table table-bordered" id="quote">
                                         <tbody>
-                                            <tr bgcolor="#F9F9F9">
+                                            <tr class="table_head">
                                                 <th width="300">Item</th>
                                                 <th width="400">Description</th>
                                                 <th>Quantity</th>
@@ -388,7 +375,7 @@
                                             $a++;
                                         }
                                         ?>
-                                        <tr bgcolor="#F9F9F9">
+                                        <tr class="table_head">
                                             <td colspan="6" align="center"> <strong>Insert New Data (New Entry)</strong></td>
                                         </tr>
 
@@ -461,8 +448,8 @@
                                     <br />
                                     <table class="table table-bordered">
                                         <tbody>
-
-                                             <tr class="toclone" id="current_row"><!-- form template -->
+                                        <!-- if error put this one <tr class="toclone" id="current_row"> -->
+                                             <tr  id="">
 
 
                                                 <td align="right" width="88.5%" >
@@ -473,9 +460,101 @@
                                                    <!-- <input type="text" id="subtotal_temp" value="0">
                                                    <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>
+                                             </tr>
+                                             <tr  id="">
+
+
+                                                <td align="right" width="88.5%" >
+                                                    <strong>Amount Paid :</strong>
+                                                </td>
+                                                <td align="center">
+                                                   RM <span id="amountpaid"></span>
+                                                   <!-- <input type="text" id="subtotal_temp" value="0">
+                                                   <input type="text" id="subtotal_temp_2" value="0"> -->
+                                                </td>
+                                             </tr>
+                                             <tr  id="">
+
+
+                                                <td align="right" width="88.5%" >
+                                                    <strong>Amount Due :</strong>
+                                                </td>
+                                                <td align="center">
+                                                   RM <span id="amountdue"></span>
+                                                   <!-- <input type="text" id="subtotal_temp" value="0">
+                                                   <input type="text" id="subtotal_temp_2" value="0"> -->
+                                                </td>
+                                             </tr>
+
+
+                                        </tbody>
+                                    </table>
+
+                                    <!-- PAYMENT HISTORY -->
+                                    <br/><br/><br/>
+                                    <div class="box-header" title="" >
+                                        <h3 class="box-title">
+                                            <strong>Payment History</strong> 
+                                            <button type="button" class="btn btn-success" id="button_payment" data-id_invoice="<?php echo $invoice_id;?>">
+                                                <i class="fa fa-dollar"></i> Insert New Payment
+                                            </button>
+                                        </h3> 
+
+                                    </div>
+<script>
+$(function(){
+     $('#button_payment').on('click',function(){
+        var $current = $(this),
+            id_invoice = $current.data('id_invoice');
+
+
+        $(this).colorbox({
+            href : "<?php echo base_url();?>invoices/ajax_invoice_payment",
+            data :{ jenis       : 'display',
+                    id_invoice  : id_invoice
+                },
+            width : '20%'
+
+        });
+        
+    
+    });
+});
+ </script>
+
+                                    <table class="table table-bordered" id="payment">
+                                        <tbody>
+                                            <tr bgcolor="#3C8DBC" style="color:#fff">
+                                                <th width="300">Date</th>
+                                                <th width="400">Payment Method</th>
+                                                <th>Amount Paid</th>
+                                                <th>Payment Remark</th>
                                             </tr>
-
-
+                                            <?php
+                                            if(empty($invoice_payments))
+                                            {?>
+                                                <tr>
+                                                    <td colspan="4">There is no payment yet.</td>
+                                                </tr>
+                                            <?php
+                                             }
+                                             else
+                                             {
+                                                foreach ($invoice_payments as $key => $value) 
+                                                {
+                                                  
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $value['invoice_payment_date'];?></td>
+                                                <td><?php echo $value['payment_method'];?></td>
+                                                <td>RM <?php echo $value['invoice_payment_amount'];?> 
+                                                <input type="hidden" class="amount" value="<?php echo $value['invoice_payment_amount'];?>"></td>
+                                                <td><?php echo $value['invoice_payment_note'];?></td>
+                                            </tr>
+                                            <?php
+                                                 }
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
 
@@ -618,12 +697,33 @@ $(function(){
     * function to calculated total subtotal and grand total
     *
     ****************************************************/
-    function calculateGrandTotal() {
+   /* function calculateGrandTotal() {
         var grandTotal = 0;
         $('#quote [id *=item_subtotal]').each(function(x,y){
             grandTotal += +Number($(this).val());
         });
         $('#subtotal').html(grandTotal);
+    }*/
+
+     function calculateGrandTotal() {
+        var grandTotal = 0,
+            amountpaid = 0,
+            subtotal =  $('#subtotal');
+            //amountdue = $('#amountdue');
+
+        $('#quote [id *=item_subtotal]').each(function(x,y){
+            grandTotal += +Number($(this).val());
+        });
+
+        $('#payment .amount').each(function(x,y){
+            
+            amountpaid += Number($(this).val());
+            
+        });
+    
+        $('#subtotal').html(grandTotal);
+        $('#amountpaid').html(amountpaid);
+        $('#amountdue').html(Number(grandTotal) - Number(amountpaid));
     }
 
 

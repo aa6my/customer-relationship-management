@@ -264,7 +264,7 @@
 
                                     <table class="table table-bordered" id="quote">
                                         <tbody>
-                                            <tr>
+                                            <tr class="table_head">
                                                 <th width="300">Item</th>
                                                 <th width="400">Description</th>
                                                 <th>Quantity</th>
@@ -385,6 +385,8 @@
 
                                         </tbody>
                                     </table>
+
+                                    
 
                                 </div><!-- /.box-body -->
 
