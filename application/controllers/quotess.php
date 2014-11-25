@@ -30,7 +30,8 @@ class Quotess extends MY_Controller {
                         'update'            =>'edit',
                         'ajax_product'      => 'view',
                         'ajax_quote_delete' => 'view',
-                        'ajax_quote_customer' => 'view'
+                        'ajax_quote_customer' => 'view',
+                        'pdf' => 'view'
                     );
     }
 
@@ -115,6 +116,30 @@ class Quotess extends MY_Controller {
 
 
     }
+
+     public function pdf (){
+        $this->load->library('pdf');
+        //$id = $this->uri->segment(4);            
+       //$this->pdf->load_view('invoicepdf', $data);
+        //$this->pdf->render();
+        //$this->pdf->stream("Invoice.pdf");
+        //
+             $data['quote_id']    = $this->uri->segment(3) ;
+             $table = "quotes"; 
+             $where = array('quote_id' =>$data['quote_id']);
+             $tableNameToJoin = "customers";
+             $tableRelation = "quotes.customer_id = customers.customer_id";
+             $data['quote'] = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
+             
+             $table = "quote_items";
+             $where = array('quote_id' =>$data['quote_id']);
+             $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+             $this->load->view("quotepdf", $data);
+               //$this->pdf->load_view('invoicepdf', $data);
+        //$this->pdf->render();
+        //$this->pdf->stream("Invoice.pdf");
+    }
+    
 
     public function crud_quote_status($value, $row)
     {

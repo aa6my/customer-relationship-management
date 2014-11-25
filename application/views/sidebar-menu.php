@@ -44,9 +44,9 @@
                                 <i class="fa fa-folder"></i> <span>Jobs</span>
                             </a>
                         </li>
-                        <li class="<?php if($this->uri->segment(1)=="invoices"){echo "active";}?>">
-                            <a href="<?php echo base_url(); ?>invoices">
-                                <i class="fa fa-edit"></i> <span>Invoices</span>
+                        <li class="<?php if($this->uri->segment(1)=="invoicess"){echo "active";}?>">
+                            <a href="<?php echo base_url(); ?>invoicess">
+                                <i class="fa fa-edit"></i> <span>Invoicess</span>
                             </a>
                         </li>
                         <li class="<?php if($this->uri->segment(1)=="files"){echo "active";}?>">

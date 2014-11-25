@@ -89,8 +89,9 @@
                             
                         </div><!-- /.col -->
                         <div class="col-sm-3 invoice-col">
+                        <br>
                             <b>Quote No: </b><?php echo $quote['quote_id']; ?><br>
-                            <br>
+                            
                             
                             <b>Date Issued: </b><?php echo $quote['quote_date_created']; ?><br>
                             <b>Valid Until: </b><?php echo $quote['quote_valid_until']; ?><br>
@@ -109,8 +110,8 @@
                                         <th>Item No</th>
                                         <th>Product</th>
                                         <th>Description</th>
-                                        <th>Price</th>
                                         <th>Quantity</th>
+                                        <th>Price</th>
                                         <th>Discount(%)</th>
                                         <th>Subtotal</th>
                                     </tr>
@@ -125,8 +126,8 @@
                                         <td><?php echo $a++;?></td>
                                         <td><?php echo $val['quote_item_name'];?></td>
                                         <td><?php echo $val['quote_item_description'];?></td>
-                                        <td><?php echo $val['quote_item_price'];?></td>
                                         <td><?php echo $val['quote_item_quantity'];?></td>
+                                        <td><?php echo $val['quote_item_price'];?></td>
                                         <td><?php echo $val['quote_item_discount'];?></td>
                                         <td><?php 
 
@@ -181,7 +182,7 @@
                             <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
                             <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
                             <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> 
-
+                            <a href="<?php echo base_url(); ?>quotess/pdf/10">
                             Generate PDF</button>
                         </div>
                     </div>
