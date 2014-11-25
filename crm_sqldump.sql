@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2014 at 04:00 AM
+-- Generation Time: Nov 25, 2014 at 10:51 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -471,15 +471,14 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   `invoice_customer_notes` longtext NOT NULL,
   `invoice_valid_until` date NOT NULL,
   `invoice_status` int(5) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=42 ;
 
 --
 -- Dumping data for table `invoices`
 --
 
 INSERT INTO `invoices` (`invoice_id`, `customer_id`, `invoice_subject`, `invoice_date_created`, `invoice_number`, `invoice_customer_notes`, `invoice_valid_until`, `invoice_status`) VALUES
-(11, 1, 'website development1', '2014-11-25', '10001', 'this is quotaion1', '2014-11-24', 1),
-(12, 1, 'website development1', '2014-11-25', '10002', 'this is quotaion1', '2014-11-24', 1);
+(41, 1, 'website development1', '2014-11-25', '10001', 'this is quotaion1', '2014-11-24', 1);
 
 -- --------------------------------------------------------
 
@@ -629,23 +628,43 @@ CREATE TABLE IF NOT EXISTS `invoice_items` (
 `invoice_item_id` int(11) NOT NULL,
   `invoice_id` int(11) NOT NULL COMMENT 'from invoice table',
   `product_id` int(5) NOT NULL DEFAULT '0' COMMENT 'from product table',
-  `invoice_item_name` varchar(300) NOT NULL,
+  `invoice_item_name` varchar(300) NOT NULL DEFAULT 'no name',
   `invoice_item_description` text NOT NULL,
-  `invoice_item_price` double NOT NULL,
-  `invoice_item_quantity` double NOT NULL,
-  `invoice_item_discount` double NOT NULL,
-  `invoice_item_subtotal` int(5) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+  `invoice_item_price` double NOT NULL DEFAULT '0',
+  `invoice_item_quantity` double NOT NULL DEFAULT '0',
+  `invoice_item_discount` double NOT NULL DEFAULT '0',
+  `invoice_item_subtotal` int(5) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55 ;
 
 --
 -- Dumping data for table `invoice_items`
 --
 
 INSERT INTO `invoice_items` (`invoice_item_id`, `invoice_id`, `product_id`, `invoice_item_name`, `invoice_item_description`, `invoice_item_price`, `invoice_item_quantity`, `invoice_item_discount`, `invoice_item_subtotal`) VALUES
-(5, 11, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
-(6, 11, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 0, 315),
-(7, 12, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
-(8, 12, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 0, 315);
+(54, 41, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_payments`
+--
+
+CREATE TABLE IF NOT EXISTS `invoice_payments` (
+`invoice_payment_id` int(5) NOT NULL,
+  `invoice_id` int(5) NOT NULL COMMENT 'from INVOICES table',
+  `payment_id` int(5) NOT NULL COMMENT 'from PAYMENTS table',
+  `invoice_payment_amount` int(11) NOT NULL,
+  `invoice_payment_date` date NOT NULL,
+  `invoice_payment_note` text NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `invoice_payments`
+--
+
+INSERT INTO `invoice_payments` (`invoice_payment_id`, `invoice_id`, `payment_id`, `invoice_payment_amount`, `invoice_payment_date`, `invoice_payment_note`) VALUES
+(3, 41, 1, 23, '2014-11-25', 'sdasd'),
+(4, 41, 1, 12, '2014-11-25', 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -785,6 +804,24 @@ CREATE TABLE IF NOT EXISTS `member` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payments`
+--
+
+CREATE TABLE IF NOT EXISTS `payments` (
+`payment_id` int(11) NOT NULL,
+  `payment_method` text NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`payment_id`, `payment_method`) VALUES
+(1, 'BANK TRANSFER');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -830,8 +867,7 @@ CREATE TABLE IF NOT EXISTS `quotes` (
 --
 
 INSERT INTO `quotes` (`quote_id`, `customer_id`, `quote_subject`, `quote_date_created`, `quote_valid_until`, `quote_discount`, `quote_customer_notes`, `quote_status`) VALUES
-(10, 1, 'website development1', '2014-11-23', '2014-11-24', 0, 'this is quotaion1', 1),
-(11, 0, 'fgg', '2014-11-25', '2014-11-27', 0, 'ttt', 0);
+(11, 1, 'fgg', '2014-11-25', '2014-11-27', 0, 'ttt', 0);
 
 -- --------------------------------------------------------
 
@@ -856,8 +892,6 @@ CREATE TABLE IF NOT EXISTS `quote_items` (
 --
 
 INSERT INTO `quote_items` (`quote_item_id`, `quote_id`, `product_id`, `quote_item_name`, `quote_item_description`, `quote_item_price`, `quote_item_quantity`, `quote_item_discount`, `quote_item_subtotal`) VALUES
-(10, 10, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
-(11, 10, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 0, 315),
 (12, 11, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 2, 90),
 (13, 11, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 3, 312);
 
@@ -1089,7 +1123,7 @@ ALTER TABLE `files`
 -- Indexes for table `invoices`
 --
 ALTER TABLE `invoices`
- ADD PRIMARY KEY (`invoice_id`), ADD UNIQUE KEY `invoice_number` (`invoice_number`);
+ ADD PRIMARY KEY (`invoice_id`);
 
 --
 -- Indexes for table `invoices_test`
@@ -1102,6 +1136,12 @@ ALTER TABLE `invoices_test`
 --
 ALTER TABLE `invoice_items`
  ADD PRIMARY KEY (`invoice_item_id`);
+
+--
+-- Indexes for table `invoice_payments`
+--
+ALTER TABLE `invoice_payments`
+ ADD PRIMARY KEY (`invoice_payment_id`);
 
 --
 -- Indexes for table `jobs`
@@ -1132,6 +1172,12 @@ ALTER TABLE `leads`
 --
 ALTER TABLE `member`
  ADD PRIMARY KEY (`member_id`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+ ADD PRIMARY KEY (`payment_id`);
 
 --
 -- Indexes for table `products`
@@ -1236,7 +1282,7 @@ MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `invoices_test`
 --
@@ -1246,7 +1292,12 @@ MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=121;
 -- AUTO_INCREMENT for table `invoice_items`
 --
 ALTER TABLE `invoice_items`
-MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=55;
+--
+-- AUTO_INCREMENT for table `invoice_payments`
+--
+ALTER TABLE `invoice_payments`
+MODIFY `invoice_payment_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `jobs`
 --
@@ -1272,6 +1323,11 @@ MODIFY `lead_id` smallint(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 ALTER TABLE `member`
 MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `products`
 --
