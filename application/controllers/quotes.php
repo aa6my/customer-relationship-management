@@ -30,7 +30,8 @@ class Quotes extends MY_Controller {
                         'update'            =>'edit',
                         'ajax_product'      => 'view',
                         'ajax_quote_delete' => 'view',
-                        'ajax_quote_customer' => 'view'
+                        'ajax_quote_customer' => 'view',
+                        'convert_to_invoive' => 'view'
                     );
     }
 
@@ -247,6 +248,63 @@ class Quotes extends MY_Controller {
             return true;
         }
 
+    }
+
+    public function get_invoice_number(){
+
+        $table               = "invoices";
+        $order_by = array('invoice_id','desc');
+        $data = $this->Midae_model->get_specified_row($table,false,$order_by,false, false);
+
+        return $data;
+    }
+
+
+    public function convert_to_invoive(){
+        $data['quote_id'] = $this->uri->segment(3) ;
+        $table            = "quotes";
+        $where            = array('quote_id' => $data['quote_id']);
+        $quotes           = $this->Midae_model->get_specified_row($table,$where,false,false, false);
+        $invoice          = $this->get_invoice_number();
+        $invoice_number   = ($invoice['invoice_number']) ? $invoice['invoice_number'] : "";
+        $invoice_number   = ($invoice_number!="") ? $invoice_number + 1 : 10001;
+        $arrayData        = array( 'customer_id'            =>$quotes['customer_id'],
+                                   'invoice_subject'        => $quotes['quote_subject'],
+                                   'invoice_date_created'   => date('Y-m-d'),
+                                   'invoice_number'         => $invoice_number,
+                                   'invoice_customer_notes' => $quotes['quote_customer_notes'],
+                                   'invoice_valid_until'    => $quotes['quote_valid_until'],
+                                   'invoice_status'         => $quotes['quote_status']
+                                   );
+        $table            = "invoices";
+        
+        $invoice_id = $this->Midae_model->insert_new_data($arrayData,$table);
+        /**
+         * buat delete invoices lepas ni
+         */
+    
+        $table               = "quote_items";
+        $quote_items = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+       
+        for($i = 0; $i <= count($quote_items); $i++)
+        {
+
+            $arrayData = array('invoice_id'                 => $invoice_id,
+                               'product_id'                 => @$quote_items[$i]['product_id'],
+                               'invoice_item_name'          => @$quote_items[$i]['quote_item_name'],
+                               'invoice_item_description'   => @$quote_items[$i]['quote_item_description'],
+                               'invoice_item_price'         => @$quote_items[$i]['quote_item_price'],
+                               'invoice_item_quantity'      => @$quote_items[$i]['quote_item_quantity'],
+                               'invoice_item_discount'      => @$quote_items[$i]['quote_item_discount'],
+                               'invoice_item_subtotal'      => @$quote_items[$i]['quote_item_subtotal']
+                               );
+            $table               = "invoice_items";
+            $this->Midae_model->insert_new_data($arrayData,$table);
+                
+        }
+
+        $this->Midae_model->display_message("convert", "invoices/index/edit/ ");
+       
     }
 
 

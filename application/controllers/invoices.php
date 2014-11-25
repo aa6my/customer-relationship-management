@@ -210,9 +210,7 @@ class Invoices extends MY_Controller {
 
     }
 
-    public function get_invoice_number(){
-
-    }
+    
     
     public function crud_invoice_status($value, $row)
     {
@@ -252,6 +250,8 @@ class Invoices extends MY_Controller {
         }
 
     }
+
+    
 
 
     public function ajax_product(){

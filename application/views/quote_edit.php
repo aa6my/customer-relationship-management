@@ -452,14 +452,15 @@ $(function(){
 
     $('#to_invoice').on('click', function(){
         var str = $(this).attr('data-confirmMsg');
-        str = (str == '1')? 'Are you sure?' : str;
+        str = (str == '1')? 'Are you sure to do this? \nThe quote will be deleted!' : str;
         if(confirm(str)==true)
         {
-            //alert("yes");
+            var id_q = $(this).data('quote_id');
+            window.location.href = '<?php echo base_url();?>quotes/convert_to_invoive/'+ id_q;
         }
         else
         {
-            //alert("no");
+            /** do nothing **/
         }
     });
 

@@ -78,7 +78,7 @@ class Jobs extends MY_Controller {
     {
             $data['website']   = $this->Midae_model->get_website(); //get websites from database
             $data['customer']  = $this->Midae_model->get_customer(); //get customers from database
-            $data['job_type'] = $this->Midae_model->get_all_rows("job_types", false, false, false); //get all types of  job
+            $data['job_type'] = $this->Midae_model->get_all_rows("job_types", false, false, false, false, false); //get all types of  job
             $data['staff']     = $this->Midae_model->get_staff_member();
 
             return $data;
@@ -298,7 +298,7 @@ class Jobs extends MY_Controller {
             
                 
 
-            $data['job_task'] = $this->Midae_model->get_all_rows("jobs_task",$where, $tableNameToJoin, $tableRelation);
+            $data['job_task'] = $this->Midae_model->get_all_rows("jobs_task",$where, $tableNameToJoin, $tableRelation, false, false);
             $data['jenis'] = "display";
             $this->load->view('job_ajax_task', $data);
         }
@@ -321,7 +321,7 @@ class Jobs extends MY_Controller {
 
             $this->Midae_model->insert_new_data($arrayData,"jobs_task");
            
-            $data['job'] = $this->Midae_model->get_all_rows_jobs("jobs_task",$this->input->post('job_id'), $tableNameToJoin, $tableRelation);
+            $data['job'] = $this->Midae_model->get_all_rows_jobs("jobs_task",$this->input->post('job_id'), $tableNameToJoin, $tableRelation, false, false);
             
             $data['jenis'] = "add";
             $this->load->view('job_ajax_task', $data);
@@ -336,7 +336,7 @@ class Jobs extends MY_Controller {
 
             $data['jenis'] = $this->input->post('jenis');
 
-            $data['total'] = $this->Midae_model->get_all_rows('jobs',$where, "jobs_task", $tableRelation);
+            $data['total'] = $this->Midae_model->get_all_rows('jobs',$where, "jobs_task", $tableRelation, false, false);
 
             //$data['percentage'] = $data['total']['']
 
@@ -417,7 +417,7 @@ class Jobs extends MY_Controller {
         if($jenis=="display")
         {
             $table            = "catproduct";
-            $data['category'] = $this->Midae_model->get_all_rows($table,false, false, false);
+            $data['category'] = $this->Midae_model->get_all_rows($table,false, false, false, false, false);
             $this->load->view('ajax_product', $data, FALSE);
         }
         else if($jenis=="get_product")
@@ -425,7 +425,7 @@ class Jobs extends MY_Controller {
             $table            = "products";
             $catproduct_id   = $this->input->post('catproduct_id');
             $where = array('catproduct_id'=>$catproduct_id);
-            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false);
+            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
             $this->load->view('ajax_product', $data, FALSE);
 
         }
@@ -438,7 +438,7 @@ class Jobs extends MY_Controller {
             $where = array('product_id'=>$product_id);
             $tableNameToJoin = "catproduct";
             $tableRelation = "products.catproduct_id = catproduct.catproduct_id";
-            $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation);
+            $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation, false, false);
             echo json_encode($return);
             //$this->load->view('ajax_product', $data, FALSE);
 

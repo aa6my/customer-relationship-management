@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2014 at 11:07 AM
+-- Generation Time: Nov 25, 2014 at 04:00 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -100,12 +100,13 @@ CREATE TABLE IF NOT EXISTS `config_data` (
 
 INSERT INTO `config_data` (`key`, `value`) VALUES
 ('charset', 'utf-8'),
+('debug', 'FALSE'),
 ('email', 'YOUR EMAIL'),
 ('emailpassword', 'YOUR EMAIL PASSWORD'),
 ('mailtype', 'html'),
 ('newline', '\\r\\n'),
 ('protocol', 'smtp'),
-('sitedescription', 'Hell Yeah! Wow'),
+('sitedescription', 'Hell Yeah!'),
 ('sitename', 'SeGi MiDae'),
 ('smtp_host', 'ssl://smtp.googlemail.com'),
 ('smtp_port', '465'),
@@ -470,7 +471,15 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   `invoice_customer_notes` longtext NOT NULL,
   `invoice_valid_until` date NOT NULL,
   `invoice_status` int(5) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`invoice_id`, `customer_id`, `invoice_subject`, `invoice_date_created`, `invoice_number`, `invoice_customer_notes`, `invoice_valid_until`, `invoice_status`) VALUES
+(11, 1, 'website development1', '2014-11-25', '10001', 'this is quotaion1', '2014-11-24', 1),
+(12, 1, 'website development1', '2014-11-25', '10002', 'this is quotaion1', '2014-11-24', 1);
 
 -- --------------------------------------------------------
 
@@ -626,7 +635,17 @@ CREATE TABLE IF NOT EXISTS `invoice_items` (
   `invoice_item_quantity` double NOT NULL,
   `invoice_item_discount` double NOT NULL,
   `invoice_item_subtotal` int(5) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `invoice_items`
+--
+
+INSERT INTO `invoice_items` (`invoice_item_id`, `invoice_id`, `product_id`, `invoice_item_name`, `invoice_item_description`, `invoice_item_price`, `invoice_item_quantity`, `invoice_item_discount`, `invoice_item_subtotal`) VALUES
+(5, 11, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
+(6, 11, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 0, 315),
+(7, 12, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
+(8, 12, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 0, 315);
 
 -- --------------------------------------------------------
 
@@ -695,10 +714,7 @@ INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `product_id`, `job_task_hour`,
 (223, 14, 3, 7, 45, '0000-00-00', 1, 0, '[COSMETIC] JAMU'),
 (225, 14, 0, 4, 20, '2014-11-12', 1, 1, 'fghfgh'),
 (226, 14, 2, 3, 34, '0000-00-00', 1, 0, '[Electronic] shaklee'),
-(229, 14, 4, 5, 12, '0000-00-00', 1, 0, '[SERVICES] MOVE STUFF'),
-(230, 14, 0, 0, 0, '0000-00-00', 1, 0, ''),
-(231, 14, 0, 2, 10, '0000-00-00', 1, 0, 'asd'),
-(232, 14, 0, 0, 0, '0000-00-00', 1, 0, '');
+(229, 14, 4, 5, 12, '0000-00-00', 1, 0, '[SERVICES] MOVE STUFF');
 
 -- --------------------------------------------------------
 
@@ -871,7 +887,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-24 08:25:43', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-25 01:52:30', '::1', NULL, NULL, NULL, 1, 1),
 (2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
@@ -1220,7 +1236,7 @@ MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `invoices_test`
 --
@@ -1230,7 +1246,7 @@ MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=121;
 -- AUTO_INCREMENT for table `invoice_items`
 --
 ALTER TABLE `invoice_items`
-MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `jobs`
 --

@@ -325,7 +325,7 @@ class Midae_model extends CI_Model {
 
         if($order_by!=false)
         {
-            $this->db->order_by($order_by);
+            $this->db->order_by($order_by[0], $order_by[1]);
         }
 
         if($tableNameToJoin && $tableRelation){
@@ -385,6 +385,10 @@ class Midae_model extends CI_Model {
         else if($messageType=="error")
         {
              $this->session->set_flashdata('error', 'There is an errors in processing, please try again.');
+        }
+        else if($messageType=="convert")
+        {
+             $this->session->set_flashdata('convert', 'Successfully converted.');
         }
        
 
