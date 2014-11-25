@@ -62,6 +62,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
+                                                       
                                                             <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_date_created" value="<?php echo $quote['quote_date_created'];?>">
                                                     </div>
                                                 </div>
@@ -254,7 +255,7 @@
                         <div class="col-md-12">
                             <!-- Primary box -->
                             <div class="box box-primary">
-                                <div class="box-header" data-toggle="tooltip" title="" data-original-title="Item from task job or products">
+                                <div class="box-header" data-toggle="tooltip" title="" data-original-title="Item from products or mannual insert">
                                     <h3 class="box-title"><strong>Quote Items</strong> <!-- <button class="btn btn-success btn-sm">Add Item From Products</button> --></h3>
 
                                 </div>
@@ -262,7 +263,7 @@
 
                                     <table class="table table-bordered" id="quote">
                                         <tbody>
-                                            <tr bgcolor="#F9F9F9">
+                                            <tr class="table_head">
                                                 <th width="300">Item</th>
                                                 <th width="400">Description</th>
                                                 <th>Quantity</th>
@@ -341,7 +342,7 @@
                                             $a++;
                                         }
                                         ?>
-                                        <tr bgcolor="#F9F9F9">
+                                        <tr class="table_head">
                                             <td colspan="6" align="center"> <strong>Insert New Data (New Entry)</strong></td>
                                         </tr>
 

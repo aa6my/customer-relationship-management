@@ -26,11 +26,12 @@ class Invoices extends MY_Controller {
     public function access_map(){
 
         return array(
-                        'index'             =>'view',
-                        'update'            =>'edit',
-                        'ajax_product'      => 'view',
-                        'ajax_invoice_delete' => 'view',
-                        'ajax_invoice_customer' => 'view'
+                        'index'                 =>'view',
+                        'update'                =>'edit',
+                        'ajax_product'          => 'view',
+                        'ajax_invoice_delete'   => 'view',
+                        'ajax_invoice_customer' => 'view',
+                        'ajax_invoice_payment'  => 'view'
                     );
     }
 
@@ -81,10 +82,14 @@ class Invoices extends MY_Controller {
             {
                 $postData = $this->input->post();
                 $bil      = count($postData['item_name']);
+                $invoice          = $this->get_invoice_number();
+                $invoice_number   = ($invoice=="") ? $invoice['invoice_number'] : "";
+                $invoice_number   = ($invoice_number!="") ? $invoice_number + 1 : 10001;
 
-                /** insert into quote table **/
+                /** insert into invoice table **/
                 $arrayData = array('invoice_subject'          => $postData['invoice_subject'],
                                    'invoice_date_created'     => $postData['invoice_date_created'],
+                                   'invoice_number'           => $invoice_number,
                                    'invoice_valid_until'      => $postData['invoice_valid_until'],
                                    'customer_id'              => $postData['customer_id'],
                                    'invoice_customer_notes'   => $postData['invoice_customer_notes'],
@@ -93,11 +98,11 @@ class Invoices extends MY_Controller {
                 $insert = $this->Midae_model->insert_new_data($arrayData,"invoices");
                 $invoice_id = $insert;
 
-                /** insert into quote items table **/
+                /** insert into invoices items table **/
                 for($i = 0; $i < $bil; $i++ ){
 
                     $arrayData = array( 'invoice_id'                  => $invoice_id,
-                                        'product_id'                => $postData['quote_product_id'][$i],
+                                        'product_id'                  => $postData['quote_product_id'][$i],
                                         'invoice_item_name'           => $postData['item_name'][$i],
                                         'invoice_item_description'    => $postData['item_description'][$i],
                                         'invoice_item_price'          => $postData['item_price'][$i],
@@ -115,17 +120,25 @@ class Invoices extends MY_Controller {
          }
          else if($state=="edit")
          {
-             $data['top_title']   = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-             $data['top_desc']    = "Change your page purpose here"; /** function purpose here.**/
-
+             $data['top_title']     = ucwords(strtolower($this->uri->segment('1'))); //URI title.
+             $data['top_desc']      = "Change your page purpose here"; /** function purpose here.**/
+             
              $data['invoice_id']    = $this->uri->segment(4) ;
-             $table               = "invoices";
-             $where               = array('invoice_id' => $data['invoice_id']);
-             $tableNameToJoin = "customers";
-             $tableRelation = "invoices.customer_id = customers.customer_id";
+             $table                 = "invoices";
+             $where                 = array('invoice_id' => $data['invoice_id']);
+             $tableNameToJoin       = "customers";
+             $tableRelation         = "invoices.customer_id = customers.customer_id";
              $data['invoice']       = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
-             $table               = "invoice_items";
+
+             $data['top_title']     .= " No : #".$data['invoice']['invoice_number'];
+             $table                 = "invoice_items";
              $data['invoice_items'] = $this->Midae_model->get_all_rows($table,$where, false, false,false, false);
+
+             $table = "invoice_payments";
+             $where = array('invoice_payments.invoice_id' => $data['invoice_id']);
+             $tableNameToJoin = "payments";
+             $tableRelation = "invoice_payments.payment_id = payments.payment_id";
+             $data['invoice_payments'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation,false, false);
              $this->load->view('invoice_edit',$data);
 
              if($this->input->post('save')) //when save button clicked
@@ -210,6 +223,14 @@ class Invoices extends MY_Controller {
 
     }
 
+    public function get_invoice_number(){
+
+        $table    = "invoices";
+        $order_by = array('invoice_id','desc');
+        $data     = $this->Midae_model->get_specified_row($table,false,$order_by,false, false);
+
+        return $data;
+    }
     
     
     public function crud_invoice_status($value, $row)
@@ -241,7 +262,8 @@ class Invoices extends MY_Controller {
             $where = array(
                 'invoice_id' => $invoice_id
                 );
-            $this->Midae_model-> delete_data("invoice_items", $where);
+            $this->Midae_model->delete_data("invoice_items", $where);
+            $this->Midae_model->delete_data("invoice_payments", $where);
             return true;
         }
         else
@@ -298,6 +320,35 @@ class Invoices extends MY_Controller {
 
     }
 
+    public function ajax_invoice_payment(){
+
+        $jenis = $this->input->post('jenis');
+        $data['id_invoice'] = $this->input->post('id_invoice');
+
+        if($jenis=="display"){
+
+            $table = "payments";
+            $data['payment_type'] = $this->Midae_model->get_all_rows($table,false, false, false, false, false);
+            $this->load->view('invoice_payment_ajax', $data);
+        }
+        else if($jenis=="add"){
+
+            if($this->input->post('save')){
+
+                $postData   = $this->input->post();
+                $table      = "invoice_payments";
+                $arrayData  = array('invoice_id'                => $postData['invoice_id'],
+                                    'payment_id'                => $postData['payment_id'],
+                                    'invoice_payment_amount'    => $postData['invoice_payment_amount'],
+                                    'invoice_payment_date'      => $postData['invoice_payment_date'],
+                                    'invoice_payment_note'      => $postData['invoice_payment_note'] 
+                                   );
+
+                $this->Midae_model->insert_new_data($arrayData,$table);
+                $this->Midae_model->display_message("save","invoices/index/edit/{$postData['invoice_id']}");
+            }
+        }
+    }
 
     public function ajax_invoice_delete(){
 
