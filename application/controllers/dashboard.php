@@ -45,6 +45,8 @@ class Dashboard extends MY_Controller {
         $data['event'] =$this->Midae_model->get_count_product($table);
         $table = "invoices";
         $data['invoice'] =$this->Midae_model->get_count_product($table);
+        $table = "quotes";
+        $data['quote'] =$this->Midae_model->get_count_product($table);
         $this->load->view('dashboard', $data);
         //print_r();
 	}

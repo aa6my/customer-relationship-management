@@ -29,8 +29,8 @@
                                 <i class="fa fa-folder"></i> <span>Products</span>
                             </a>
                         </li>
-                        <li class="<?php if($this->uri->segment(1)=="quotes"){echo "active";}?>">
-                            <a href="<?php echo base_url(); ?>quotes">
+                        <li class="<?php if($this->uri->segment(1)=="quotess"){echo "active";}?>">
+                            <a href="<?php echo base_url(); ?>quotess">
                                 <i class="fa fa-edit"></i> <span>Quotes</span>
                             </a>
                         </li>
