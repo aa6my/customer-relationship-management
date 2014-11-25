@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <?php $this->load->view('header'); ?>
+    <head>
+        <meta charset="UTF-8">
+        <title>[CRM] Customer Relationship Management | <?php echo $this->config->item('sitename'); ?></title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+        <link href="<?php echo $is; ?>://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $is; ?>://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/calendar/bootstrap-calendar/css/calendar.css">
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/calendar/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" />
+        <!-- Theme style -->
+        <link href="<?php echo base_url(); ?>assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <!--script src="<?php echo $is; ?>://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+        <script src="<?php echo base_url(); ?>assets/calendar/jquery.min.js" type="text/javascript"></script>
+        <script src="<?php echo $is; ?>://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
+
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+         
+        
+        <!-- AdminLTE App -->
+        
+        
+    </head>
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
         <?php $this->load->view('top'); ?>
@@ -85,7 +114,7 @@
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--script src="<?php echo $is; ?>://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script-->
         <script src="<?php echo base_url() ?>assets/calendar/underscore/underscore-min.js"></script>
         <script src="<?php echo base_url() ?>assets/calendar/bootstrap-calendar/js/calendar.js"></script>
         <script type="text/javascript">

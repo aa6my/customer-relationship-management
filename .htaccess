@@ -6,6 +6,9 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 #SSLCertificateKeyFile /path/to/your_private.key
 #SSLCertificateChainFile /path/to/DigiCertCA.crt
 
+#Header set Access-Control-Allow-Origin "*"
+#Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+
 RewriteBase /customer-relationship-management/
 RewriteCond $1 !^(index\.php|resources|robots\.txt)
 RewriteCond %{REQUEST_FILENAME} !-f

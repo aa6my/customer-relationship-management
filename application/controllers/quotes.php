@@ -47,7 +47,7 @@ class Quotes extends MY_Controller {
     public function index()
     {
 
-
+        //$this->output->enable_profiler(false);
         $crud  = new grocery_CRUD();
         $state = $crud->getState();
         $crud->set_theme('datatables');
@@ -202,7 +202,7 @@ class Quotes extends MY_Controller {
 
              $crud->callback_column('quote_status',array($this,'crud_quote_status'));
              $output              = $crud->render();
-             $output              = array_merge($data,(array)$output);
+            // $output              = array_merge($data,(array)$output);
              $this->load->view('cruds.php',$output);
          }
 
@@ -309,9 +309,9 @@ class Quotes extends MY_Controller {
            $name = $this->input->post('name_startsWith');
            $table = "customers";
            $where = array('customer_name LIKE' => $name.'%');
-           //$likes = array('customer_name'=>$name);
+           $likes = $name;
            //$places = "after";
-           $data['customer'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+           $data['customer'] = $this->Midae_model->get_all_rows_quote($table,$where, false, false, false);
 
            // if($_GET['type'] == 'country'){
                /* $result = mysql_query("SELECT name FROM country where name LIKE '".strtoupper($_GET['name_startsWith'])."%'");  

@@ -211,6 +211,31 @@ class Midae_model extends CI_Model {
             //return $data;
     }
 
+    function get_all_rows_quote($table,$where, $tableNameToJoin, $tableRelation,$likes)
+    {
+            //$data = array();
+            //$query = $this->db->query("SELECT *FROM $table");
+
+            $this->db->select('*');
+            $this->db->from($table);
+
+            if($where!=false){
+               $this->db->where($where);
+            }
+           
+           if($tableNameToJoin!=false && $tableRelation!=false){
+
+                $this->db->join($tableNameToJoin, $tableRelation);
+           }
+
+          
+            //$this->db->like('customer_name',"j",'after'); 
+         
+            $query = $this->db->get();
+            return $query->result_array(); 
+           
+    }
+
 
     function get_all_rows_jobs($table,$job_id, $tableNameToJoin, $tableRelation)
     {

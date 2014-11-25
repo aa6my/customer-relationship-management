@@ -37,7 +37,7 @@
                 <!-- Main content -->
                 <section class="content">
 
-                <form action="<?php echo base_url()."quotes/index/edit/$quote_id"; ?>" method="post">
+                <form action="<?php echo base_url()."invoices/index/edit/$invoice_id"; ?>" method="post">
                 <div class="row">
 
 
@@ -62,7 +62,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_date_created" value="<?php echo $quote['quote_date_created'];?>">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="invoice_date_created" value="<?php echo $invoice['invoice_date_created'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -70,14 +70,14 @@
                                         </tr>
                                          <tr>
 
-                                            <td align="right">Valid Until</td>
+                                            <td align="right">Due Date</td>
                                             <td>
                                                <div class="col-xs-5">
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_valid_until" value="<?php echo $quote['quote_valid_until'];?>">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="invoice_valid_until" value="<?php echo $invoice['invoice_valid_until'];?>">
                                                     </div>
                                                 </div>
                                             </td>
@@ -88,11 +88,11 @@
                                             <td align="right">Status</td>
                                             <td>
                                                 <div class="col-xs-5">
-                                                    <select class="form-control" name="quote_status">
-                                                        <option value="0" <?php if($quote['quote_status']==0) echo 'selected';?>>DRAFT</option>
-                                                        <option value="1" <?php if($quote['quote_status']==1) echo 'selected';?>>ACCEPTED</option>
-                                                        <option value="2" <?php if($quote['quote_status']==2) echo 'selected';?>>REJECTED</option>
-                                                        <option value="3" <?php if($quote['quote_status']==3) echo 'selected';?>>CANCEL</option>
+                                                    <select class="form-control" name="invoice_status">
+                                                        <option value="0" <?php if($invoice['invoice_status']==0) echo 'selected';?>>DRAFT</option>
+                                                        <option value="1" <?php if($invoice['invoice_status']==1) echo 'selected';?>>PAID</option>
+                                                        <option value="2" <?php if($invoice['invoice_status']==2) echo 'selected';?>>UNPAID</option>
+                                                        <option value="3" <?php if($invoice['invoice_status']==3) echo 'selected';?>>CANCEL</option>
 
                                                     </select>
                                                 </div>
@@ -104,8 +104,8 @@
                                             <td align="right">Customer</td>
                                             <td>
                                                 <div class="col-xs-5">
-                                                    <input id="country_name" class="form-control txt-auto" value="<?php echo $quote['customer_name'];?>" />
-                                                    <input type="hidden" id="customer_id" name="customer_id" value="<?php echo $quote['customer_id'];?>">
+                                                    <input id="country_name" class="form-control txt-auto" value="<?php echo $invoice['customer_name'];?>" />
+                                                    <input type="hidden" id="customer_id" name="customer_id" value="<?php echo $invoice['customer_id'];?>">
                                                 </div>
                                             </td>
 
@@ -118,7 +118,7 @@
                                             source: function( request, response ) {
                                                 $.ajax({
                                                     type : 'POST',
-                                                    url : '<?php echo base_url();?>quotes/ajax_quote_customer',
+                                                    url : '<?php echo base_url();?>invoices/ajax_invoice_customer',
                                                     dataType: "json",
                                                     data: {
                                                        name_startsWith: request.term
@@ -205,7 +205,7 @@
 
                                                                <div class="col-xs-12">
                                                                <strong>Quote Subject</strong><br/>
-                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_subject"><?php echo $quote['quote_subject'];?></textarea>
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="invoice_subject"><?php echo $invoice['invoice_subject'];?></textarea>
                                                                 </div>
 
                                               </td>
@@ -219,7 +219,7 @@
 
                                                                <div class="col-xs-12">
                                                               <strong>Quote Terms</strong><br/>
-                                                                    <textarea class="form-control" rows="3" placeholder="" name="quote_customer_notes"><?php echo $quote['quote_customer_notes'];?></textarea>
+                                                                    <textarea class="form-control" rows="3" placeholder="" name="invoice_customer_notes"><?php echo $invoice['invoice_customer_notes'];?></textarea>
                                                                 </div>
 
                                               </td>
@@ -272,13 +272,13 @@
                                             </tr>
                                             <?php
                                             $a = 200;
-                                            foreach($quote_items as $data)
+                                            foreach($invoice_items as $data)
                                             {?>
                                              <tr id="current_row<?php echo $a;?>"><!-- form template -->
                                                 <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" id="item_name<?php echo $a;?>" name="item_name[]" value="<?php echo $data['quote_item_name'];?>">
-                                                    <input type="hidden" name="quote_product_id[]" id="quote_product_id<?php echo $a;?>" value="<?php echo $data['product_id'];?>">
-                                                    <input type="hidden" name="quote_item_id[]" id="quote_item_id" value="<?php echo $data['quote_item_id'];?>">
+                                                    <input type="text" class="form-control input-sm" placeholder="" id="item_name<?php echo $a;?>" name="item_name[]" value="<?php echo $data['invoice_item_name'];?>">
+                                                    <input type="text" name="quote_product_id[]" id="quote_product_id<?php echo $a;?>" value="<?php echo $data['product_id'];?>">
+                                                    <input type="text" name="quote_item_id[]" id="quote_item_id" value="<?php echo $data['invoice_item_id'];?>">
                                                     <br/>
                                                     <a class='buttonProduct' href="#inline_content" id="papar_product<?php echo $a;?>"><!-- <button class="btn btn-success btn-sm buttonProduct">Add Item From Products</button> -->Fetch data from product</a>
                                                     <script>
@@ -308,22 +308,22 @@
                                                     </script>
                                                     </td>
                                                <td>
-                                                    <textarea class="form-control" rows="3" placeholder="" id="item_description<?php echo $a;?>" name="item_description[]"><?php echo $data['quote_item_description'];?></textarea>
+                                                    <textarea class="form-control" rows="3" placeholder="" id="item_description<?php echo $a;?>" name="item_description[]"><?php echo $data['invoice_item_description'];?></textarea>
 
                                                 </td>
                                                   <td align="center">
-                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity<?php echo $a;?>" data-calculate="a" value="<?php echo $data['quote_item_quantity'];?>">
+                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity<?php echo $a;?>" data-calculate="a" value="<?php echo $data['invoice_item_quantity'];?>">
 
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price<?php echo $a;?>" data-calculate="a" value="<?php echo $data['quote_item_price'];?>">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price<?php echo $a;?>" data-calculate="a" value="<?php echo $data['invoice_item_price'];?>">
                                                 </td>
 
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_discount[]" id="item_discount<?php echo $a;?>" data-calculate="a" value="<?php echo $data['quote_item_discount'];?>">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_discount[]" id="item_discount<?php echo $a;?>" data-calculate="a" value="<?php echo $data['invoice_item_discount'];?>">
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_subtotal[]" id="item_subtotal<?php echo $a;?>" readonly="readonly" value="<?php echo $data['quote_item_subtotal'];?>">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_subtotal[]" id="item_subtotal<?php echo $a;?>" readonly="readonly" value="<?php echo $data['invoice_item_subtotal'];?>">
                                                     <br/>
                                                     <!-- <a href="#" class="clone" data-subTotal="subtotal">
                                                         <button type="button" class="btn btn-default" >
@@ -349,8 +349,8 @@
                                         <tr class="toclone" id="current_row">
                                                 <td>
                                                     <input type="text" class="form-control input-sm" placeholder="" id="item_name" name="item_name[]" value="">
-                                                    <input type="hidden" name="quote_product_id[]" id="quote_product_id" >
-                                                    <input type="hidden" name="quote_item_id[]" id="quote_item_id">
+                                                    <input type="text" name="quote_product_id[]" id="quote_product_id" >
+                                                    <input type="text" name="quote_item_id[]" id="quote_item_id">
                                                     <br/>
                                                     <a class='buttonProduct' href="#inline_content" id="papar_product">Fetch data from product</a>
                                                     <script>
@@ -437,7 +437,6 @@
                             </div><!-- /.box --> <div class="col-xs-7">
                                                 <button class="btn btn-warning btn-sm" type="reset">Reset</button>
                                                <input class="btn btn-primary btn-sm" name="save" type="submit" value="Save">
-                                               <input class="btn btn-danger btn-sm" name="save" type="button" value="Convert to Invoice" data-quote_id="<?php echo $quote_id;?>" id="to_invoice" data-confirmMsg="1">
 
                                             </div>
 
@@ -449,19 +448,6 @@
 
 <script>
 $(function(){
-
-    $('#to_invoice').on('click', function(){
-        var str = $(this).attr('data-confirmMsg');
-        str = (str == '1')? 'Are you sure?' : str;
-        if(confirm(str)==true)
-        {
-            //alert("yes");
-        }
-        else
-        {
-            //alert("no");
-        }
-    });
 
     /****************************************************
     * call this method at initial start loading of this page
@@ -526,8 +512,8 @@ $(function(){
 
             $.ajax({
                 type : "POST",
-                url : "<?php echo base_url();?>quotes/ajax_quote_delete",
-                data : "quote_item_id="+q_id,
+                url : "<?php echo base_url();?>invoices/ajax_invoice_delete",
+                data : "invoice_item_id="+q_id,
                 success : function(){
                     $('#'+parent.attr('id')).remove();
                     calculateGrandTotal();

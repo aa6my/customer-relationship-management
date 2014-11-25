@@ -106,7 +106,7 @@
                                             <td>
                                                 <div class="col-xs-5">
                                                     <input id="country_name" class="form-control txt-auto"/>
-                                                    <input type="text" id="customer_id" name="customer_id">
+                                                    <input type="hidden" id="customer_id" name="customer_id">
                                                 </div>
                                             </td>
 
@@ -118,6 +118,7 @@
                                         $('#country_name').autocomplete({
                                             source: function( request, response ) {
                                                 $.ajax({
+                                                    type : 'POST',
                                                     url : '<?php echo base_url();?>quotes/ajax_quote_customer',
                                                     dataType: "json",
                                                     data: {
@@ -128,12 +129,13 @@
 
                                                          response( $.map( data, function( item ) {
                                                                 
-                                                            var value = {
+                                                            var d = {
                                                                 label: item.customer_name,
                                                                 value: item.customer_name,
-                                                                id : item.customer_id}
+                                                                id : item.customer_id
+                                                            }
 
-                                                                return value;
+                                                                return d;
                                                             
                                                            
                                                         }));

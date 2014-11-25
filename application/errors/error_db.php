@@ -1,5 +1,20 @@
 <?php
-$bsurl = "http://".$_SERVER['HTTP_HOST'];
+
+function is_https(){ 
+    if ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) 
+    {   
+        $protocol = "https";
+        return $protocol; 
+    }
+    else 
+    {
+        $protocol = "http";
+        return $protocol; 
+    }
+} 
+
+$is = is_https();
+$bsurl = $is."://".$_SERVER['HTTP_HOST'];
 $bsurl .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 $config['base_url'] = "$bsurl";
 ?>
@@ -7,7 +22,7 @@ $config['base_url'] = "$bsurl";
         <meta charset="UTF-8">
         <title><?php echo $heading; ?></title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo $is; ?>://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <!-- Theme style -->
         <link href="<?= $bsurl ?>assets/css/AdminLTE.css" rel="stylesheet" type="text/css">
 
