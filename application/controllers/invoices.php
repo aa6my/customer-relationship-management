@@ -83,7 +83,7 @@ class Invoices extends MY_Controller {
                 $postData = $this->input->post();
                 $bil      = count($postData['item_name']);
                 $invoice          = $this->get_invoice_number();
-                $invoice_number   = ($invoice=="") ? $invoice['invoice_number'] : "";
+                $invoice_number   = ($invoice!="") ? $invoice['invoice_number'] : "";
                 $invoice_number   = ($invoice_number!="") ? $invoice_number + 1 : 10001;
 
                 /** insert into invoice table **/
@@ -206,14 +206,27 @@ class Invoices extends MY_Controller {
 
              $data['top_title']   = ucwords(strtolower($this->uri->segment('1'))); //URI title.
              $data['top_desc']    = "Change your page purpose here"; /** function purpose here.**/
-             $this->load->view('quote',$data);
+             
+             $data['invoice_id']    = $this->uri->segment(4) ;
+             $table = "invoices"; 
+             $where = array('invoice_id' =>$data['invoice_id']);
+             $tableNameToJoin = "customers";
+             $tableRelation = "invoices.customer_id = customers.customer_id";
+             $data['invoice'] = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
+       
+             $table               = "invoice_items";
+             $where = array('invoice_id' =>$data['invoice_id']);
+             $data['invoice_items'] = $this->Midae_model->get_all_rows($table,$where, false, false,false, false);
+
+             $this->load->view('invoice.php',$data);
 
         }
 
         else
         {
 
-             $crud->callback_column('invoice_status',array($this,'crud_invoice_status'));
+             $crud->callback_column('invoice_status',array($this,'crud_invoice_status'))
+                  ->callback_column('customer_id',array($this,'crud_customer_display'));
              $output              = $crud->render();
             // $output              = array_merge($data,(array)$output);
              $this->load->view('cruds.php',$output);
@@ -253,6 +266,16 @@ class Invoices extends MY_Controller {
 
 
         return $stat;
+    }
+
+
+    public function crud_customer_display($key, $row){
+      $table = "customers";
+      $where = array('customer_id' => $key);
+
+      $customer = $this->Midae_model->get_specified_row($table,$where,false,false, false);
+      $name = $customer['customer_name'];
+      return '<a href="customers/index/read/'.$key.'" target="blank">'.$name.'</a>';
     }
 
     function delete_invoice_n_invoiceitems($invoice_id){

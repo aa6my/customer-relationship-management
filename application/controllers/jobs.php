@@ -231,10 +231,14 @@ class Jobs extends MY_Controller {
         
         else
         {
-            $crud->columns('job_title','job_date_start','job_due_date','job_type_id','job_status');
-            $crud->display_as('job_type_id','Job type');
+            $crud->columns('job_title','job_date_start','job_due_date','job_type_id','job_status','customer_id','website_id');
+            $crud->display_as('job_type_id','Job type')
+                 ->display_as('customer_id','Customer Name')
+                 ->display_as('website_id','Website Name');;
             $crud->callback_column('job_type_id',array($this,'crud_job_type'))
-                 ->callback_column('job_status',array($this,'crud_job_status'));
+                 ->callback_column('job_status',array($this,'crud_job_status'))
+                 ->callback_column('customer_id',array($this,'crud_customer_display'))
+                 ->callback_column('website_id',array($this,'crud_website_display'));
             $output = $crud->render();
             //$output = array_merge($data,(array)$output);
             $this->load->view('cruds.php',$output);
@@ -243,6 +247,25 @@ class Jobs extends MY_Controller {
 
            
 
+    }
+
+    public function crud_website_display($key, $row){
+      $table = "websites";
+      $where = array('website_id' => $key);
+
+      $customer = $this->Midae_model->get_specified_row($table,$where,false,false, false);
+      $name = $customer['website_name'];
+      return '<a href="websites/index/read/'.$key.'" target="blank">'.$name.'</a>';
+    }
+
+
+    public function crud_customer_display($key, $row){
+      $table = "customers";
+      $where = array('customer_id' => $key);
+
+      $customer = $this->Midae_model->get_specified_row($table,$where,false,false, false);
+      $name = $customer['customer_name'];
+      return '<a href="customers/index/read/'.$key.'" target="blank">'.$name.'</a>';
     }
 
     public function crud_job_type($value, $row)

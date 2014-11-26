@@ -58,11 +58,11 @@ class Quotes extends MY_Controller {
        /**********************************************
         *  Rendering in datatables
         */
-        $crud->columns('quote_status','quote_id','quote_date_created','quote_valid_until','job_task_id')
-             ->display_as('quote_id','Quotes no(#)')
-             ->display_as('quote_date_created','Date issued')
-             ->display_as('quote_valid_until','Valid until')
-             ->display_as('job_task_id','Item');
+        $crud->columns('quote_status','quote_id','quote_date_created','quote_valid_until','customer_id')
+             ->display_as('quote_id','Quotes No(#)')
+             ->display_as('quote_date_created','Date Issued')
+             ->display_as('quote_valid_until','Valid Until')
+             ->display_as('customer_id','Customer Name');
 
 
 
@@ -190,18 +190,36 @@ class Quotes extends MY_Controller {
 
             }
         }
-        else if($state=="read"){
+       else if($state=="read"){
 
              $data['top_title']   = ucwords(strtolower($this->uri->segment('1'))); //URI title.
              $data['top_desc']    = "Change your page purpose here"; /** function purpose here.**/
-             $this->load->view('quote',$data);
+             
+             $data['quote_id']    = $this->uri->segment(4) ;
+             $table = "quotes"; 
+             $where = array('quote_id' =>$data['quote_id']);
+             $tableNameToJoin = "customers";
+             $tableRelation = "quotes.customer_id = customers.customer_id";
+             $data['quote'] = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
+             
+            // $data['quote_item_id'] = $this->uri->segment(4);
+             $table = "quote_items";
+             $where = array('quote_id' =>$data['quote_id']);
+             //$tableNameToJoin = "products";
+             //$tableRelation = "quote_items.product_id = products.product_id";
+             $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+             $this->load->view('quote.php',$data);
+
+          
+        
 
         }
 
         else
         {
 
-             $crud->callback_column('quote_status',array($this,'crud_quote_status'));
+             $crud->callback_column('quote_status',array($this,'crud_quote_status'))
+                  ->callback_column('customer_id',array($this,'crud_customer_display'));;
              $output              = $crud->render();
             // $output              = array_merge($data,(array)$output);
              $this->load->view('cruds.php',$output);
@@ -209,6 +227,15 @@ class Quotes extends MY_Controller {
 
 
 
+    }
+
+     public function crud_customer_display($key, $row){
+      $table = "customers";
+      $where = array('customer_id' => $key);
+
+      $customer = $this->Midae_model->get_specified_row($table,$where,false,false, false);
+      $name = $customer['customer_name'];
+      return '<a href="customers/index/read/'.$key.'" target="blank">'.$name.'</a>';
     }
 
     public function crud_quote_status($value, $row)
