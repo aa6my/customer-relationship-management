@@ -62,7 +62,7 @@ class Dashboard extends MY_Controller {
     public function data_hightchart(){
 
         $tahun = $this->input->post('tahun');
-        $tahun = ($tahun=="") ? $tahun : date('Y');
+        $tahun = ($tahun!="") ? $tahun : date('Y');
         $bulan = array(1 => 'Jan',
                        2 => 'Feb',
                        3 => 'Mac',
@@ -80,6 +80,8 @@ class Dashboard extends MY_Controller {
         $month = array();
         $amount = array();
         $amount['name'] = "Amount";
+        $textTahun = array();
+        $textTahun['tahun'] = $tahun;
        
 
         foreach($data as $k => $v){
@@ -102,6 +104,7 @@ class Dashboard extends MY_Controller {
         $results = array();       
         array_push($results, $amount); 
         array_push($results, $month);
+        array_push($results, $textTahun);
         print json_encode($results, JSON_NUMERIC_CHECK);
 
     }

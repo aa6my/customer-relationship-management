@@ -37,7 +37,142 @@
                 <!-- Main content -->
                 <section class = "content">
                     <div class = "row">
-                    
+                    <div class = "col-lg-3 col-xs-6">
+                    <div class = "small-box bg-maroon">
+                    <div class = "inner">
+                    <h3><?php echo $product; ?></h3>
+                    <p>Products</p>
+                    </div>
+                <div class = "icon">
+                <i class ="ion ion-bag">
+                </i>
+                </div>
+                <a href = "<?php echo base_url(); ?>products" class = "small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class = "col-lg-3 col-xs-6">
+                <div class = "small-box bg-yellow">
+                <div class = "inner">
+                <h3><?php echo $customer; ?>
+                </h3>
+                <p>Customers</p>
+                </div>
+                <div class = "icon">
+                <i class = "ion ion-person-stalker"></i>
+                </div>
+                <a href = "<?php echo base_url(); ?>customers" class = "small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class = "col-lg-3 col xs-6">
+                <div class = "small-box bg-orange">
+                <div class = "inner">
+                <h3><?php echo $vendor; ?></h3>
+                <p>Vendors</p>
+                </div>
+                <div class = "icon">
+                <i class = "ion ion-network">
+                </i>
+                </div>
+                <a href = "<?php echo base_url(); ?>vendors" class = "small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class = "col-lg-3 col xs-6">
+                <div class = "small-box bg-aqua">
+                <div class = "inner">
+                <h3><?php echo $lead; ?></h3>
+                <p>Leads</p>
+                </div>
+                <div class = "icon">
+                <i class="ion ion-thumbsup">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>leads" class = "small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class="col-lg-3 col xs-6">
+                <div class="small-box bg-purple">
+                <div class="inner">
+                <h3><?php echo $job; ?></h3>
+                <p>Jobs</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-briefcase">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>jobs" class="small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class="col-lg-3 col xs-6">
+                <div class="small-box bg-red">
+                <div class="inner">
+                <h3><?php echo $event; ?></h3>
+                <p>Events</p>
+                </div>
+                <div class="icon">
+                <i class ="ion ion-clipboard">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>events" class="small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class="col-lg-3 col xs-6">
+                <div class="small-box bg-green">
+                <div class="inner">
+                <h3><?php echo $invoice; ?></h3>
+                <p>Invoices</p>
+                </div>
+                <div class="icon">
+                <i class = "ion ion-cash">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>invoices" class="small-box-footer">
+                <span>More Info</span>
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
+                <!--/.column-->
+                <div class="col-lg-3 col xs-6">
+                <div class="small-box bg-blue">
+                <div class="inner">
+               
+                <h3><?php echo $quote; ?></h3>
+                <p>Quotes</p>
+                </div>
+                <div class="icon">
+                <i class ="ion ion-pricetag">
+                </i>
+                </div>
+                <a href="<?php echo base_url(); ?>quotes" class="small-box-footer">
+                <span>More Info</span>
+                <i class ="fa fa-arrow-circle-right"></i>
+                </a>
+                </div>
+                </div>
 
 
 
@@ -56,12 +191,14 @@ $(function () {
     var options = {
         chart: {
                     renderTo: 'container',
-                    type: 'line',
+                    type: 'area',
                     marginRight: 130,
                     marginBottom: 25
+                   /* plotBackgroundColor : '#F2EAB5'*/
+
         },
         title: {
-            text: 'Monthly Sales By Year',
+            /*text: 'Monthly Sales By Year',*/
             x: -20 //center
         },
         subtitle: {
@@ -85,35 +222,63 @@ $(function () {
             valuePrefix: 'RM'
         },
         legend: {
+            backgroundColor : '#FFF',
+            borderColor : '#F38C7D',
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'middle',
             borderWidth: 0
+
+            
+        },
+        credits: {
+            text : 'SegiMidaeInfocomn',
+            href : 'http://segimidae.net',
+            style : {
+                color : '#55A3D1',
+                padding : '3px',
+                border: '1px solid #55A3D1'
+            }
         },
         series: [{ }]
         
    }
 
-   chart = new Highcharts.Chart(options);
+   render_chart(false);
+
+   
  
    $('#tahun').on('change', function(){
+        var tahun = $(this).val();
+        render_chart(Number(tahun));
+               
+     });
 
+   function render_chart(year){
 
-               $.ajax({
+        var new_year;
+        if(year!=false){
+            new_year = year;
+        }
+        else{
+            new_year = "";
+        }
+        $.ajax({
                 type : "POST",
                 url : "<?php echo base_url();?>dashboard/data_hightchart",
-                data : "tahun="+ $(this).val(),
+                data : "tahun="+ new_year,
                 dataType : 'json',
                 success:function(json){
                    
                     options.xAxis.categories = json[1].month;
                     options.series[0].name = json[0].name;
                     options.series[0].data = json[0].data;
-                    //console.log(options.xAxis.categories);
+                    options.title.text = "Monthly sales "+json[2].tahun;
+                    
                     chart = new Highcharts.Chart(options);
                 }
                });
-     });
+   }
 
 
 });
@@ -122,7 +287,7 @@ $(function () {
 
 
                 <!--<div class ="row">-->
-                <section class ="col-lg-7 connectedSortable ui-sortable">
+                <section class ="col-lg-12">
                     <div class = "nav-tabs-custom" style="cursor: move;">
                     <ul class = "nav nav-tabs pull-right ui-sortable-handle">
                      
