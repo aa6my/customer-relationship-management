@@ -1,103 +1,119 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Invoice</title>
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/invoice/style.css">
-        <link rel="license" href="http://www.opensource.org/licenses/mit-license/">
-    </head>
-    <body>
-        <header>
-            <h1>Invoice</h1>
-            <address>
-                <p><?php echo $invoice['customer_name'];?></p>
-                <p><?php echo $invoice['customer_address'];?></p>
-                <p><?php echo $invoice['customer_postcode'];?></p>
-                <p><?php echo $invoice['customer_state'];?></p>
-                <p><?php echo $invoice['customer_phone']; ?></p>
-                <p><?php echo $invoice['customer_fax']; ?></p>
-                <p><?php echo $invoice['customer_email']; ?></p>
-            </address>
-            
-           
-        </header>
-        <article>
-            <h1>Recipient</h1>
-            <address>
-                <p>CRM<br>SeGi MiDae</p>
-            </address>
-            <table class="meta">
+<body>
+<style type="text/css">
+.item th{
+    border-bottom:1px solid #000;
+}
+</style>
+<center><h3 style="border:1px solid #000;padding:3px">Invoice</h3>
+<hr style="width:100%">
+<div style="width:100%">
+
+    
+<table  style="width:100%;border:1px solid #000" align="center" border="0" width="100">
+               
                 <tr>
-                    <th><span>Invoice No </span></th>
-                    <td><span><?php echo $invoice['invoice_id']; ?></span></td>
+                    
+                    <td width="70%" style="border-right:1px solid #000">
+                        <?php echo $invoice['customer_name'];?><br/>
+                        <?php echo $invoice['customer_address'];?><br/>
+                        <?php echo $invoice['customer_postcode'];?><br/>
+                        <?php echo $invoice['customer_state'];?><br/>
+                        <br>
+                        Tel :<?php echo $invoice['customer_phone']; ?><br/>
+                        Fax:<?php echo $invoice['customer_fax']; ?><br/>
+                        Email:<?php echo $invoice['customer_email']; ?><br/>
+                    </td>
+                    <td align="right" valign="top">Invoice No :<?php echo $invoice['invoice_number']; ?><br/>
+                            Date Issued :<?php echo $invoice['invoice_date_created']; ?><br/>
+                            Valid Until :<?php echo $invoice['invoice_valid_until']; ?><br/>
+                           Amount Due
+                    </td>
+                   
                 </tr>
-                <tr>
-                    <th><span>Date Issued</span></th>
-                    <td><span><?php echo $invoice['invoice_date_created']; ?></span></td>
-                </tr>
-                <tr>
-                    <th><span>Valid Until</span></th>
-                    <td><span><?php echo $invoice['invoice_valid_until']; ?></span></td>
-                </tr>
-                <tr>
-                    <th><span>Amount Due</span></th>
-                    <td><span id="prefix">$</span><span>600.00</span></td>
-                </tr>
-            </table>
-            <table class="inventory">
-                <thead>
-                    <tr>
-                        <th><span>Item No</span></th>
-                        <th><span>Product</span></th>
-                        <th><span>Quantity</span></th>
-                        <th><span>Price</span></th>
-                        <th><span>Discount</span></th>
-                        <th><span>Subtotal</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <?php $a=1;
-                         $sum = 0;
-                                foreach($invoice_items as $key => $val){
+</table>
+<br>
+<br>
+
+
+<table border="0" style="width:100%;border:1px solid #000" align="center" cellpadding="5" cellspacing="0" class="item">
+                                <thead>
+                                    <tr >
+                                        <th>No</th>
+                                        <th>Product</th>
+                                       
+                                        <th><div align ="center">Quantity</div></th>
+                                        <th><div align = "center">Price</div></th>
+                                        <th><div align = "center">Discount(%)</div></th>
+                                        <th><div align = "center">Subtotal</div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php $a=1; 
+                                    $sum = 0;
+                                foreach($invoice_items as $key => $val)
+                                    /*foreach ($invoice_payments as $key => $value) {
+                                        
+                                    }*/{
                                 ?>
-                        <td><span><?php echo $a++ ?></span></td>
-                        <td><span><?php echo $val['invoice_item_name'];?></span></td>
-                        <td><span data-prefix>$</span><span><?php echo $val['invoice_item_quantity']; ?></span></td>
-                        <td><span><?php echo $val['invoice_item_price'];?></span></td>
-                        <td><span data-prefix>$</span><span><?php echo $val['invoice_item_discount']; ?></span></td>
-                        <td><span><?php 
+                                    <tr>
+                                        <td><?php echo $a++ ?></td>
+                                        <td><?php echo $val['invoice_item_name'];?></td>
+                                        
+                                        <td><div align ="center"><?php echo $val['invoice_item_quantity']; ?></div></td>
+                                        <td><div align ="center"><?php echo $val['invoice_item_price'];?></div></td>
+                                        <td><div align = "center"><?php echo $val['invoice_item_discount']; ?></div></td>
+                                        <td><div align = "center"><?php 
 
                                         $sum += $val['invoice_item_subtotal'];
-                                        echo $val['invoice_item_subtotal'];?></span></td>
-                    </tr>
-                    <?php
+                                        echo $val['invoice_item_subtotal'];?></div></td>
+                                    </tr>
+                                <?php
                             }
                                 ?>
-                </tbody>
-            </table>
-            <table class="balance">
-                <tr>
-                    <th><span>Total</span></th>
-                    <td><span data-prefix>$</span><span><?php echo $sum ?></span></td>
-                </tr>
-                <tr>
-                    <th><span>Amount Paid</span></th>
-                    <td><span data-prefix>$</span><span>0.00</span></td>
-                </tr>
-                <tr>
-                    <th><span>Balance Due</span></th>
-                    <td><span data-prefix>$</span><span>600.00</span></td>
-                </tr>
-            </table>
-        </article>
-        <aside>
-        <br>
-        <br>
-            <h1><span>Additional Notes</span></h1>
-            <div>
-                <p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
-            </div>
-        </aside>
-    </body>
+                                </tbody>
+                            </table>
+<br>
+                            <table style="width:100%;border:1px solid #000" align="center" border="0">
+                                    <tbody>
+                                        <tr>
+                                        <td style="width:20%">Subtotal</td>
+                                        <td> : <?php echo $sum ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax (9.3%)</th>
+                                        <td> : </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Shipping</th>
+                                        <td> : </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</th>
+                                        <td> : </td>
+                                    </tr>
+                                     <tr>
+                                        <td>Amount Paid</th>
+                                        <td> : <?php 
+                                        $tot = 0;
+                                        //print_r($invoice_payments);
+                                            foreach($invoice_payments as $key => $value){
+                                                $tot = $tot + $value['invoice_payment_amount'];
+                                            }
+                                            echo  $tot;
+                                            ?>
+                                          </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Balance</th>
+                                        <td> : <?php 
+                                        $c= $sum - $tot ?>
+                                        <?php echo $c ?></td>
+                                    </tr> 
+                                </tbody></table>
+</div>
+</center>
+</body>
 </html>

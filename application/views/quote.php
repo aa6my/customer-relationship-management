@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-xs-10">
                             <h2 class="page-header">
-                                <i class="fa fa-globe"></i> CRM
+                                <i class="fa fa-globe"></i><?php echo $this->config->item('sitename'); ?>
                                 
                             </h2>
                         </div><!-- /.col -->
@@ -80,40 +80,40 @@
                         </div><!-- /.col -->
                         <div class="col-sm-2 invoice-col">
                         <br>
-                            <b>Tel: </b> <?php echo $quote['customer_phone']; ?><br>
+                        <br>
+                            <b>Tel<span style="padding-left:21px">:</span> </b> <?php echo $quote['customer_phone']; ?><br>
                            
                             
-                            <b>Fax: </b><?php echo $quote['customer_fax']; ?><br>
-                            <b>Mobile:</b><?php echo $quote['customer_mobile']; ?><br>
-                            <b>Email: </b><?php echo $quote['customer_email']; ?>
+                            <b>Fax<span style="padding-left:19px">: </span></b><?php echo $quote['customer_fax']; ?><br>
+                            <b>Email<span style="padding-left:7px">:</span> </b><?php echo $quote['customer_email']; ?>
                             
                         </div><!-- /.col -->
                         <div class="col-sm-3 invoice-col">
                         <br>
-                            <b>Quote No: </b><?php echo $quote['quote_id']; ?><br>
+                        <br>
+                            <b>Quote No<span style="padding-left:18px">: </span> </b><?php echo $quote['quote_id']; ?><br>
                             
                             
-                            <b>Date Issued: </b><?php echo $quote['quote_date_created']; ?><br>
-                            <b>Valid Until: </b><?php echo $quote['quote_valid_until']; ?><br>
-                            <b>Payment Due:</b> 2/22/2014
+                            <b>Date Issued<span style="padding-left:5px">: </span></b><?php echo $quote['quote_date_created']; ?><br>
+                            <b>Valid Until<span style="padding-left:12px">: </span></b><?php echo $quote['quote_valid_until']; ?>
                             
                         </div><!-- /.col -->
 
                     </div><!-- /.row -->
 
                     <!-- Table row -->
+                    <br>
                     <div class="row">
                         <div class="col-xs-10 table-responsive">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Item No</th>
+                                        <th>No</th>
                                         <th>Product</th>
-                                        <th>Description</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Discount(%)</th>
-                                        <th>Subtotal</th>
+                                        <th><div align ="center">Quantity</th>
+                                        <th><div align ="center">Price</div></th>
+                                        <th><div align ="center">Discount(%)</div></th>
+                                        <th><div align = "center">Subtotal</div></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -125,14 +125,13 @@
                                     <tr>
                                         <td><?php echo $a++;?></td>
                                         <td><?php echo $val['quote_item_name'];?></td>
-                                        <td><?php echo $val['quote_item_description'];?></td>
-                                        <td><?php echo $val['quote_item_quantity'];?></td>
-                                        <td><?php echo $val['quote_item_price'];?></td>
-                                        <td><?php echo $val['quote_item_discount'];?></td>
-                                        <td><?php 
+                                        <td><div align ="center"><?php echo $val['quote_item_quantity'];?></div></td>
+                                        <td><div align ="center"><span data-prefix>$</span><?php echo $val['quote_item_price'];?></div></td>
+                                        <td><div align = "center"><?php echo $val['quote_item_discount'];?></div></td>
+                                        <td><div align = "center"><span data-prefix>$</span><?php 
 
                                         $sum += $val['quote_item_subtotal'];
-                                        echo $val['quote_item_subtotal'];?></td>
+                                        echo $val['quote_item_subtotal'];?></div></td>
                                     </tr>
                                 <?php
                             }
@@ -152,21 +151,21 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <tbody><tr>
-                                        <th style="width:50%">Subtotal:</th>
-                                        <td><?php echo $sum?></td>
+                                        <th style="width:50%">Subtotal<span style="padding-left:32px">:</span></th>
+                                        <td><span data-prefix>$</span><?php echo $sum?></td>
                                     </tr>
                                     <tr>
-                                        <th>Tax (9.3%):</th>
+                                        <th>Tax (9.3%)<span style ="padding-left:19px">:</span></th>
                                         <td>
                                      </td>
                                     </tr>
 
                                     <tr>
-                                        <th>Shipping:</th>
+                                        <th>Shipping<span style = "padding-left:30px">:</span></th>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <th>Total:</th>
+                                        <th>Total<span style ="padding-left:52px">:</span></th>
                                         <td></td>
                                     </tr>
                                 </tbody></table>
@@ -177,13 +176,11 @@
                     <!-- this row will not appear when printing -->
                     <div class="row no-print">
                         <div class="col-xs-12">
-                        <br>
-
                             <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
-                            <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
-                            <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> 
-                            <a href="<?php echo base_url(); ?>quotess/pdf/10">
-                            Generate PDF</button>
+                            <button class="btn bg-blue pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+                            <button class="btn bg-maroon pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> 
+                            <a href="<?php echo base_url(); ?>quotess/pdf/<?php echo $quote_id;?>">
+                            Generate PDF</a></button>
                         </div>
                     </div>
                 </section>		

@@ -120,24 +120,25 @@ class Quotess extends MY_Controller {
      public function pdf (){
         $this->load->library('pdf');
         //$id = $this->uri->segment(4);            
-       //$this->pdf->load_view('invoicepdf', $data);
-        //$this->pdf->render();
-        //$this->pdf->stream("Invoice.pdf");
-        //
+             //$this->pdf->load_view('quotepdf', $data);
+             //$this->pdf->render();
+             //$this->pdf->stream("Invoice.pdf");
+        
              $data['quote_id']    = $this->uri->segment(3) ;
              $table = "quotes"; 
              $where = array('quote_id' =>$data['quote_id']);
              $tableNameToJoin = "customers";
              $tableRelation = "quotes.customer_id = customers.customer_id";
              $data['quote'] = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
-             
              $table = "quote_items";
              $where = array('quote_id' =>$data['quote_id']);
              $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
-             $this->load->view("quotepdf", $data);
-               //$this->pdf->load_view('invoicepdf', $data);
-        //$this->pdf->render();
-        //$this->pdf->stream("Invoice.pdf");
+             //$this->load->view("quotepdf", $data);
+             $p = new pdf();
+             $p->load_view('quotepdf', $data);
+             $p->set_paper('c4', 'potrait');
+             $p->render();
+             $p->stream("quotepdf.pdf");
     }
     
 

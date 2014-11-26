@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-xs-10">
                             <h2 class="page-header">
-                                <i class="fa fa-globe"></i> CRM
+                                <i class="fa fa-globe"></i> <?php echo $this->config->item('sitename'); ?>
                                 
                             </h2>
                         </div><!-- /.col -->
@@ -80,58 +80,63 @@
                         </div><!-- /.col -->
                         <div class="col-sm-2 invoice-col">
                         <br>
-                            <b>Tel: </b><?php echo $invoice['customer_phone']; ?><br>
+                        <br>
+                            <b>Tel<span style="padding-left:21px">:</span> </b><?php echo $invoice['customer_phone']; ?><br>
                            
                             
-                            <b>Fax: </b><?php echo $invoice['customer_fax']; ?><br>
-                            <b>Mobile:</b><?php echo $invoice['customer_mobile']; ?><br>
-                            <b>Email: </b><?php echo $invoice['customer_email']; ?>
+                            <b>Fax<span style="padding-left:19px">: </span></b><?php echo $invoice['customer_fax']; ?><br>
+                            <b>Email<span style="padding-left:7px">:</span> </b><?php echo $invoice['customer_email']; ?>
                             
                         </div><!-- /.col -->
                         <div class="col-sm-3 invoice-col">
                             <br>
-                            <b>Invoice No: </b><?php echo $invoice['invoice_id']; ?><br>
+                            <br>
+                            <b>Invoice No<span style="padding-left:10px">: </span></b><?php echo $invoice['invoice_number']; ?><br>
                             
                             
-                            <b>Date Issued: </b><?php echo $invoice['invoice_date_created']; ?><br>
-                            <b>Valid Until: </b><?php echo $invoice['invoice_valid_until']; ?><br>
-                            <b>Payment Due:</b> 2/22/2014
+                            <b>Date Issued<span style="padding-left:5px">: </span></b><?php echo $invoice['invoice_date_created']; ?><br>
+                            <b>Valid Until<span style="padding-left:12px">: </span></b><?php echo $invoice['invoice_valid_until']; ?>
+                            
                             
                         </div><!-- /.col -->
 
                     </div><!-- /.row -->
 
                     <!-- Table row -->
+                    <br>
                     <div class="row">
                         <div class="col-xs-10 table-responsive">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Item No</th>
+                                        <th>No</th>
                                         <th>Product</th>
                                        
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Discount(%)</th>
-                                        <th>Subtotal</th>
+                                        <th><div align ="center">Quantity</div></th>
+                                        <th><div align = "center">Price</div></th>
+                                        <th><div align = "center">Discount(%)</div></th>
+                                        <th><div align = "center">Subtotal</div></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php $a=1; 
                                     $sum = 0;
-                                foreach($invoice_items as $key => $val){
+                                foreach($invoice_items as $key => $val)
+                                    foreach ($invoice_payments as $key => $value) {
+                                        
+                                    }{
                                 ?>
                                     <tr>
                                         <td><?php echo $a++ ?></td>
                                         <td><?php echo $val['invoice_item_name'];?></td>
                                         
-                                        <td><?php echo $val['invoice_item_quantity']; ?></td>
-                                        <td><?php echo $val['invoice_item_price'];?></td>
-                                        <td><?php echo $val['invoice_item_discount']; ?></td>
-                                        <td><?php 
+                                        <td><div align ="center"><?php echo $val['invoice_item_quantity']; ?></div></td>
+                                        <td><div align ="center"><?php echo $val['invoice_item_price'];?></div></td>
+                                        <td><div align = "center"><?php echo $val['invoice_item_discount']; ?></div></td>
+                                        <td><div align = "center"><?php 
 
                                         $sum += $val['invoice_item_subtotal'];
-                                        echo $val['invoice_item_subtotal'];?></td>
+                                        echo $val['invoice_item_subtotal'];?></div></td>
                                     </tr>
                                 <?php
                             }
@@ -147,28 +152,50 @@
                         <div class="col-xs-5">
                         <br>
                         <br>
-                            <p class="lead">Amount Due 2/22/2014</p>
+                        
+                            <p class="lead">Amount Due :   </p>
+                            
                             <div class="table-responsive">
                                 <table class="table">
-                                    <tbody><tr>
-                                        <th style="width:50%">Subtotal:</th>
+                                    <tbody>
+                                        <tr>
+                                        <th style="width:50%">Subtotal<span style="padding-left:32px">:</span></th>
                                         <td><?php echo $sum ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Tax (9.3%):</th>
-                                        <td>
-                                     </td>
+                                        <th>Tax (9.3%)<span style="padding-left:19px">:</span></th>
+                                        <td></td>
                                     </tr>
 
                                     <tr>
-                                        <th>Shipping:</th>
+                                        <th>Shipping<span style="padding-left:30px">:</span></th>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <th>Total:</th>
+                                        <th>Total<span style="padding-left:52px">:</span></th>
                                         <td></td>
                                     </tr>
+                                     <tr>
+                                        <th>Amount Paid<span style="padding-left:4px">:</span></th>
+                                        <td><?php 
+                                        $tot = 0;
+                                        //print_r($invoice_payments);
+                                            foreach($invoice_payments as $key => $value){
+                                                $tot = $tot + $value['invoice_payment_amount'];
+                                            }
+                                            echo  $tot;
+                                            ?>
+                                          </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Balance<span style="padding-left:34px">:</span></th>
+                                        <td><?php 
+                                        $c= $sum - $tot ?>
+                                        <?php echo $c ?></td>
+                                    </tr> 
                                 </tbody></table>
+    
+                                </tbody>
                             </div>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -176,13 +203,10 @@
                     <!-- this row will not appear when printing -->
                     <div class="row no-print">
                         <div class="col-xs-12">
-                        <br>
-
                             <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
-                            <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
-                            <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> 
-                            <a href="<?php echo base_url(); ?>invoicess/pdf/11">
-                            Generate PDF</a></button>
+                            <button class="btn bg-blue pull-right"><i class="fa fa-credit-card"></i>Submit Payment</button>
+                            <button class="btn bg-maroon pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> 
+                            <a href="<?php echo base_url(); ?>invoicess/pdf/<?php echo $invoice_id ?>">Generate PDF</a></button>
                         </div>
                     </div>
                 </section>      

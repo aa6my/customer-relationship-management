@@ -110,7 +110,11 @@
   ),
   'glyphicons halflings' => 
   array (
-    'normal' => DOMPDF_FONT_DIR . '16d0f80b8c1e96d46fb22117387af9da',
+    'normal' => DOMPDF_FONT_DIR . 'e45789575542c2d2129f03bed3af1ca9',
+  ),
+  'bree serif' => 
+  array (
+    'normal' => DOMPDF_FONT_DIR . 'db3f885ad86c63b4ffb6ffb207032c04',
   ),
   'fontawesome' => 
   array (
