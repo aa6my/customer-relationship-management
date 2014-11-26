@@ -357,6 +357,37 @@ class Midae_model extends CI_Model {
 
     }
 
+        function get_all_rows1($table,$where, $tableNameToJoin, $tableRelation, $likes, $places)
+    {
+            //$data = array();
+            //$query = $this->db->query("SELECT *FROM $table");
+
+            $this->db->select('*');
+            $this->db->from($table);
+
+            if($where!=false){
+               $this->db->where($where);
+            }
+           
+           if($tableNameToJoin!=false && $tableRelation!=false){
+                for ($i=0; $i < count($tableNameToJoin); $i++){
+                    $this->db->join($tableNameToJoin[$i], $tableRelation[$i]);
+                }
+                
+           }
+
+           if($likes!=false){
+            $this->db->like($likes, 'after'); 
+           }
+            /*foreach ($query->result_array() as $row)
+            {
+               $data[] = $row;
+            }*/
+            $query = $this->db->get();
+            return $query->result_array(); 
+            //return $data;
+    }
+
 
     /**
      * [display_message display flash message data in view part]
@@ -398,65 +429,23 @@ class Midae_model extends CI_Model {
 
 
 
-    /*---------------------------------------------------------------
-    / Invoices Only
-    /------------------------------------------------------------ */
-
-    function get_invoices($status = 'all')
-    {
-        $this->db->select('*');
-        $this->db->from('ci_invoices');
-        $this->db->join('ci_clients', 'ci_clients.client_id = ci_invoices.client_id');
-        if($status != 'all')
-        {
-        $this->db->where('ci_invoices.invoice_status', $status);
-        }
-        $this->db->order_by('invoice_id', 'DESC');
-        $invoices = $this->db->get()->result_array();
-        $invoice_amount = 0;
-        foreach($invoices as $invoice_count=>$invoice)
-        {
-            $invoice_totals = $this->get_invoice_total_amount($invoice['invoice_id']);
-            $invoices[$invoice_count]['invoice_amount'] = $invoice_totals['item_total'] + $invoice_totals['tax_total'] - $invoice['invoice_discount'];
-            $invoices[$invoice_count]['total_paid'] = $invoice_totals['amount_paid'];
-        }
-        return $invoices;
+    public function get_data_highchart($tahun){
+        //$dd = date('2014');
+        //$this->db->select('');
+        //$this->db->from('invoice_payments');
+        //$this->db->where('invoice_payment_date', 'YEAR(2014)', FALSE);
+        //$this->db->group_by('MONTH(invoice_date_created)');
+        $sql = "select sum(invoice_payment_amount) as amount, MONTH(invoice_payment_date) as month from invoice_payments where YEAR(invoice_payment_date) = $tahun group by MONTH(invoice_payment_date)";
+        
+        /*$query = $this->db->get();*/
+        $query = $this->db->query($sql);
+        return $query->result_array();
     }
+
+
+
+
     
-    function get_invoice_total_amount($invoice_id = 0)
-    {
-        $invoice_totals = array();
-        $this->db->select('*');
-        $this->db->from('ci_invoice_items');
-        $this->db->where('ci_invoice_items.invoice_id', $invoice_id);
-        $invoice_items = $this->db->get();
-        $item_total = 0;
-        $tax_total = 0;
-        $items_total_discount = 0;
-        foreach($invoice_items->result_array() as $item_count=>$item)
-        {
-            $item_amount = ($item['item_quantity'] * $item['item_price']) - $item['item_discount'];
-            if($item['item_taxrate_id'] != 0)
-            {
-                $tax_rate = $this->common_model->get_tax($item['item_taxrate_id']);
-                $tax_total += $item_amount * $tax_rate;
-            }
-            $item_total = $item_total + $item_amount;
-            $items_total_discount += $item['item_discount'];
-        }
-
-        $invoice = $this->db->select('invoice_discount')->where('invoice_id', $invoice_id)->get('ci_invoices')->row();
-
-        $amount_paid = $this->get_invoice_paid_amount($invoice_id);
-        $invoice_totals['item_total']           = $item_total;
-        $invoice_totals['tax_total']            = $tax_total;
-        $invoice_totals['sub_total']            = $item_total + $tax_total;
-        $invoice_totals['items_total_discount'] = $items_total_discount;
-        $invoice_totals['amount_paid']          = $amount_paid;
-        $invoice_totals['amount_due']           = $item_total + $tax_total - $amount_paid - $invoice->invoice_discount;
-
-        return $invoice_totals;
-    }
 
 
 }

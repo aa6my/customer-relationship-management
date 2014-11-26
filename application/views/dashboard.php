@@ -37,142 +37,88 @@
                 <!-- Main content -->
                 <section class = "content">
                     <div class = "row">
-                    <div class = "col-lg-3 col-xs-6">
-                    <div class = "small-box bg-maroon">
-                    <div class = "inner">
-                    <h3><?php echo $product; ?></h3>
-                    <p>Products</p>
-                    </div>
-                <div class = "icon">
-                <i class ="ion ion-bag">
-                </i>
-                </div>
-                <a href = "<?php echo base_url(); ?>products" class = "small-box-footer">
-                <span>More Info</span>
-                <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
-                <!--/.column-->
-                <div class = "col-lg-3 col-xs-6">
-                <div class = "small-box bg-yellow">
-                <div class = "inner">
-                <h3><?php echo $customer; ?>
-                </h3>
-                <p>Customers</p>
-                </div>
-                <div class = "icon">
-                <i class = "ion ion-person-stalker"></i>
-                </div>
-                <a href = "<?php echo base_url(); ?>customers" class = "small-box-footer">
-                <span>More Info</span>
-                <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
-                <!--/.column-->
-                <div class = "col-lg-3 col xs-6">
-                <div class = "small-box bg-orange">
-                <div class = "inner">
-                <h3><?php echo $vendor; ?></h3>
-                <p>Vendors</p>
-                </div>
-                <div class = "icon">
-                <i class = "ion ion-network">
-                </i>
-                </div>
-                <a href = "<?php echo base_url(); ?>vendors" class = "small-box-footer">
-                <span>More Info</span>
-                <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
-                <!--/.column-->
-                <div class = "col-lg-3 col xs-6">
-                <div class = "small-box bg-aqua">
-                <div class = "inner">
-                <h3><?php echo $lead; ?></h3>
-                <p>Leads</p>
-                </div>
-                <div class = "icon">
-                <i class="ion ion-thumbsup">
-                </i>
-                </div>
-                <a href="<?php echo base_url(); ?>leads" class = "small-box-footer">
-                <span>More Info</span>
-                <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
-                <!--/.column-->
-                <div class="col-lg-3 col xs-6">
-                <div class="small-box bg-purple">
-                <div class="inner">
-                <h3><?php echo $job; ?></h3>
-                <p>Jobs</p>
-                </div>
-                <div class="icon">
-                <i class="ion ion-briefcase">
-                </i>
-                </div>
-                <a href="<?php echo base_url(); ?>jobs" class="small-box-footer">
-                <span>More Info</span>
-                <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
-                <!--/.column-->
-                <div class="col-lg-3 col xs-6">
-                <div class="small-box bg-red">
-                <div class="inner">
-                <h3><?php echo $event; ?></h3>
-                <p>Events</p>
-                </div>
-                <div class="icon">
-                <i class ="ion ion-clipboard">
-                </i>
-                </div>
-                <a href="<?php echo base_url(); ?>events" class="small-box-footer">
-                <span>More Info</span>
-                <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
-                <!--/.column-->
-                <div class="col-lg-3 col xs-6">
-                <div class="small-box bg-green">
-                <div class="inner">
-                <h3><?php echo $invoice; ?></h3>
-                <p>Invoices</p>
-                </div>
-                <div class="icon">
-                <i class = "ion ion-cash">
-                </i>
-                </div>
-                <a href="<?php echo base_url(); ?>invoices" class="small-box-footer">
-                <span>More Info</span>
-                <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
-                <!--/.column-->
-                <div class="col-lg-3 col xs-6">
-                <div class="small-box bg-blue">
-                <div class="inner">
-               
-                <h3><?php echo $quote; ?></h3>
-                <p>Quotes</p>
-                </div>
-                <div class="icon">
-                <i class ="ion ion-pricetag">
-                </i>
-                </div>
-                <a href="<?php echo base_url(); ?>quotes" class="small-box-footer">
-                <span>More Info</span>
-                <i class ="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
+                    
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+$(function () {
+
+
+    var options = {
+        chart: {
+                    renderTo: 'container',
+                    type: 'line',
+                    marginRight: 130,
+                    marginBottom: 25
+        },
+        title: {
+            text: 'Monthly Sales By Year',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: Invoices',
+            x: -20
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: 'Overall Amount (RM)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#CF9601'
+            }]
+        },
+        tooltip: {
+            valuePrefix: 'RM'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{ }]
+        
+   }
+
+   chart = new Highcharts.Chart(options);
+ 
+   $('#tahun').on('change', function(){
+
+
+               $.ajax({
+                type : "POST",
+                url : "<?php echo base_url();?>dashboard/data_hightchart",
+                data : "tahun="+ $(this).val(),
+                dataType : 'json',
+                success:function(json){
+                   
+                    options.xAxis.categories = json[1].month;
+                    options.series[0].name = json[0].name;
+                    options.series[0].data = json[0].data;
+                    //console.log(options.xAxis.categories);
+                    chart = new Highcharts.Chart(options);
+                }
+               });
+     });
+
+
+});
+        </script>
+<span id="cuba"></span>
 
 
                 <!--<div class ="row">-->
@@ -184,7 +130,7 @@
                 <a href="#revenue-chart data-toggle="tab"">Year</a>
                 
                         <label>
-                        <select size="1" name="546c075c38f60_length" aria-controls="546c075c38f60">
+                        <select size="1" name="546c075c38f60_length" aria-controls="546c075c38f60" id="tahun">
                         <?php 
                         $end = 2015;
                         $j = 2007;
@@ -201,7 +147,7 @@
                 <li class = "pull-left header">
                     <i class="fa fa-inbox"></i>
                     Sales
-                    </li>
+                </li>
                     </ul>
                 <div class="tab-content ">
                 <!--Bar Chat-->
@@ -209,7 +155,27 @@
                     <div class="box-header">
                     </div>
                     <div class="box-body">
-                    <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;">
+                    <div id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    
+                </div>
+            </div>
+            <!--box-body-->
+        </div>
+         </section>
+
+
+
+                </section><!-- /.content -->
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+    </body>
+</html>
+
+
+
+
+
+<!-- <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;">
                     <canvas class="flot-base" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;"></canvas>
                     <div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
                     <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
@@ -218,15 +184,4 @@
                     <div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
               
                     </div>
-                    <canvas class="flot-overlay" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;">
-                </div>
-            </div>
-            <!--box-body-->
-        </div>
-                
-                </section>
-                </section><!-- /.content -->
-            </aside><!-- /.right-side -->
-        </div><!-- ./wrapper -->
-    </body>
-</html>
+                    <canvas class="flot-overlay" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;"> -->

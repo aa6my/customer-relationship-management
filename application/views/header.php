@@ -23,6 +23,8 @@
 
         <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
         <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.colorbox-min.js"></script>
+        <script src="<?php echo base_url() ?>/assets/highchart/highcharts.js"></script>
+        <script src="<?php echo base_url() ?>/assets/highchart/exporting.js"></script>
         <!--<script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js"></script>
         <script src="<?php echo base_url() ?>/assets/grocery_crud/js/jquery_plugins/jquery.easing-1.3.pack.js"></script>-->
          <script src="<?php echo base_url() ?>assets/js/clone/jquery-cloneya.js"></script>

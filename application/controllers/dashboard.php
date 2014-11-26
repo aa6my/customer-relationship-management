@@ -54,8 +54,56 @@ class Dashboard extends MY_Controller {
     public function access_map(){
         return array(
             'index'=>'view',
-            'update'=>'edit'
+            'update'=>'edit',
+            'data_hightchart' => 'view'
         );
+    }
+
+    public function data_hightchart(){
+
+        $tahun = $this->input->post('tahun');
+        $tahun = ($tahun=="") ? $tahun : date('Y');
+        $bulan = array(1 => 'Jan',
+                       2 => 'Feb',
+                       3 => 'Mac',
+                       4 => 'Apr',
+                       5 => 'May',
+                       6 => 'June',
+                       7 => 'July',
+                       8 => 'Aug',
+                       9 => 'Sep',
+                       10 => 'Oct',
+                       11 => 'Nov',
+                       12 => 'Dec');
+
+        $data = $this->Midae_model->get_data_highchart($tahun);
+        $month = array();
+        $amount = array();
+        $amount['name'] = "Amount";
+       
+
+        foreach($data as $k => $v){
+
+                if(array_key_exists($v['month'],$bulan)){
+                    
+                    $month['month'][] = $bulan[$v['month']];
+                }
+        }
+               
+                
+     
+
+        $results = array();
+        foreach($data as $key => $value){
+
+            $amount['data'][] = $value['amount'];
+        }
+
+        $results = array();       
+        array_push($results, $amount); 
+        array_push($results, $month);
+        print json_encode($results, JSON_NUMERIC_CHECK);
+
     }
 }
 
