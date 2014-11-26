@@ -29,8 +29,8 @@
                                 <i class="fa fa-folder"></i> <span>Products</span>
                             </a>
                         </li>
-                        <li class="<?php if($this->uri->segment(1)=="quotess"){echo "active";}?>">
-                            <a href="<?php echo base_url(); ?>quotess">
+                        <li class="<?php if($this->uri->segment(1)=="quotes"){echo "active";}?>">
+                            <a href="<?php echo base_url(); ?>quotes">
                                 <i class="fa fa-edit"></i> <span>Quotes</span>
                             </a>
                         </li>
@@ -44,9 +44,9 @@
                                 <i class="fa fa-folder"></i> <span>Jobs</span>
                             </a>
                         </li>
-                        <li class="<?php if($this->uri->segment(1)=="invoicess"){echo "active";}?>">
-                            <a href="<?php echo base_url(); ?>invoicess">
-                                <i class="fa fa-edit"></i> <span>Invoicess</span>
+                        <li class="<?php if($this->uri->segment(1)=="invoices"){echo "active";}?>">
+                            <a href="<?php echo base_url(); ?>invoices">
+                                <i class="fa fa-edit"></i> <span>Invoices</span>
                             </a>
                         </li>
                         <li class="<?php if($this->uri->segment(1)=="files"){echo "active";}?>">

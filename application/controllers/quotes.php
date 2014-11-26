@@ -192,7 +192,7 @@ class Quotes extends MY_Controller {
         }
        else if($state=="read"){
 
-             $data['top_title']   = ucwords(strtolower($this->uri->segment('1'))); //URI title.
+              $data['top_title']   = ucwords(strtolower($this->uri->segment('1'))); //URI title.
              $data['top_desc']    = "Change your page purpose here"; /** function purpose here.**/
              
              $data['quote_id']    = $this->uri->segment(4) ;
@@ -228,6 +228,31 @@ class Quotes extends MY_Controller {
 
 
     }
+
+     public function pdf (){
+        $this->load->library('pdf');
+        //$id = $this->uri->segment(4);            
+             //$this->pdf->load_view('quotepdf', $data);
+             //$this->pdf->render();
+             //$this->pdf->stream("Invoice.pdf");
+        
+             $data['quote_id']    = $this->uri->segment(3) ;
+             $table = "quotes"; 
+             $where = array('quote_id' =>$data['quote_id']);
+             $tableNameToJoin = "customers";
+             $tableRelation = "quotes.customer_id = customers.customer_id";
+             $data['quote'] = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
+             $table = "quote_items";
+             $where = array('quote_id' =>$data['quote_id']);
+             $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+             //$this->load->view("quotepdf", $data);
+             $p = new pdf();
+             $p->load_view('quotepdf', $data);
+             $p->set_paper('c4', 'potrait');
+             $p->render();
+             $p->stream("quotepdf.pdf");
+    }
+    
 
      public function crud_customer_display($key, $row){
       $table = "customers";

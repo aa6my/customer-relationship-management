@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2014 at 10:51 AM
+-- Generation Time: Nov 26, 2014 at 01:10 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -471,14 +471,17 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   `invoice_customer_notes` longtext NOT NULL,
   `invoice_valid_until` date NOT NULL,
   `invoice_status` int(5) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=42 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
 
 --
 -- Dumping data for table `invoices`
 --
 
 INSERT INTO `invoices` (`invoice_id`, `customer_id`, `invoice_subject`, `invoice_date_created`, `invoice_number`, `invoice_customer_notes`, `invoice_valid_until`, `invoice_status`) VALUES
-(41, 1, 'website development1', '2014-11-25', '10001', 'this is quotaion1', '2014-11-24', 1);
+(41, 1, 'website development1', '2014-11-25', '10001', 'this is quotaion1', '2014-11-24', 1),
+(42, 2, 'hj', '2014-11-26', '10001', 'kk', '2014-11-26', 1),
+(43, 1, 'bb', '2014-12-17', '10001', 'tt', '2014-12-17', 1),
+(44, 1, 'sdfsf', '2014-11-27', '10002', 'dfvgdfg', '2014-11-29', 1);
 
 -- --------------------------------------------------------
 
@@ -634,14 +637,20 @@ CREATE TABLE IF NOT EXISTS `invoice_items` (
   `invoice_item_quantity` double NOT NULL DEFAULT '0',
   `invoice_item_discount` double NOT NULL DEFAULT '0',
   `invoice_item_subtotal` int(5) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
 
 --
 -- Dumping data for table `invoice_items`
 --
 
 INSERT INTO `invoice_items` (`invoice_item_id`, `invoice_id`, `product_id`, `invoice_item_name`, `invoice_item_description`, `invoice_item_price`, `invoice_item_quantity`, `invoice_item_discount`, `invoice_item_subtotal`) VALUES
-(54, 41, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92);
+(54, 41, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
+(55, 42, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
+(56, 42, 4, '[SERVICES] MOVE STUFF', 'Move your stuff into another place', 12, 5, 0, 60),
+(57, 43, 2, '[Electronic] shaklee', 'all the medicine related', 34, 3, 0, 102),
+(58, 43, 3, '[COSMETIC] JAMU', 'Give strength for your body', 45, 7, 0, 315),
+(59, 44, 1, '[Electronic] Gerrad Lamp', 'Lamp...', 23, 4, 0, 92),
+(60, 44, 4, '[SERVICES] MOVE STUFF', 'Move your stuff into another place', 12, 5, 0, 60);
 
 -- --------------------------------------------------------
 
@@ -656,7 +665,7 @@ CREATE TABLE IF NOT EXISTS `invoice_payments` (
   `invoice_payment_amount` int(11) NOT NULL,
   `invoice_payment_date` date NOT NULL,
   `invoice_payment_note` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `invoice_payments`
@@ -664,7 +673,13 @@ CREATE TABLE IF NOT EXISTS `invoice_payments` (
 
 INSERT INTO `invoice_payments` (`invoice_payment_id`, `invoice_id`, `payment_id`, `invoice_payment_amount`, `invoice_payment_date`, `invoice_payment_note`) VALUES
 (3, 41, 1, 23, '2014-11-25', 'sdasd'),
-(4, 41, 1, 12, '2014-11-25', 'asdasd');
+(4, 41, 1, 12, '2014-11-25', 'asdasd'),
+(5, 43, 1, 56, '2014-12-29', 'sdfsdf'),
+(6, 43, 1, 70, '2014-12-29', 'cvcv'),
+(7, 42, 1, 500, '2014-02-04', 'dfgdfgdf'),
+(8, 42, 1, 78, '2014-02-05', 'dfgdfg'),
+(9, 42, 1, 566, '2013-11-26', 'sdfsdfsdfsdfsdf'),
+(10, 44, 1, 6000, '2014-10-24', 'sdfsdf');
 
 -- --------------------------------------------------------
 
@@ -723,7 +738,7 @@ CREATE TABLE IF NOT EXISTS `jobs_task` (
   `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
   `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
   `job_task_description` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=233 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=231 ;
 
 --
 -- Dumping data for table `jobs_task`
@@ -731,9 +746,7 @@ CREATE TABLE IF NOT EXISTS `jobs_task` (
 
 INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `product_id`, `job_task_hour`, `job_task_amount`, `job_task_due_date`, `user_id`, `job_task_percentage`, `job_task_description`) VALUES
 (223, 14, 3, 7, 45, '0000-00-00', 1, 0, '[COSMETIC] JAMU'),
-(225, 14, 0, 4, 20, '2014-11-12', 1, 1, 'fghfgh'),
-(226, 14, 2, 3, 34, '0000-00-00', 1, 0, '[Electronic] shaklee'),
-(229, 14, 4, 5, 12, '0000-00-00', 1, 0, '[SERVICES] MOVE STUFF');
+(225, 14, 0, 4, 20, '2014-11-12', 1, 1, 'fghfgh');
 
 -- --------------------------------------------------------
 
@@ -810,7 +823,7 @@ CREATE TABLE IF NOT EXISTS `member` (
 CREATE TABLE IF NOT EXISTS `payments` (
 `payment_id` int(11) NOT NULL,
   `payment_method` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `payments`
@@ -921,7 +934,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-25 01:52:30', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-26 01:44:41', '::1', NULL, NULL, NULL, 1, 1),
 (2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
@@ -1282,7 +1295,7 @@ MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `invoices_test`
 --
@@ -1292,12 +1305,12 @@ MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=121;
 -- AUTO_INCREMENT for table `invoice_items`
 --
 ALTER TABLE `invoice_items`
-MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=55;
+MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT for table `invoice_payments`
 --
 ALTER TABLE `invoice_payments`
-MODIFY `invoice_payment_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `invoice_payment_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `jobs`
 --
@@ -1307,7 +1320,7 @@ MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT for table `jobs_task`
 --
 ALTER TABLE `jobs_task`
-MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=233;
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=231;
 --
 -- AUTO_INCREMENT for table `job_types`
 --
@@ -1327,7 +1340,7 @@ MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `products`
 --

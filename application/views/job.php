@@ -664,11 +664,11 @@
                                                         groupVar[1].val(new_amount);
                                                         return true;
                                                 }
-                                                else{
-                                                    alert("Please enter the hours rate!!");
-                                                    groupVar[2].focus();
-                                                    return false;
-                                                }
+                                                //else{
+                                                    //alert("Please enter the hours rate!!");
+                                                    //groupVar[2].focus();
+                                                    //return false;
+                                                //}
                                         });
                                     })
                                     </script>

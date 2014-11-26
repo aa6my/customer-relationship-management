@@ -213,12 +213,17 @@ class Invoices extends MY_Controller {
              $tableNameToJoin = "customers";
              $tableRelation = "invoices.customer_id = customers.customer_id";
              $data['invoice'] = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
-       
+            
              $table               = "invoice_items";
              $where = array('invoice_id' =>$data['invoice_id']);
              $data['invoice_items'] = $this->Midae_model->get_all_rows($table,$where, false, false,false, false);
 
-             $this->load->view('invoice.php',$data);
+             $table ="invoice_payments";
+             $where = array('invoice_id' => $data['invoice_id']);
+             $data['invoice_payments'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+
+
+             $this->load->view('invoice.php', $data);
 
         }
 
@@ -235,6 +240,31 @@ class Invoices extends MY_Controller {
 
 
     }
+
+    public function pdf (){
+             $this->load->library('pdf');
+             $data['invoice_id']    = $this->uri->segment(3) ;
+             $table = "invoices"; 
+             $where = array('invoice_id' =>$data['invoice_id']);
+             $tableNameToJoin = "customers";
+             $tableRelation = "invoices.customer_id = customers.customer_id";
+             $data['invoice'] = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
+       
+             $table = "invoice_items";
+             $where = array('invoice_id' =>$data['invoice_id']);
+             $data['invoice_items'] = $this->Midae_model->get_all_rows($table,$where, false, false,false, false);
+
+             $table ="invoice_payments";
+             $where = array('invoice_id' => $data['invoice_id']);
+             $data['invoice_payments'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+             //$this->load->view("invoicepdf", $data);
+             $p = new pdf();
+             $p->load_view('invoicepdf', $data);
+             $p->set_paper('c4', 'potrait');
+             $p->render();
+             $p->stream("Invoice.pdf");
+    }
+   
 
     public function get_invoice_number(){
 
