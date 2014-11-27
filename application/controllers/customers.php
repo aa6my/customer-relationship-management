@@ -81,6 +81,7 @@ class Customers extends MY_Controller {
         $crud->set_rules('customer_lastname', 'Customer Last Name', 'required');
         $crud->set_rules('customer_email','Customer Email','valid_email|required');
         $crud->set_rules('customer_phone','Customer Phone','integer|required');
+        $crud->set_rules('customer_mobile','Customer Mobile' , 'regex_match[/^[0-9]{10}$/]|required');
         $crud->set_rules('customer_address','Customer Address','required');
         $crud->set_rules('customer_postcode','Customer Postcode', 'integer|required');
         $crud->set_rules('customer_state','Customer State', 'required');

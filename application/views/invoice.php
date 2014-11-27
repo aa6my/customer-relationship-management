@@ -204,7 +204,7 @@
                     <div class="row no-print">
                         <div class="col-xs-12">
                             <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
-                            <button class="btn bg-blue pull-right"><i class="fa fa-credit-card"></i>Submit Payment</button>
+                            <button class="btn bg-blue pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
                             <button class="btn bg-maroon pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> 
                             <a href="<?php echo base_url(); ?>invoices/pdf/<?php echo $invoice_id ?>">Generate PDF</a></button>
                         </div>
