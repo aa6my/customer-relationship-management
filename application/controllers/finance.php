@@ -53,6 +53,7 @@ class Finance extends MY_Controller {
         $data['to_date'] = $to_date;
 
         $data['clients'] = $this->Midae_model->get_all_rows("customers", false, false, false, false, false); //get all types of  job
+        
         if($this->input->post('search')){
 
 

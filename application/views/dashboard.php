@@ -287,14 +287,13 @@ $(function () {
 
 
                 <!--<div class ="row">-->
-                <section class ="col-lg-12">
+               
+                <section class ="col-lg-12"> <div class="box box-primary" id="bar-chart" style="position:relative; height: 300px;">
                     <div class = "nav-tabs-custom" style="cursor: move;">
-                    <ul class = "nav nav-tabs pull-right ui-sortable-handle">
+                    <ul class = "nav nav-tabs pull-right ">
                      
                     <li class="active">
-                <a href="#revenue-chart data-toggle="tab"">Year</a>
-                
-                        <label>
+                <a href="#revenue-chart data-toggle="tab"">Year :  <label>
                         <select size="1" name="546c075c38f60_length" aria-controls="546c075c38f60" id="tahun">
                         <?php 
                         $end = 2015;
@@ -308,6 +307,8 @@ $(function () {
                        </select>
                        
                         </label></a>
+                
+                       
                     </li>
                 <li class = "pull-left header">
                     <i class="fa fa-inbox"></i>
@@ -316,17 +317,21 @@ $(function () {
                     </ul>
                 <div class="tab-content ">
                 <!--Bar Chat-->
-                <div class="box box-primary id="bar-chart" style="position:relative; height: 300px;"">
+                <!-- <div class="box box-primary" id="bar-chart" style="position:relative; height: 300px;"> -->
                     <div class="box-header">
                     </div>
-                    <div class="box-body">
-                    <div id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
-                    
+                        <div class="box-body">
+                            <div id="container" style="min-width: 310px; height: 300px; margin: 0 auto">
+                                
+                            </div>
+                        
+                        </div>
+                <!-- </div> -->
                 </div>
-            </div>
             <!--box-body-->
-        </div>
+        </div></div>
          </section>
+
 
 
 

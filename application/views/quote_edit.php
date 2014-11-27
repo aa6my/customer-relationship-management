@@ -370,7 +370,8 @@
                                                                         href : "<?php echo base_url();?>quotes/ajax_product",
                                                                         data :{ jenis       : 'display',
                                                                                 id_table_row : id_table_row,
-                                                                                current_no  : current_no}
+                                                                                current_no  : current_no},
+                                                                        width:'400px'
 
                                                                     });
 
