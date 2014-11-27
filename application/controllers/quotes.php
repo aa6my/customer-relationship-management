@@ -31,7 +31,8 @@ class Quotes extends MY_Controller {
                         'ajax_product'      => 'view',
                         'ajax_quote_delete' => 'view',
                         'ajax_quote_customer' => 'view',
-                        'convert_to_invoive' => 'view'
+                        'convert_to_invoive' => 'view',
+                        'pdf' => 'view'
                     );
     }
 

@@ -31,7 +31,8 @@ class Invoices extends MY_Controller {
                         'ajax_product'          => 'view',
                         'ajax_invoice_delete'   => 'view',
                         'ajax_invoice_customer' => 'view',
-                        'ajax_invoice_payment'  => 'view'
+                        'ajax_invoice_payment'  => 'view',
+                        'pdf' => 'view'
                     );
     }
 
