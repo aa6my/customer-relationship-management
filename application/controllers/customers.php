@@ -75,6 +75,17 @@ class Customers extends MY_Controller {
         }
         else{
         $crud->columns('customer_name','customer_firstname','customer_lastname','customer_mobile','customer_address');
+
+        $crud->set_rules('customer_name','Customer Name', 'required');
+        $crud->set_rules('customer_firstname','Customer First Name', 'required');
+        $crud->set_rules('customer_lastname', 'Customer Last Name', 'required');
+        $crud->set_rules('customer_email','Customer Email','valid_email|required');
+        $crud->set_rules('customer_phone','Customer Phone','integer|required');
+        $crud->set_rules('customer_address','Customer Address','required');
+        $crud->set_rules('customer_postcode','Customer Postcode', 'integer|required');
+        $crud->set_rules('customer_state','Customer State', 'required');
+        $crud->set_rules('country_id','Customer Country' , 'required');
+
         $output = $crud->render();
         //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);

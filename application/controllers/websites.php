@@ -74,6 +74,11 @@ class Websites extends MY_Controller {
         }
         else{
         $crud->columns('website_url','website_name');
+
+        $crud->set_rules('website_url','Website Url', 'required');
+        $crud->set_rules('website_name','Website Name', 'required');
+
+
         $output = $crud->render();
         //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);

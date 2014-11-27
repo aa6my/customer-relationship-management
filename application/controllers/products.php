@@ -64,6 +64,14 @@ class Products extends MY_Controller {
         }
         else{
         $crud->columns('product_sku','product_name','product_quantity','product_amount');
+
+        $crud->set_rules('product_sku','Product SKU', 'required');
+        $crud->set_rules('product_name','Product Name', 'required');
+        $crud->set_rules('product_desc', 'Product Description', 'required');
+        $crud->set_rules('product_quantity','Product Quantity','integer|required');
+        $crud->set_rules('product_amount','Product Amount','numeric|required');
+        $crud->set_rules('catproduct_id','Product Category','required');
+
         $output = $crud->render();
         //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);

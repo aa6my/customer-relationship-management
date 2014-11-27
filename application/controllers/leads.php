@@ -74,6 +74,17 @@ class Leads extends MY_Controller {
         }
         else{
         $crud->columns('lead_name','lead_firstname','lead_lastname','lead_mobile','lead_address');
+
+        $crud->set_rules('lead_name','Lead Name', 'required');
+        $crud->set_rules('lead_firstname','Lead First Name', 'required');
+        $crud->set_rules('lead_lastname', 'Lead Last Name', 'required');
+        $crud->set_rules('lead_email','Lead Email','valid_email|required');
+        $crud->set_rules('lead_phone','Lead Phone','integer|required');
+        $crud->set_rules('lead_address','Lead Address','required');
+        $crud->set_rules('lead_postcode','Lead Postcode', 'integer|required');
+        $crud->set_rules('lead_state','Lead State', 'required');
+        $crud->set_rules('country_id','Lead Country' , 'required');
+
         $output = $crud->render();
         //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);

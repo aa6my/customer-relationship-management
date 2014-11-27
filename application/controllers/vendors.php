@@ -56,12 +56,17 @@ class Vendors extends MY_Controller {
              ->display_as('vendor_state','State')
              ->display_as('country_id','Country')
              ->display_as('last_update','Date Changes');
+
         $crud->unset_texteditor('vendor_address','full_text');
         $crud->unset_print();
+
+        
+        
 
         if($state == "add" | $state == "edit"){
         $crud->fields('vendor_name','vendor_firstname','vendor_lastname','vendor_email','vendor_phone','vendor_mobile','vendor_fax','vendor_address','vendor_postcode','vendor_state','country_id');
         $crud->callback_before_insert(array($this,'_last_update'));
+
         $output = $crud->render();
         //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
@@ -74,6 +79,18 @@ class Vendors extends MY_Controller {
         }
         else{
         $crud->columns('vendor_name','vendor_firstname','vendor_lastname','vendor_mobile','vendor_address');
+        
+        $crud->set_rules('vendor_name','Vendor Name', 'required');
+        $crud->set_rules('vendor_firstname','Vendor FirstName', 'required');
+        $crud->set_rules('vendor_lastname','Vendor LastName', 'required');
+        $crud->set_rules('vendor_email', 'Vendor Email', 'valid_email|required');
+        $crud->set_rules('vendor_phone', 'Vendor Phone','integer|required');
+        $crud->set_rules('vendor_address', 'Vendor Address', 'required');
+        $crud->set_rules('vendor_postcode', 'Vendor Postcode' ,'integer|required');
+        $crud->set_rules('vendor_state', 'Vendor State', 'required');
+        $crud->set_rules('country_id', 'Vendor Country', 'trim|required');
+        
+
         $output = $crud->render();
         //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);

@@ -64,6 +64,10 @@ class Files extends MY_Controller {
         }
         else{
         $crud->columns('file_name','file_content');
+
+        $crud->set_rules('file_name','File Name', 'required');
+        $crud->set_rules('file_content','File Content', 'required');
+
         $output = $crud->render();
         //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
