@@ -25,8 +25,7 @@ class MY_Controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-
-
+        
         //By do this, all controllers who use this class as parent controller
         //will have $news in their views
         $CI =& get_instance();
