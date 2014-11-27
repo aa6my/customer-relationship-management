@@ -56,7 +56,7 @@ table{
 }
 .table_border{
     
-    border:1px solid #000;
+    border:1px solid #00;
 }
 .text_color{
     color:#357CA5;
