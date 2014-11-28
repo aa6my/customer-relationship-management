@@ -81,14 +81,15 @@ class Vendors extends MY_Controller {
         $crud->columns('vendor_name','vendor_firstname','vendor_lastname','vendor_mobile','vendor_address');
         
         $crud->set_rules('vendor_name','Vendor Name', 'required');
-        $crud->set_rules('vendor_firstname','Vendor FirstName', 'required');
-        $crud->set_rules('vendor_lastname','Vendor LastName', 'required');
+        $crud->set_rules('vendor_firstname','Vendor First Name', 'required');
+        $crud->set_rules('vendor_lastname','Vendor Last Name', 'required');
         $crud->set_rules('vendor_email', 'Vendor Email', 'valid_email|required');
-        $crud->set_rules('vendor_phone', 'Vendor Phone','integer|required');
+        $crud->set_rules('vendor_phone', 'Vendor Phone','regex_match[/^[0-9]{10}$/]|required');
+        $crud->set_rules('vendor_mobile','Vendor Mobile', 'regex_match[^[0-9]{10}$/]|required');
         $crud->set_rules('vendor_address', 'Vendor Address', 'required');
         $crud->set_rules('vendor_postcode', 'Vendor Postcode' ,'integer|required');
         $crud->set_rules('vendor_state', 'Vendor State', 'required');
-        $crud->set_rules('country_id', 'Vendor Country', 'trim|required');
+        $crud->set_rules('country_id', 'Vendor Country', 'required');
         
 
         $output = $crud->render();
