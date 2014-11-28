@@ -495,7 +495,7 @@
                                     <div class="box-header" title="" >
                                         <h3 class="box-title">
                                             <strong>Payment History</strong> 
-                                            <button type="button" class="btn btn-success" id="button_payment" data-id_invoice="<?php echo $invoice_id;?>">
+                                            <button type="button" class="btn btn-success" id="button_payment" data-id_invoice="<?php echo $invoice_id;?>" data-invoice_status = "<?php echo $invoice['invoice_status'];?>">
                                                 <i class="fa fa-dollar"></i> Insert New Payment
                                             </button>
                                         </h3> 
@@ -505,13 +505,15 @@
 $(function(){
      $('#button_payment').on('click',function(){
         var $current = $(this),
-            id_invoice = $current.data('id_invoice');
+            id_invoice = $current.data('id_invoice'),
+            invoice_status = $current.data('invoice_status');
 
 
         $(this).colorbox({
             href : "<?php echo base_url();?>invoices/ajax_invoice_payment",
             data :{ jenis       : 'display',
-                    id_invoice  : id_invoice
+                    id_invoice  : id_invoice,
+                    invoice_status : invoice_status
                 },
             width : '20%'
 

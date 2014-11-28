@@ -2,6 +2,7 @@
 		<form class="form-horizontal" method="POST" action='<?php echo base_url()."invoices/ajax_invoice_payment";?>'>
 			<input name="invoice_id" id="invoice_id" value="<?php echo $id_invoice;?>" type="hidden">
 			<input name="jenis" id="jenis" value="add" type="hidden">
+			<input name="invoice_status" value="<?php echo $invoice_status;?>" type="hidden">
 			<!-- <input name="invoice_id" id="invoice_id" value="5" type="hidden"> -->
 			<div class="col-xs-12">
 			<div class="control-group error">

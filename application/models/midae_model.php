@@ -435,7 +435,7 @@ class Midae_model extends CI_Model {
         //$this->db->from('invoice_payments');
         //$this->db->where('invoice_payment_date', 'YEAR(2014)', FALSE);
         //$this->db->group_by('MONTH(invoice_date_created)');
-        $sql = "select sum(invoice_payment_amount) as amount, MONTH(invoice_payment_date) as month from invoice_payments where YEAR(invoice_payment_date) = $tahun group by MONTH(invoice_payment_date)";
+        $sql = "select sum(invoice_payment_amount) as amount, MONTH(invoice_payment_date) as month from invoice_payments where YEAR(invoice_payment_date) = $tahun AND invoice_status = 1 group by MONTH(invoice_payment_date)";
         
         /*$query = $this->db->get();*/
         $query = $this->db->query($sql);

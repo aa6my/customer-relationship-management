@@ -156,6 +156,12 @@ class Invoices extends MY_Controller {
                 $usingCondition = array('invoice_id' => $data['invoice_id']);
                 $table          = "invoices";
                 $update         = $this->Midae_model->update_data($columnToUpdate, $table, $usingCondition);
+
+
+                $table          = "invoice_payments";
+                $columnToUpdate = array('invoice_status' => $postData['invoice_status']);
+                $usingCondition = array("invoice_id"     => $data['invoice_id']);
+                $updateP        = $this->Midae_model->update_data($columnToUpdate, $table, $usingCondition);
                 
                 
                 $bil            = count($postData['item_name']);
@@ -378,6 +384,7 @@ class Invoices extends MY_Controller {
 
         $jenis = $this->input->post('jenis');
         $data['id_invoice'] = $this->input->post('id_invoice');
+        $data['invoice_status'] = $this->input->post('invoice_status');
 
         if($jenis=="display"){
 
@@ -395,7 +402,8 @@ class Invoices extends MY_Controller {
                                     'payment_id'                => $postData['payment_id'],
                                     'invoice_payment_amount'    => $postData['invoice_payment_amount'],
                                     'invoice_payment_date'      => $postData['invoice_payment_date'],
-                                    'invoice_payment_note'      => $postData['invoice_payment_note'] 
+                                    'invoice_payment_note'      => $postData['invoice_payment_note'],
+                                    'invoice_status'            => $postData['invoice_status']
                                    );
 
                 $this->Midae_model->insert_new_data($arrayData,$table);
