@@ -157,21 +157,21 @@
                 </div>
                 <!--/.column-->
                 <div class="col-lg-3 col xs-6">
-                <div class="small-box bg-blue">
-                <div class="inner">
-               
-                <h3><?php echo $quote; ?></h3>
-                <p>Quotes</p>
-                </div>
-                <div class="icon">
-                <i class ="ion ion-pricetag">
-                </i>
-                </div>
-                <a href="<?php echo base_url(); ?>quotes" class="small-box-footer">
-                <span>More Info</span>
-                <i class ="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
+                    <div class="small-box bg-blue">
+                    <div class="inner">
+                   
+                        <h3><?php echo $quote; ?></h3>
+                        <p>Quotes</p>
+                    </div>
+                    <div class="icon">
+                        <i class ="ion ion-pricetag">
+                        </i>
+                    </div>
+                        <a href="<?php echo base_url(); ?>quotes" class="small-box-footer">
+                        <span>More Info</span>
+                        <i class ="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
 
 
