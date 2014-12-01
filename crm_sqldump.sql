@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2014 at 01:10 PM
+-- Generation Time: Dec 01, 2014 at 11:07 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -100,6 +100,8 @@ CREATE TABLE IF NOT EXISTS `config_data` (
 
 INSERT INTO `config_data` (`key`, `value`) VALUES
 ('charset', 'utf-8'),
+('currency', '$'),
+('currencyposition', 'left'),
 ('debug', 'FALSE'),
 ('email', 'YOUR EMAIL'),
 ('emailpassword', 'YOUR EMAIL PASSWORD'),
@@ -636,7 +638,7 @@ CREATE TABLE IF NOT EXISTS `invoice_items` (
   `invoice_item_price` double NOT NULL DEFAULT '0',
   `invoice_item_quantity` double NOT NULL DEFAULT '0',
   `invoice_item_discount` double NOT NULL DEFAULT '0',
-  `invoice_item_subtotal` int(5) NOT NULL DEFAULT '0'
+  `invoice_item_subtotal` double NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
 
 --
@@ -662,24 +664,26 @@ CREATE TABLE IF NOT EXISTS `invoice_payments` (
 `invoice_payment_id` int(5) NOT NULL,
   `invoice_id` int(5) NOT NULL COMMENT 'from INVOICES table',
   `payment_id` int(5) NOT NULL COMMENT 'from PAYMENTS table',
-  `invoice_payment_amount` int(11) NOT NULL,
+  `invoice_payment_amount` double NOT NULL,
   `invoice_payment_date` date NOT NULL,
-  `invoice_payment_note` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+  `invoice_payment_note` text NOT NULL,
+  `invoice_status` int(5) NOT NULL COMMENT 'same like invoice table'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `invoice_payments`
 --
 
-INSERT INTO `invoice_payments` (`invoice_payment_id`, `invoice_id`, `payment_id`, `invoice_payment_amount`, `invoice_payment_date`, `invoice_payment_note`) VALUES
-(3, 41, 1, 23, '2014-11-25', 'sdasd'),
-(4, 41, 1, 12, '2014-11-25', 'asdasd'),
-(5, 43, 1, 56, '2014-12-29', 'sdfsdf'),
-(6, 43, 1, 70, '2014-12-29', 'cvcv'),
-(7, 42, 1, 500, '2014-02-04', 'dfgdfgdf'),
-(8, 42, 1, 78, '2014-02-05', 'dfgdfg'),
-(9, 42, 1, 566, '2013-11-26', 'sdfsdfsdfsdfsdf'),
-(10, 44, 1, 6000, '2014-10-24', 'sdfsdf');
+INSERT INTO `invoice_payments` (`invoice_payment_id`, `invoice_id`, `payment_id`, `invoice_payment_amount`, `invoice_payment_date`, `invoice_payment_note`, `invoice_status`) VALUES
+(3, 41, 1, 23, '2014-11-25', 'sdasd', 1),
+(4, 41, 1, 12, '2014-11-25', 'asdasd', 1),
+(5, 43, 1, 56, '2014-12-29', 'sdfsdf', 1),
+(6, 43, 1, 70, '2014-12-29', 'cvcv', 1),
+(7, 42, 1, 500, '2013-02-04', 'dfgdfgdf', 1),
+(8, 42, 1, 78, '2014-02-05', 'dfgdfg', 1),
+(9, 42, 1, 566, '2013-11-26', 'sdfsdfsdfsdfsdf', 1),
+(10, 44, 1, 6000, '2014-10-24', 'sdfsdf', 1),
+(11, 42, 1, 123, '2014-11-29', 'asdasd', 1);
 
 -- --------------------------------------------------------
 
@@ -733,20 +737,20 @@ CREATE TABLE IF NOT EXISTS `jobs_task` (
   `job_id` int(5) NOT NULL COMMENT 'from JOBS table',
   `product_id` int(5) NOT NULL DEFAULT '0',
   `job_task_hour` int(5) NOT NULL,
-  `job_task_amount` int(5) NOT NULL,
+  `job_task_amount` double NOT NULL,
   `job_task_due_date` date NOT NULL,
   `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
   `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
   `job_task_description` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=231 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=229 ;
 
 --
 -- Dumping data for table `jobs_task`
 --
 
 INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `product_id`, `job_task_hour`, `job_task_amount`, `job_task_due_date`, `user_id`, `job_task_percentage`, `job_task_description`) VALUES
-(223, 14, 3, 7, 45, '0000-00-00', 1, 0, '[COSMETIC] JAMU'),
-(225, 14, 0, 4, 20, '2014-11-12', 1, 1, 'fghfgh');
+(225, 14, 0, 4, 20.23, '2014-11-12', 1, 1, 'fghfgh'),
+(228, 14, 0, 2, 10.15, '0000-00-00', 1, 1, 'aaaa');
 
 -- --------------------------------------------------------
 
@@ -844,7 +848,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_name` varchar(255) NOT NULL,
   `product_desc` text NOT NULL,
   `product_quantity` int(5) NOT NULL,
-  `product_amount` int(5) NOT NULL,
+  `product_amount` double NOT NULL,
   `catproduct_id` int(5) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -897,7 +901,7 @@ CREATE TABLE IF NOT EXISTS `quote_items` (
   `quote_item_price` double NOT NULL,
   `quote_item_quantity` double NOT NULL,
   `quote_item_discount` double NOT NULL,
-  `quote_item_subtotal` int(5) NOT NULL
+  `quote_item_subtotal` double NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
@@ -934,7 +938,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-11-26 01:44:41', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-12-01 02:13:14', '::1', NULL, NULL, NULL, 1, 1),
 (2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
@@ -1310,7 +1314,7 @@ MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=61;
 -- AUTO_INCREMENT for table `invoice_payments`
 --
 ALTER TABLE `invoice_payments`
-MODIFY `invoice_payment_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `invoice_payment_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `jobs`
 --
@@ -1320,7 +1324,7 @@ MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT for table `jobs_task`
 --
 ALTER TABLE `jobs_task`
-MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=231;
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=229;
 --
 -- AUTO_INCREMENT for table `job_types`
 --
