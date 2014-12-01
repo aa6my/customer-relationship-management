@@ -301,7 +301,7 @@
                                                 <th width="400">Description</th>
                                                 <th>Quantity</th>
                                                 <th>Unit Price(<?php echo $this->config->item("currency");?>)</th>
-                                                <th>Discount</th>
+                                                <th>Discount (%)</th>
                                                 <th>Subtotal</th>
                                             </tr>
                                             <?php
@@ -681,7 +681,18 @@ $(function(){
                      subtotal_temp_2 = $('#subtotal_temp_2');
 
                      if(qtty || price || disc){
-                       subtot.val((Number(qtty) * Number(price)) - Number(disc)); //subtotal in rows
+                       /*subtot.val((Number(qtty) * Number(price)) - Number(disc)); //subtotal in rows*/
+
+                       var disc1 = (Number(disc)/100) * (Number(qtty) * Number(price)),
+                            subt = Number(qtty) * Number(price),
+                            true_tot = (subt.toFixed(2) - disc1);
+
+                        subtot.val(true_tot.toFixed(2));
+
+                       //var disc = (Number(disc)/100) * (Number(qtty) * Number(price)),
+                           //subt = Number(qtty) * Number(price);
+
+                       //subtot.val(subt - disc);
                       calculateGrandTotal();
 
 
@@ -710,7 +721,8 @@ $(function(){
      function calculateGrandTotal() {
         var grandTotal = 0,
             amountpaid = 0,
-            subtotal =  $('#subtotal');
+            subtotal =  $('#subtotal'),
+            amountdue = 0;
             //amountdue = $('#amountdue');
 
         $('#quote [id *=item_subtotal]').each(function(x,y){
@@ -722,10 +734,22 @@ $(function(){
             amountpaid += Number($(this).val());
             
         });
+
+        if(grandTotal > amountpaid){
+
+            amountdue = (grandTotal - amountpaid);
+            $('#amountdue').html('<font color="red">'+amountdue.toFixed(2)+'</font>');
+        }
+        else if(amountpaid > grandTotal){
+            amountdue = (amountpaid - grandTotal);
+            $('#amountdue').html('<font color="green">'+amountdue.toFixed(2)+'</font>');
+        }
     
-        $('#subtotal').html(grandTotal);
-        $('#amountpaid').html(amountpaid);
-        $('#amountdue').html(Number(grandTotal) - Number(amountpaid));
+        $('#subtotal').html(grandTotal.toFixed(2));
+        $('#amountpaid').html(amountpaid.toFixed(2));
+        
+
+        /* yang asal $('#amountdue').html(Number(grandTotal) - Number(amountpaid)); */
     }
 
 

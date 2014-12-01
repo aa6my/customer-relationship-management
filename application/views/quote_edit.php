@@ -570,8 +570,14 @@ $(function(){
                      subtotal_temp_2 = $('#subtotal_temp_2');
 
                      if(qtty || price || disc){
-                       subtot.val((Number(qtty) * Number(price)) - Number(disc)); //subtotal in rows
-                      calculateGrandTotal();
+
+                        var disc1 = (Number(disc)/100) * (Number(qtty) * Number(price)),
+                            subt = Number(qtty) * Number(price),
+                            true_tot = (subt.toFixed(2) - disc1);
+
+                        subtot.val(true_tot.toFixed(2));
+                        //subtot.val((Number(qtty) * Number(price)) - Number(disc)); //subtotal in rows
+                        calculateGrandTotal();
 
 
                     }
@@ -593,7 +599,7 @@ $(function(){
         $('#quote [id *=item_subtotal]').each(function(x,y){
             grandTotal += +Number($(this).val());
         });
-        $('#subtotal').html(grandTotal);
+        $('#subtotal').html(grandTotal.toFixed(2));
     }
 
 

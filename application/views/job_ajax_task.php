@@ -74,7 +74,7 @@ foreach($job_task as $value)
                                             </td>
                                             <td>
                                             <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> 
-                                            <?php echo @$job['job_task_amount'];?>
+                                            <?php echo number_format(@$job['job_task_amount'],2,'.','');?>
                                             <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
                                             </td>
                                             <td>
@@ -114,9 +114,9 @@ foreach($job_task as $value)
                                                     if($subTotal!="")
                                                     {
                                                         if($this->config->item("currencyposition")=="left")
-                                                            echo $this->config->item("currency")." ".$subTotal;
+                                                            echo $this->config->item("currency")." ".number_format($subTotal,2,'.','');
                                                         else
-                                                            echo $subTotal." ".$this->config->item("currency");
+                                                            echo number_format($subTotal,2,'.','')." ".$this->config->item("currency");
                                                     }
                                                     else{
                                                         echo "-";
@@ -131,10 +131,7 @@ foreach($job_task as $value)
                                                     <?php 
                                                     if($total[0]['job_discount_amount']!="")
                                                     {
-                                                        if($this->config->item("currencyposition")=="left")
-                                                            echo $this->config->item("currency")." ".$total[0]['job_discount_amount'];
-                                                        else
-                                                            echo $total[0]['job_discount_amount']." ".$this->config->item("currency");
+                                                        echo $total[0]['job_discount_amount']." %";
                                                     }
                                                     else{
                                                         echo "-";
@@ -146,16 +143,18 @@ foreach($job_task as $value)
                                                     <th>Total</th>
                                                     <td>:</td>
                                                     <td> <?php 
-                                                    $tot = $subTotal - @$total[0]['job_discount_amount'];
+                                                    //$tot = $subTotal - @$total[0]['job_discount_amount'];
+                                                    $discount = (@$total[0]['job_discount_amount']/100)*$subTotal;
+                                                    $tot = $subTotal - $discount;
                                                     //echo ($tot!="") ? "RM ".$tot : "-";
                                                     ?>
                                                     <?php 
                                                     if($tot!="")
                                                     {
                                                         if($this->config->item("currencyposition")=="left")
-                                                            echo $this->config->item("currency")." ".$tot;
+                                                            echo $this->config->item("currency")." ".number_format($tot,2,'.','');
                                                         else
-                                                            echo $tot." ".$this->config->item("currency");
+                                                            echo number_format($tot,2,'.','')." ".$this->config->item("currency");
                                                     }
                                                     else{
                                                         echo "-";
