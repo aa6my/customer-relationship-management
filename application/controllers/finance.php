@@ -56,10 +56,15 @@ class Finance extends MY_Controller {
         
         if($this->input->post('search')){
 
-
-        //$where = "invoice_payments.invoice_payment_date BETWEEN "."'".$new_from_date;."'"." AND "."'".$new_to_date."'";
-        $where = array("invoice_payments.invoice_payment_date >=" => $new_from_date,"invoice_payments.invoice_payment_date <=" => $new_to_date, "invoices.customer_id" => $client) ;
-
+        if($this->input->post('client_id')!=""){
+            $where = array("invoices.customer_id" => $client) ;
+        }
+        else if($this->input->post('client_id')==""){
+            $where = array("invoice_payments.invoice_payment_date >=" => $new_from_date,"invoice_payments.invoice_payment_date <=" => $new_to_date) ;
+        }
+        
+        
+        //echo $where;
         
 
         $tableNameToJoin = array('invoice_payments','payments','customers');

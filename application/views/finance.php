@@ -78,7 +78,7 @@
                                     <div class="form-group">
                                         <label>Customer : </label>
                                         <select name="client_id" id="client_id" class="form-control">
-                                        <option>Please select</option>
+                                        <option value="">Please select</option>
                                         <?php 
                                         foreach ($clients as $key => $value) {?>
                                         <option value="<?php echo $value['customer_id']; ?>"><?php echo $value['customer_name'];?></option>
@@ -104,8 +104,8 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <label> </label>
-                                        <div class="form-group input-group" style="margin-left:0;">
-                                        <input type="submit" name="search"/>
+                                        <div class="form-group input-group" style="margin-left:0;position:absolute;top:30px">
+                                        <input type="submit" name="search" class="btn btn-success btn-sm"/>
                                         </div>
                                     </div>
                                     </div>
