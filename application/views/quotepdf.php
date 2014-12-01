@@ -133,7 +133,7 @@ fieldset{
                                         <th>Product</th>
                                        
                                         <th><div align ="center">Quantity</div></th>
-                                        <th><div align = "center">Price</div></th>
+                                        <th><div align = "center">Price(<?php echo $this->config->item("currency");?>)</div></th>
                                         <th><div align = "center">Discount(%)</div></th>
                                         <th><div align = "center">Subtotal</div></th>
                                     </tr>
@@ -168,7 +168,7 @@ fieldset{
                                     <tbody>
                                         <tr>
                                         <td style="width:20%"><span class="text_color">Subtotal</span></td>
-                                        <td> : <?php echo $sum ?></td>
+                                        <td> : <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?><?php echo $sum ?><?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?></td>
                                     </tr>
                                     
                                 </tbody></table>

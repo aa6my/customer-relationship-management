@@ -6,7 +6,7 @@
 			<!-- <input name="invoice_id" id="invoice_id" value="5" type="hidden"> -->
 			<div class="col-xs-12">
 			<div class="control-group error">
-				<label class="control-label">Amount: </label>
+				<label class="control-label">Amount (<?php echo $this->config->item("currency");?>): </label>
 				<div class="controls">
 					<input name="invoice_payment_amount" class="form-control" id="payment_amount" value="" type="text">
 				</div>

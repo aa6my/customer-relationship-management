@@ -268,7 +268,7 @@
                                                 <th width="300">Item</th>
                                                 <th width="400">Description</th>
                                                 <th>Quantity</th>
-                                                <th>Unit Price</th>
+                                                <th>Unit Price(<?php $this->config->item("currency");?>)</th>
                                                 <th>Discount</th>
                                                 <th>Subtotal</th>
                                             </tr>
@@ -347,7 +347,7 @@
                                                     <strong>Total :</strong>
                                                 </td>
                                                 <td align="center">
-                                                   RM <span id="subtotal"></span>
+                                                   <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <span id="subtotal"></span> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
                                                    <!-- <input type="text" id="subtotal_temp" value="0">
                                                    <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>

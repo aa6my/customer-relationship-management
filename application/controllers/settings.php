@@ -228,6 +228,8 @@ class Settings extends MY_Controller {
             'sitename'=>$this->input->post('sitename'),
             'sitedescription'=>$this->input->post('sitedescription'),
             'timezone'=>$this->input->post('timezone'),
+            'currency'=>$this->input->post('currency'),
+            'currencyposition'=>$this->input->post('currencyposition'),
             'debug'=>$this->input->post('debug')
             );
          $success = $this->Siteconfig_model->update_config($update_data);

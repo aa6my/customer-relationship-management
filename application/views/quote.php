@@ -126,12 +126,20 @@
                                         <td><?php echo $a++;?></td>
                                         <td><?php echo $val['quote_item_name'];?></td>
                                         <td><div align ="center"><?php echo $val['quote_item_quantity'];?></div></td>
-                                        <td><div align ="center"><span data-prefix>$</span><?php echo $val['quote_item_price'];?></div></td>
+                                        <td><div align ="center">
+                                        <?php if($this->config->item("currencyposition")=="left") echo $this->config->item("currency");?>
+                                            <?php echo $val['quote_item_price'];?>
+                                        <?php if($this->config->item("currencyposition")=="right") echo $this->config->item("currency");?>
+                                        </div></td>
                                         <td><div align = "center"><?php echo $val['quote_item_discount'];?></div></td>
-                                        <td><div align = "center"><span data-prefix>$</span><?php 
+                                        <td><div align = "center">
+                                        <?php if($this->config->item("currencyposition")=="left") echo $this->config->item("currency");?>
+                                        <?php 
 
                                         $sum += $val['quote_item_subtotal'];
-                                        echo $val['quote_item_subtotal'];?></div></td>
+                                        echo $val['quote_item_subtotal'];?>
+                                        <?php if($this->config->item("currencyposition")=="right") echo $this->config->item("currency");?>
+                                        </div></td>
                                     </tr>
                                 <?php
                             }
@@ -152,22 +160,13 @@
                                 <table class="table">
                                     <tbody><tr>
                                         <th style="width:50%">Subtotal<span style="padding-left:32px">:</span></th>
-                                        <td><span data-prefix>$</span><?php echo $sum?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Tax (9.3%)<span style ="padding-left:19px">:</span></th>
                                         <td>
-                                     </td>
+                                            <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?>
+                                                <?php echo $sum?>
+                                            <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
+                                            </td>
                                     </tr>
-
-                                    <tr>
-                                        <th>Shipping<span style = "padding-left:30px">:</span></th>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total<span style ="padding-left:52px">:</span></th>
-                                        <td></td>
-                                    </tr>
+                                    
                                 </tbody></table>
                             </div>
                         </div><!-- /.col -->

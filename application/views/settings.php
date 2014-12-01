@@ -59,6 +59,30 @@
                                             <input type="text" class="form-control" id="sitedescription" name="timezone" value="<?php echo $this->config->item('timezone'); ?>">
                                         </div>
                                         <div class="form-group">
+                                            <label for="exampleInputEmail1">Currency</label>
+                                            
+                                                    <select class="form-control" name="currency">
+                                                        <option value="">--Select Currency--</option>
+                                                        <option value="$" <?php if($this->config->item('currency')=="$") echo 'selected';?>>USD [DEFAULT]</option>
+                                                        <option value="RM" <?php if($this->config->item('currency')=="RM") echo 'selected';?>>RM</option>
+                                                        
+
+                                                    </select>
+                                                
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Currency Position</label>
+                                            
+                                                    <select class="form-control" name="currencyposition">
+                                                        <option value="">--Select Position--</option>
+                                                        <option value="left" <?php if($this->config->item('currencyposition')=="left") echo 'selected';?>>LEFT</option>
+                                                        <option value="right" <?php if($this->config->item('currencyposition')=='right') echo 'selected';?>>RIGHT</option>
+                                                        
+
+                                                    </select>
+                                                
+                                        </div>
+                                        <div class="form-group">
                                             <label for="Debug">Debug</label>
                                             <div class="radio">
                                                 <label>

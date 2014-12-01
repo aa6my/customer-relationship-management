@@ -55,7 +55,7 @@ class Jobs extends MY_Controller {
                     'job_complete_date'   => $postData['job_complete_date'],
                     'user_id'             => $postData['user_id'],
                     'job_tax'             => $postData['job_tax'],
-                    'job_currency'        => $postData['job_currency'],
+                    /*'job_currency'        => $postData['job_currency'],*/
                     'job_type_id'         => $postData['job_type_id'],
                     'job_status'          => $postData['job_status'],
                     'job_description'     => $postData['job_description'],
@@ -193,7 +193,7 @@ class Jobs extends MY_Controller {
                     'job_complete_date'   => $postData['job_complete_date'],
                     'user_id'             => $postData['user_id'],
                     'job_tax'             => $postData['job_tax'],
-                    'job_currency'        => $postData['job_currency'],
+                    /*'job_currency'        => $postData['job_currency'],*/
                     'job_type_id'         => $postData['job_type_id'],
                     'job_status'          => $postData['job_status'],
                     'job_description'     => $postData['job_description'],

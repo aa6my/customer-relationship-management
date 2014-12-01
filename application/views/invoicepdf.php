@@ -133,7 +133,7 @@ fieldset{
                                         <th>Product</th>
                                        
                                         <th><div align ="center">Quantity</div></th>
-                                        <th><div align = "center">Price</div></th>
+                                        <th><div align = "center">Price (<?php echo $this->config->item("currency");?>)</div></th>
                                         <th><div align = "center">Discount(%)</div></th>
                                         <th><div align = "center">Subtotal</div></th>
                                     </tr>
@@ -168,9 +168,9 @@ fieldset{
                                     <tbody>
                                         <tr>
                                         <td style="width:20%"><span class="text_color">Subtotal</span></td>
-                                        <td> : <?php echo $sum ?></td>
+                                        <td> : <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <?php echo $sum ?> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td><span class="text_color">Tax (9.3%)</span></th>
                                         <td> : </td>
                                     </tr>
@@ -182,24 +182,24 @@ fieldset{
                                     <tr>
                                         <td><span class="text_color">Total</span></th>
                                         <td> : </td>
-                                    </tr>
+                                    </tr> -->
                                      <tr>
                                         <td><span class="text_color">Amount Paid</span></th>
-                                        <td> : <?php 
+                                        <td> : <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <?php 
                                         $tot = 0;
                                         //print_r($invoice_payments);
                                             foreach($invoice_payments as $key => $value){
                                                 $tot = $tot + $value['invoice_payment_amount'];
                                             }
                                             echo  $tot;
-                                            ?>
+                                            ?> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
                                           </td>
                                     </tr>
                                     <tr>
                                         <td><span class="text_color">Balance</span></th>
                                         <td> : <?php 
                                         $c= $sum - $tot ?>
-                                        <?php echo $c ?></td>
+                                        <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <?php echo $c ?> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?></td>
                                     </tr> 
                                 </tbody></table>
 </div>

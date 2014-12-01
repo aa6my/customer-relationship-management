@@ -300,7 +300,7 @@
                                                 <th width="300">Item</th>
                                                 <th width="400">Description</th>
                                                 <th>Quantity</th>
-                                                <th>Unit Price</th>
+                                                <th>Unit Price(<?php echo $this->config->item("currency");?>)</th>
                                                 <th>Discount</th>
                                                 <th>Subtotal</th>
                                             </tr>
@@ -456,7 +456,7 @@
                                                     <strong>Total :</strong>
                                                 </td>
                                                 <td align="center">
-                                                   RM <span id="subtotal"></span>
+                                                   <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <span id="subtotal"></span> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
                                                    <!-- <input type="text" id="subtotal_temp" value="0">
                                                    <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>
@@ -468,7 +468,7 @@
                                                     <strong>Amount Paid :</strong>
                                                 </td>
                                                 <td align="center">
-                                                   RM <span id="amountpaid"></span>
+                                                   <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <span id="amountpaid"></span> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
                                                    <!-- <input type="text" id="subtotal_temp" value="0">
                                                    <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>
@@ -480,7 +480,7 @@
                                                     <strong>Amount Due :</strong>
                                                 </td>
                                                 <td align="center">
-                                                   RM <span id="amountdue"></span>
+                                                   <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <span id="amountdue"></span> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
                                                    <!-- <input type="text" id="subtotal_temp" value="0">
                                                    <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>
@@ -529,7 +529,7 @@ $(function(){
                                             <tr bgcolor="#3C8DBC" style="color:#fff">
                                                 <th width="300">Date</th>
                                                 <th width="400">Payment Method</th>
-                                                <th>Amount Paid</th>
+                                                <th>Amount Paid(<?php echo $this->config->item("currency");?>)</th>
                                                 <th>Payment Remark</th>
                                             </tr>
                                             <?php
@@ -549,7 +549,7 @@ $(function(){
                                             <tr>
                                                 <td><?php echo $value['invoice_payment_date'];?></td>
                                                 <td><?php echo $value['payment_method'];?></td>
-                                                <td>RM <?php echo $value['invoice_payment_amount'];?> 
+                                                <td><?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <?php echo $value['invoice_payment_amount'];?> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?> 
                                                 <input type="hidden" class="amount" value="<?php echo $value['invoice_payment_amount'];?>"></td>
                                                 <td><?php echo $value['invoice_payment_note'];?></td>
                                             </tr>

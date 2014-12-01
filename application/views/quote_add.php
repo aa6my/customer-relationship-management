@@ -347,7 +347,7 @@
                                                     <strong>Total :</strong>
                                                 </td>
                                                 <td align="center">
-                                                   RM <span id="subtotal"></span>
+                                                   <?php if($this->config->item("currencyposition")=="left") echo $this->config->item("currency");?> <span id="subtotal"></span> <?php if($this->config->item("currencyposition")=="right") echo $this->config->item("currency");?>
                                                    <!-- <input type="text" id="subtotal_temp" value="0">
                                                    <input type="text" id="subtotal_temp_2" value="0"> -->
                                                 </td>

@@ -210,7 +210,7 @@ $(function () {
         },
         yAxis: {
             title: {
-                text: 'Overall Amount (RM)'
+                text: 'Overall Amount (<?php echo $this->config->item("currency");?>)'
             },
             plotLines: [{
                 value: 0,
@@ -219,7 +219,20 @@ $(function () {
             }]
         },
         tooltip: {
-            valuePrefix: 'RM'
+            <?php
+            if($this->config->item("currencyposition")=="left")
+            {
+                ?>
+            
+            valuePrefix: '<?php echo $this->config->item("currency");?>'
+            <?php
+            }
+            else
+                {?>
+            valueSuffix: '<?php echo $this->config->item("currency");?>' 
+            <?php
+            }
+            ?>     
         },
         legend: {
             backgroundColor : '#FFF',

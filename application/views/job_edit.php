@@ -272,7 +272,7 @@
                                             </td>
                                            
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             
                                             <td align="right">Currency</td>
                                             <td>
@@ -291,7 +291,7 @@
                                                 </div>
                                             </td>
                                            
-                                        </tr>
+                                        </tr> -->
                                          <tr>
                                             
                                             <td align="right"></td>
@@ -615,7 +615,7 @@
                                             <th style="width: 10px">#</th>
                                             <th style="width: 430px">Description</th>
                                             <th>Hours</th>
-                                            <th>Amount</th>
+                                            <th>Amount(<?php echo $this->config->item("currency");?>)</th>
                                             <th>Due Date</th>
                                             <!-- <th>Done Date</th> -->
                                             <th>Staff</th>

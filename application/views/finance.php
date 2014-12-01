@@ -123,7 +123,7 @@
                                         <th>DATE </th>
                                         <th>PAYMENT METHOD</th>
                                         <th>CUSTOMER</th>
-                                        <th class="text-right">AMOUNT</th>
+                                        <th class="text-right">AMOUNT (<?php echo $this->config->item("currency");?>)</th>
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -140,7 +140,7 @@
                                         <td><?php echo $value['invoice_payment_date']; ?></td>
                                         <td><?php echo $value['payment_method']; ?></td>
                                         <td><?php echo $value['customer_name']; ?></td>
-                                        <td class="text-right"><?php echo $value['invoice_payment_amount']; ?></td>
+                                        <td class="text-right"><?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <?php echo $value['invoice_payment_amount']; ?> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?></td>
                                       </tr>
                                     <?php
                                         $total = $total + $value['invoice_payment_amount'];
@@ -150,7 +150,7 @@
                                     <td><b>TOTAL </b></td>
                                     <td></td>
                                     <td></td>
-                                    <td class="text-right"><?php echo $total; ?></td>
+                                    <td class="text-right"><?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> <?php echo $total; ?> <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?></td>
                                     </tr>
                                 <?php
                                 }

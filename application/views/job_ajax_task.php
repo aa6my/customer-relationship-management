@@ -23,7 +23,9 @@ foreach($job_task as $value)
                                                 
                                                 <?php echo @$value['job_task_hour'];?>&nbsp;Hour
                                             </td>
-                                            <td>RM <?php echo @$value['job_task_amount'];?>
+                                            <td><?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> 
+                                            <?php echo @$value['job_task_amount'];?>
+                                            <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
                                             </td>
                                             <td>
                                                 <?php echo @$value['job_task_due_date'];?>
@@ -70,7 +72,10 @@ foreach($job_task as $value)
                                                 
                                                 <?php echo @$job['job_task_hour'];?>&nbsp;Hour
                                             </td>
-                                            <td>RM <?php echo @$job['job_task_amount'];?>
+                                            <td>
+                                            <?php echo ($this->config->item("currencyposition")=="left") ? $this->config->item("currency") : "";?> 
+                                            <?php echo @$job['job_task_amount'];?>
+                                            <?php echo ($this->config->item("currencyposition")=="right") ? $this->config->item("currency") : "";?>
                                             </td>
                                             <td>
                                                 <?php echo @$job['job_task_due_date'];?>
@@ -103,19 +108,59 @@ foreach($job_task as $value)
                                                 <tbody><tr>
                                                     <th style="width:40px">Subtotal</th>
                                                     <td style="width:10px">:</td>
-                                                    <td><?php echo ($subTotal!="") ? "RM ".$subTotal : "-";?></td>
+                                                    <td>
+                                                    
+                                                    <?php 
+                                                    if($subTotal!="")
+                                                    {
+                                                        if($this->config->item("currencyposition")=="left")
+                                                            echo $this->config->item("currency")." ".$subTotal;
+                                                        else
+                                                            echo $subTotal." ".$this->config->item("currency");
+                                                    }
+                                                    else{
+                                                        echo "-";
+                                                    }
+
+                                                    ?></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Discount</th>
                                                     <td>:</td>
-                                                    <td><?php echo (@$total[0]['job_discount_amount']!="") ? "RM ".$total[0]['job_discount_amount'] : "-";?></td>
+                                                    <td>
+                                                    <?php 
+                                                    if($total[0]['job_discount_amount']!="")
+                                                    {
+                                                        if($this->config->item("currencyposition")=="left")
+                                                            echo $this->config->item("currency")." ".$total[0]['job_discount_amount'];
+                                                        else
+                                                            echo $total[0]['job_discount_amount']." ".$this->config->item("currency");
+                                                    }
+                                                    else{
+                                                        echo "-";
+                                                    }
+
+                                                    ?></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Total</th>
                                                     <td>:</td>
                                                     <td> <?php 
                                                     $tot = $subTotal - @$total[0]['job_discount_amount'];
-                                                    echo ($tot!="") ? "RM ".$tot : "-";
+                                                    //echo ($tot!="") ? "RM ".$tot : "-";
+                                                    ?>
+                                                    <?php 
+                                                    if($tot!="")
+                                                    {
+                                                        if($this->config->item("currencyposition")=="left")
+                                                            echo $this->config->item("currency")." ".$tot;
+                                                        else
+                                                            echo $tot." ".$this->config->item("currency");
+                                                    }
+                                                    else{
+                                                        echo "-";
+                                                    }
+
                                                     ?></td>
                                                 </tr>
                                                 </tbody>
