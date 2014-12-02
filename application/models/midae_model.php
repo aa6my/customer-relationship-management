@@ -357,7 +357,7 @@ class Midae_model extends CI_Model {
 
     }
 
-        function get_all_rows1($table,$where, $tableNameToJoin, $tableRelation, $likes, $places)
+    function get_all_rows1($table,$where, $tableNameToJoin, $tableRelation, $likes, $places)
     {
             //$data = array();
             //$query = $this->db->query("SELECT *FROM $table");
@@ -441,6 +441,56 @@ class Midae_model extends CI_Model {
         $query = $this->db->query($sql);
         return $query->result_array();
     }
+
+
+
+
+    /*=========================================== APPS API ONLY ================================= */
+    public function get_table_details($table){
+
+        $dbName = $this->db->database;
+        $query = $this->db->query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$table' and EXTRA = 'AUTO_INCREMENT' ");
+       
+
+            foreach ($query->result_array() as $row)
+            {
+               $data[] = $row;
+            }
+
+            return $data;
+    }
+
+
+    
+
+    function get_data_join($table,$where, $join_to, $join_id, $likes, $places)
+    {
+            //$data = array();
+            //$query = $this->db->query("SELECT *FROM $table");
+
+            $this->db->select('*');
+            $this->db->from($table);
+
+            if($where!=false){
+               $this->db->where($where);
+            }
+           
+           if($join_to!=false && $join_id!=false){
+                for ($i=0; $i < count($join_to); $i++){
+                    $this->db->join($join_to[$i], $join_to[$i].".".$join_id[$i]." = ".$table.".".$join_id[$i]);
+                }
+                
+           }
+
+           if($likes!=false){
+            $this->db->like($likes, 'after'); 
+           }
+            
+            $query = $this->db->get();
+            return $query->result_array(); 
+            
+    }
+   
 
 
  
