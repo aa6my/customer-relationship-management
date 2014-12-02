@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2014 at 11:07 AM
+-- Generation Time: Dec 02, 2014 at 10:32 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -102,7 +102,7 @@ INSERT INTO `config_data` (`key`, `value`) VALUES
 ('charset', 'utf-8'),
 ('currency', '$'),
 ('currencyposition', 'left'),
-('debug', 'FALSE'),
+('debug', 'TRUE'),
 ('email', 'YOUR EMAIL'),
 ('emailpassword', 'YOUR EMAIL PASSWORD'),
 ('mailtype', 'html'),
@@ -938,7 +938,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-12-01 02:13:14', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-12-02 08:38:52', '::1', NULL, NULL, NULL, 1, 1),
 (2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
