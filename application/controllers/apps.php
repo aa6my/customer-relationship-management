@@ -42,8 +42,6 @@ class Apps extends REST_Controller
 
 	function dataAll_get() 
     {
-    	header('content-type: application/json; charset=utf-8');
-		header("access-control-allow-origin: *");
         if(($this->get('val') && !$this->get('key')) || ($this->get('key') && !$this->get('val')))
         {
         	$this->response(array('error' => 'The key parameter and value parameter must have'), 400);
@@ -106,11 +104,11 @@ class Apps extends REST_Controller
     }
 
 
-    function dataSpecified_get(){
+    /*function dataSpecified_get(){
 
-    	$data = array('nama' => 'sdsd');
+    	$data[ = array('nama' => 'sdsd');
 
-    }
+    }*/
 
 
 
