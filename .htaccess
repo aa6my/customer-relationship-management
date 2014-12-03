@@ -7,8 +7,8 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 #SSLCertificateChainFile /path/to/DigiCertCA.crt
 
 #htaccess allow CORS //make sure disable option on restserver codeigniter
-Header set Access-Control-Allow-Origin "*"
-Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+#Header set Access-Control-Allow-Origin "*"
+#Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
 
 RewriteBase /customer-relationship-management/
 RewriteCond $1 !^(index\.php|resources|robots\.txt)
