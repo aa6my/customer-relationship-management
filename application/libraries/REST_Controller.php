@@ -1006,8 +1006,16 @@ abstract class REST_Controller extends CI_Controller
     /**
      * Parse DELETE
      */
+   /** wat asal protected function _parse_delete()
+    {
+        // Set up out DELETE variables (which shouldn't really exist, but sssh!)
+        parse_str(file_get_contents('php://input'), $this->_delete_args);
+    } **/
+
     protected function _parse_delete()
     {
+        $this->_delete_args = $_DELETE;
+        $this->request->format and $this->request->body = file_get_contents('php://input');
         // Set up out DELETE variables (which shouldn't really exist, but sssh!)
         parse_str(file_get_contents('php://input'), $this->_delete_args);
     }

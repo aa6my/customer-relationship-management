@@ -16,14 +16,14 @@ class Apps extends REST_Controller
 	/**
 	 * @param   [type] [parameter]
 	 *          [value][table name]
-	 *          eg : type/invoices
+	 *          eg : crm/type/invoices
 	 *          
 	 * @param   [key] [parameter]
 	 *          [value][table primary key or unique value]
 	 *          if use this must be include also the val paremeter
 	 *          [val][parameter]
 	 *          [value][value for the primary key]
-	 *          eg : key/invoice_id/val/42
+	 *          eg : crm/key/invoice_id/val/42
 	 *
 	 * 			example Full url : crm/type/invoice/key/invoice_id/val/12
 	 * 			
@@ -35,9 +35,9 @@ class Apps extends REST_Controller
 	 *          [jointo][parameter]
 	 *          [value][name of the table that need to join]
 	 *          ex : jointo/invoice_payments
-	 *          eg : if more than one - type/invoices/joinid/invoice_id-customer_id/jointo/invoice_payments-customers          
+	 *          eg : if more than one - crm/type/invoices/joinid/invoice_id-customer_id/jointo/invoice_payments-customers          
 	 * 
-	 */
+	 **************************************************************************************************/
  
 
 	function dataAll_get() 
@@ -104,11 +104,8 @@ class Apps extends REST_Controller
     }
 
 
-    /*function dataSpecified_get(){
 
-    	$data[ = array('nama' => 'sdsd');
-
-    }*/
+    
 
 
 
@@ -127,5 +124,36 @@ class Apps extends REST_Controller
         }
         /*========================================= END RESULT ================================================*/
     }
+
+
+
+
+
+
+    public function dataAll_post()
+    {
+    	//if($this->input->post('save')){
+    		//echo $this->get('cuba');
+			//$website_name = $this->input->post('website_name');
+			//echo $website_name;
+		//}
+    	 //$this->response($message, 200); // 200 being the HTTP response code
+    }
+
+    function dataAll_delete()
+    {
+
+    	
+    	//echo $this->get('id');
+    	
+        
+        $this->response(array('error'=>'error da'), 400); // 200 being the HTTP response code
+    }
+
+
+    public function send_post()
+	{
+		var_dump($this->request->body);
+	}
 
 }
