@@ -84,8 +84,8 @@ class Vendors extends MY_Controller {
         $crud->set_rules('vendor_firstname','Vendor First Name', 'required');
         $crud->set_rules('vendor_lastname','Vendor Last Name', 'required');
         $crud->set_rules('vendor_email', 'Vendor Email', 'valid_email|required');
-        $crud->set_rules('vendor_phone', 'Vendor Phone','regex_match[/^[0-9]{10}$/]|required');
-        $crud->set_rules('vendor_mobile','Vendor Mobile', 'regex_match[^[0-9]{10}$/]|required');
+        $crud->set_rules('vendor_phone', 'Vendor Phone','integer|required');
+        $crud->set_rules('vendor_mobile','Vendor Mobile', 'integer|required');
         $crud->set_rules('vendor_address', 'Vendor Address', 'required');
         $crud->set_rules('vendor_postcode', 'Vendor Postcode' ,'integer|required');
         $crud->set_rules('vendor_state', 'Vendor State', 'required');
