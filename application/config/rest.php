@@ -10,7 +10,7 @@
 |	Default: FALSE
 |
 */
-$config['force_https'] = FALSE;
+$config['force_https'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------

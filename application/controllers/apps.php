@@ -11,6 +11,9 @@ class Apps extends REST_Controller
 		parent::__construct();
 		$this->load->helper('url');
 		$this->url    = current_url();
+		//if($this->input->server('REQUEST_METHOD')=="DELETE"){
+		//	$this.dataAll_delete();
+		//}
 	}
 
 	/**
@@ -137,17 +140,32 @@ class Apps extends REST_Controller
 			//$website_name = $this->input->post('website_name');
 			//echo $website_name;
 		//}
-    	 //$this->response($message, 200); // 200 being the HTTP response code
+    	  // 200 being the HTTP response code
+    	  
     }
 
-    function dataAll_delete()
+    public function dataAll_delete()
     {
+    	$id = $this->uri->segment(3);
+        if(!$id)
+        {
+            $this->response(array('error' =>
+                                'An ID must be supplied to delete a customer'), 400);
+        }
 
-    	
-    	//echo $this->get('id');
-    	
+
+        if($id) {
+            try {
+              $customer = $this->Midae_model->delete_data('invoices_test', array('invoice_id' => $id));
+            } catch (Exception $e) {
+                
+                $this->response(array('error' => $e->getMessage()),
+                                        $e->getCode());
+            }
+                $this->response($customer, 200); // 200 being the HTTP response code
+        } else
+            $this->response(array('error' => 'Widget could not be found'), 404);
         
-        $this->response(array('error'=>'error da'), 400); // 200 being the HTTP response code
     }
 
 

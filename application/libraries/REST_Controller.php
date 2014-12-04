@@ -36,8 +36,8 @@ abstract class REST_Controller extends CI_Controller
      *
      * @var array
      */
-    //protected $allowed_http_methods = array('get', 'delete', 'post', 'put', 'options', 'patch', 'head');
-    protected $allowed_http_methods = array('get',  'delete', 'post', 'put', 'patch', 'head');
+    protected $allowed_http_methods = array('get', 'delete', 'post', 'put', 'options', 'patch', 'head');
+    //protected $allowed_http_methods = array('get',  'delete', 'post', 'put', 'patch', 'head');
 
     /**
      * General request data and information.
@@ -1014,8 +1014,8 @@ abstract class REST_Controller extends CI_Controller
 
     protected function _parse_delete()
     {
-        $this->_delete_args = $_DELETE;
-        $this->request->format and $this->request->body = file_get_contents('php://input');
+        //$this->_delete_args = $_DELETE;
+        //$this->request->format and $this->request->body = file_get_contents('php://input');
         // Set up out DELETE variables (which shouldn't really exist, but sssh!)
         parse_str(file_get_contents('php://input'), $this->_delete_args);
     }
