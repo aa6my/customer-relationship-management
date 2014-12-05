@@ -132,7 +132,7 @@
                 <i class ="ion ion-clipboard">
                 </i>
                 </div>
-                <a href="<?php echo base_url(); ?>events" class="small-box-footer">
+                <a href="<?php echo base_url(); ?>calendar" class="small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
