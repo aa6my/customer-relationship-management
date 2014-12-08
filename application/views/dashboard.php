@@ -132,7 +132,7 @@
                 <i class ="ion ion-clipboard">
                 </i>
                 </div>
-                <a href="<?php echo base_url(); ?>events" class="small-box-footer">
+                <a href="<?php echo base_url(); ?>calendar" class="small-box-footer">
                 <span>More Info</span>
                 <i class="fa fa-arrow-circle-right"></i>
                 </a>
@@ -157,34 +157,157 @@
                 </div>
                 <!--/.column-->
                 <div class="col-lg-3 col xs-6">
-                <div class="small-box bg-blue">
-                <div class="inner">
+                    <div class="small-box bg-blue">
+                    <div class="inner">
+                   
+                        <h3><?php echo $quote; ?></h3>
+                        <p>Quotes</p>
+                    </div>
+                    <div class="icon">
+                        <i class ="ion ion-pricetag">
+                        </i>
+                    </div>
+                        <a href="<?php echo base_url(); ?>quotes" class="small-box-footer">
+                        <span>More Info</span>
+                        <i class ="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+$(function () {
+
+
+    var options = {
+        chart: {
+                    renderTo: 'container',
+                    type: 'area',
+                    marginRight: 130,
+                    marginBottom: 25
+                   /* plotBackgroundColor : '#F2EAB5'*/
+
+        },
+        title: {
+            /*text: 'Monthly Sales By Year',*/
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: Invoices',
+            x: -20
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: 'Overall Amount (<?php echo $this->config->item("currency");?>)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#CF9601'
+            }]
+        },
+        tooltip: {
+            <?php
+            if($this->config->item("currencyposition")=="left")
+            {
+                ?>
+            
+            valuePrefix: '<?php echo $this->config->item("currency");?>'
+            <?php
+            }
+            else
+                {?>
+            valueSuffix: '<?php echo $this->config->item("currency");?>' 
+            <?php
+            }
+            ?>     
+        },
+        legend: {
+            backgroundColor : '#FFF',
+            borderColor : '#F38C7D',
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+
+            
+        },
+        credits: {
+            text : 'SegiMidaeInfocomn',
+            href : 'http://segimidae.net',
+            style : {
+                color : '#55A3D1',
+                padding : '3px',
+                border: '1px solid #55A3D1'
+            }
+        },
+        series: [{ }]
+        
+   }
+
+   render_chart(false);
+
+   
+ 
+   $('#tahun').on('change', function(){
+        var tahun = $(this).val();
+        render_chart(Number(tahun));
                
-                <h3>""</h3>
-                <p>Quotes</p>
-                </div>
-                <div class="icon">
-                <i class ="ion ion-pricetag">
-                </i>
-                </div>
-                <a href="<?php echo base_url(); ?>quotes" class="small-box-footer">
-                <span>More Info</span>
-                <i class ="fa fa-arrow-circle-right"></i>
-                </a>
-                </div>
-                </div>
+     });
+
+   function render_chart(year){
+
+        var new_year;
+        if(year!=false){
+            new_year = year;
+        }
+        else{
+            new_year = "";
+        }
+        $.ajax({
+                type : "POST",
+                url : "<?php echo base_url();?>dashboard/data_hightchart",
+                data : "tahun="+ new_year,
+                dataType : 'json',
+                success:function(json){
+                   
+                    options.xAxis.categories = json[1].month;
+                    options.series[0].name = json[0].name;
+                    options.series[0].data = json[0].data;
+                    options.title.text = "Monthly sales "+json[2].tahun;
+                    
+                    chart = new Highcharts.Chart(options);
+                }
+               });
+   }
+
+
+});
+        </script>
+<span id="cuba"></span>
 
 
                 <!--<div class ="row">-->
-                <section class ="col-lg-7 connectedSortable ui-sortable">
+               
+                <section class ="col-lg-12"> <div class="box box-primary" id="bar-chart" style="position:relative; height: 300px;">
                     <div class = "nav-tabs-custom" style="cursor: move;">
-                    <ul class = "nav nav-tabs pull-right ui-sortable-handle">
+                    <ul class = "nav nav-tabs pull-right ">
                      
                     <li class="active">
-                <a href="#revenue-chart data-toggle="tab"">Year</a>
-                
-                        <label>
-                        <select size="1" name="546c075c38f60_length" aria-controls="546c075c38f60">
+                <a href="#revenue-chart data-toggle="tab"">Year :  <label>
+                        <select size="1" name="546c075c38f60_length" aria-controls="546c075c38f60" id="tahun">
                         <?php 
                         $end = 2015;
                         $j = 2007;
@@ -197,19 +320,45 @@
                        </select>
                        
                         </label></a>
+                
+                       
                     </li>
                 <li class = "pull-left header">
                     <i class="fa fa-inbox"></i>
                     Sales
-                    </li>
+                </li>
                     </ul>
                 <div class="tab-content ">
                 <!--Bar Chat-->
-                <div class="box box-primary id="bar-chart" style="position:relative; height: 300px;"">
+                <!-- <div class="box box-primary" id="bar-chart" style="position:relative; height: 300px;"> -->
                     <div class="box-header">
                     </div>
-                    <div class="box-body">
-                    <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;">
+                        <div class="box-body">
+                            <div id="container" style="min-width: 310px; height: 300px; margin: 0 auto">
+                                
+                            </div>
+                        
+                        </div>
+                <!-- </div> -->
+                </div>
+            <!--box-body-->
+        </div></div>
+         </section>
+
+
+
+
+                </section><!-- /.content -->
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+    </body>
+</html>
+
+
+
+
+
+<!-- <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;">
                     <canvas class="flot-base" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;"></canvas>
                     <div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
                     <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
@@ -218,46 +367,4 @@
                     <div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
               
                     </div>
-                    <canvas class="flot-overlay" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;">
-                </div>
-            </div>
-            <!--box-body-->
-        </div>
-                
-                </section>
-                </section><!-- /.content -->
-            </aside><!-- /.right-side -->
-        </div><!-- ./wrapper -->
-
-        <!-- add new calendar event modal -->
-
-
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
-
-        <!-- Morris.js charts -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/js/plugins/morris/morris.min.js" type="text/javascript"></script>
-        <!-- Sparkline -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
-        <!-- jvectormap -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
-        <script src="<?php echo base_url(); ?>assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
-        <!-- jQuery Knob Chart -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/jqueryKnob/jquery.knob.js" type="text/javascript"></script>
-        <!-- daterangepicker -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-        <!-- datepicker -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-        <!-- Bootstrap WYSIHTML5 -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
-        <!-- iCheck -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-
-        <!-- AdminLTE App -->
-        <script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
-
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="<?php echo base_url(); ?>assets/js/AdminLTE/dashboard.js" type="text/javascript"></script>
-
-    </body>
-</html>
+                    <canvas class="flot-overlay" width="632" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 735px; height: 300px;"> -->

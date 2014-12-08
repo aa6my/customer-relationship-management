@@ -1,12 +1,17 @@
 RewriteEngine on
+
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+#SSLCertificateFile /etc/httpd/ssl/ca.crt
+#SSLCertificateKeyFile /etc/httpd/ssl/ca.key
+#SSLCertificateChainFile /path/to/DigiCertCA.crt
+
+#htaccess allow CORS //make sure disable option on restserver codeigniter
+#Header set Access-Control-Allow-Origin "*"
+#Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+
 RewriteBase /customer-relationship-management/
 RewriteCond $1 !^(index\.php|resources|robots\.txt)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L,QSA]
-
-#google web fonts
-AddType application/vnd.ms-fontobject .eot
-AddType font/ttf .ttf
-AddType font/otf .otf
-AddType application/x-font-woff .woff

@@ -19,7 +19,7 @@
  * @copyright  2014 SEGI MiDae
  * @version    0.4.1
 */
-class Jobs extends CI_Controller {
+class Jobs extends MY_Controller {
 
     public function access_map(){
         return array(
@@ -55,7 +55,7 @@ class Jobs extends CI_Controller {
                     'job_complete_date'   => $postData['job_complete_date'],
                     'user_id'             => $postData['user_id'],
                     'job_tax'             => $postData['job_tax'],
-                    'job_currency'        => $postData['job_currency'],
+                    /*'job_currency'        => $postData['job_currency'],*/
                     'job_type_id'         => $postData['job_type_id'],
                     'job_status'          => $postData['job_status'],
                     'job_description'     => $postData['job_description'],
@@ -78,29 +78,17 @@ class Jobs extends CI_Controller {
     {
             $data['website']   = $this->Midae_model->get_website(); //get websites from database
             $data['customer']  = $this->Midae_model->get_customer(); //get customers from database
-            $data['job_type'] = $this->Midae_model->get_all_rows("job_types", false, false, false); //get all types of  job
+            $data['job_type'] = $this->Midae_model->get_all_rows("job_types", false, false, false, false, false); //get all types of  job
             $data['staff']     = $this->Midae_model->get_staff_member();
 
             return $data;
     }
 
     
-
-     
-
-
-
     public function index()
     {
 
-        // Component
-        $this->output->enable_profiler(TRUE); //Profiler Debug
-        $this->load->model('Midae_model');
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc']  = "Change your page purpose here"; //function purpose here.
-
-        //End of component
+        
 
         $crud  = new grocery_CRUD();
         $state = $crud->getState();
@@ -180,7 +168,7 @@ class Jobs extends CI_Controller {
             
             $data['job_id']    = $this->uri->segment(4) ; // get the last segment parameter from url
             $where             = array('job_id' => $data['job_id']);
-            $data['jobs']      = $this->Midae_model->get_specified_row("jobs",$where,false);            
+            $data['jobs']      = $this->Midae_model->get_specified_row("jobs",$where,false,false,false);            
             
 
 
@@ -205,7 +193,7 @@ class Jobs extends CI_Controller {
                     'job_complete_date'   => $postData['job_complete_date'],
                     'user_id'             => $postData['user_id'],
                     'job_tax'             => $postData['job_tax'],
-                    'job_currency'        => $postData['job_currency'],
+                    /*'job_currency'        => $postData['job_currency'],*/
                     'job_type_id'         => $postData['job_type_id'],
                     'job_status'          => $postData['job_status'],
                     'job_description'     => $postData['job_description'],
@@ -229,26 +217,30 @@ class Jobs extends CI_Controller {
                $this->Midae_model->update_data($columnToUpdate,"jobs", $usingCondition);
 
                //after changes was made, fetch the data again from job table
-               $data['jobs'] = $this->Midae_model->get_specified_row("jobs",$where,false);
+               $data['jobs'] = $this->Midae_model->get_specified_row("jobs",$where,false,false,false);
                $this->Midae_model->display_message("save", current_url());
                
                
                 
                
            }
-            $data['token_val'] = $this->security->get_csrf_hash();
+           $data['token_val'] = $this->security->get_csrf_hash();
            $this->load->view('job_edit.php', $data);
 
         }
         
         else
         {
-            $crud->columns('job_title','job_date_start','job_due_date','job_type_id','job_status');
-            $crud->display_as('job_type_id','Job type');
+            $crud->columns('job_title','job_date_start','job_due_date','job_type_id','job_status','customer_id','website_id');
+            $crud->display_as('job_type_id','Job type')
+                 ->display_as('customer_id','Customer Name')
+                 ->display_as('website_id','Website Name');;
             $crud->callback_column('job_type_id',array($this,'crud_job_type'))
-                 ->callback_column('job_status',array($this,'crud_job_status'));
+                 ->callback_column('job_status',array($this,'crud_job_status'))
+                 ->callback_column('customer_id',array($this,'crud_customer_display'))
+                 ->callback_column('website_id',array($this,'crud_website_display'));
             $output = $crud->render();
-            $output = array_merge($data,(array)$output);
+            //$output = array_merge($data,(array)$output);
             $this->load->view('cruds.php',$output);
         }
 
@@ -257,13 +249,32 @@ class Jobs extends CI_Controller {
 
     }
 
+    public function crud_website_display($key, $row){
+      $table = "websites";
+      $where = array('website_id' => $key);
+
+      $customer = $this->Midae_model->get_specified_row($table,$where,false,false, false);
+      $name = $customer['website_name'];
+      return '<a href="websites/index/read/'.$key.'" target="blank">'.$name.'</a>';
+    }
+
+
+    public function crud_customer_display($key, $row){
+      $table = "customers";
+      $where = array('customer_id' => $key);
+
+      $customer = $this->Midae_model->get_specified_row($table,$where,false,false, false);
+      $name = $customer['customer_name'];
+      return '<a href="customers/index/read/'.$key.'" target="blank">'.$name.'</a>';
+    }
+
     public function crud_job_type($value, $row)
     {
         $where = array(
                 'job_type_id' => $value
             );
 
-        $job_type = $this->Midae_model->get_specified_row("job_types",$where,false);
+        $job_type = $this->Midae_model->get_specified_row("job_types",$where,false,false,false);
        
         return $job_type['job_type_name'];
     }
@@ -310,7 +321,7 @@ class Jobs extends CI_Controller {
             
                 
 
-            $data['job_task'] = $this->Midae_model->get_all_rows("jobs_task",$where, $tableNameToJoin, $tableRelation);
+            $data['job_task'] = $this->Midae_model->get_all_rows("jobs_task",$where, $tableNameToJoin, $tableRelation, false, false);
             $data['jenis'] = "display";
             $this->load->view('job_ajax_task', $data);
         }
@@ -333,7 +344,7 @@ class Jobs extends CI_Controller {
 
             $this->Midae_model->insert_new_data($arrayData,"jobs_task");
            
-            $data['job'] = $this->Midae_model->get_all_rows_jobs("jobs_task",$this->input->post('job_id'), $tableNameToJoin, $tableRelation);
+            $data['job'] = $this->Midae_model->get_all_rows_jobs("jobs_task",$this->input->post('job_id'), $tableNameToJoin, $tableRelation, false, false);
             
             $data['jenis'] = "add";
             $this->load->view('job_ajax_task', $data);
@@ -348,7 +359,7 @@ class Jobs extends CI_Controller {
 
             $data['jenis'] = $this->input->post('jenis');
 
-            $data['total'] = $this->Midae_model->get_all_rows('jobs',$where, "jobs_task", $tableRelation);
+            $data['total'] = $this->Midae_model->get_all_rows('jobs',$where, "jobs_task", $tableRelation, false, false);
 
             //$data['percentage'] = $data['total']['']
 
@@ -429,7 +440,7 @@ class Jobs extends CI_Controller {
         if($jenis=="display")
         {
             $table            = "catproduct";
-            $data['category'] = $this->Midae_model->get_all_rows($table,false, false, false);
+            $data['category'] = $this->Midae_model->get_all_rows($table,false, false, false, false, false);
             $this->load->view('ajax_product', $data, FALSE);
         }
         else if($jenis=="get_product")
@@ -437,7 +448,7 @@ class Jobs extends CI_Controller {
             $table            = "products";
             $catproduct_id   = $this->input->post('catproduct_id');
             $where = array('catproduct_id'=>$catproduct_id);
-            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false);
+            $data['product'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
             $this->load->view('ajax_product', $data, FALSE);
 
         }
@@ -450,7 +461,7 @@ class Jobs extends CI_Controller {
             $where = array('product_id'=>$product_id);
             $tableNameToJoin = "catproduct";
             $tableRelation = "products.catproduct_id = catproduct.catproduct_id";
-            $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation);
+            $return['product'] = $this->Midae_model->get_all_rows($table,$where, $tableNameToJoin, $tableRelation, false, false);
             echo json_encode($return);
             //$this->load->view('ajax_product', $data, FALSE);
 

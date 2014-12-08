@@ -21,7 +21,7 @@
  * @version    0.4.1
 */
 
-class Customers extends CI_Controller {
+class Customers extends MY_Controller {
 
     public function access_map(){
         return array(
@@ -34,20 +34,10 @@ class Customers extends CI_Controller {
     {
         parent::__construct();
         $this->load->database();
-        $this->load->helper('url');
-        $this->load->library('grocery_CRUD');
     }
 
     public function index()
     {
-
-        // Component
-        $this->output->enable_profiler(TRUE); //Profiler Debug
-        $this->load->model('Midae_model');
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "Customer Form"; //function purpose here.
-        //End of component
 
         $crud = new grocery_CRUD();
         $state = $crud->getState();
@@ -74,19 +64,31 @@ class Customers extends CI_Controller {
         $crud->fields('customer_name','customer_firstname','customer_lastname','customer_email','customer_phone','customer_mobile','customer_fax','customer_address','customer_postcode','customer_state','country_id');
         $crud->callback_before_insert(array($this,'_last_update'));
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         }elseif ($state == "read") {
         $crud->fields('customer_name','customer_firstname','customer_lastname','customer_email','customer_phone','customer_mobile','customer_fax','customer_address','customer_postcode','customer_state','country_id','last_update');
         $crud->callback_before_insert(array($this,'_last_update'));
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         }
         else{
         $crud->columns('customer_name','customer_firstname','customer_lastname','customer_mobile','customer_address');
+
+        $crud->set_rules('customer_name','Customer Name', 'required');
+        $crud->set_rules('customer_firstname','Customer First Name', 'required');
+        $crud->set_rules('customer_lastname', 'Customer Last Name', 'required');
+        $crud->set_rules('customer_email','Customer Email','valid_email|required');
+        $crud->set_rules('customer_phone','Customer Phone','integer|required');
+        $crud->set_rules('customer_mobile','Customer Mobile' , 'integer|required');
+        $crud->set_rules('customer_address','Customer Address','required');
+        $crud->set_rules('customer_postcode','Customer Postcode', 'integer|required');
+        $crud->set_rules('customer_state','Customer State', 'required');
+        $crud->set_rules('country_id','Customer Country' , 'required');
+
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         }
 

@@ -161,6 +161,7 @@ img {
   display: inline;
   width: auto;
 }
+
 /* Background colors */
 .bg-red,
 .bg-yellow,
@@ -3532,4 +3533,9 @@ fieldset[disabled] .btn-vk.active {
 .btn-vk .badge {
   color: #587ea3;
   background-color: #ffffff;
+}
+
+.table_head{
+  background-color: #3C8DBC;
+  color : #fff;
 }

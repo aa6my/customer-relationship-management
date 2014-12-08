@@ -121,8 +121,9 @@ class Midae_model extends CI_Model {
     {
 
         $this->db->insert($table,$arrayData);
-        $this->db->_error_message();
-        return  $this->db->_error_message();
+        //$this->db->_error_message();
+       // return  $this->db->_error_message();
+        return $this->db->insert_id();
     }
 
 
@@ -181,7 +182,7 @@ class Midae_model extends CI_Model {
     * @param  [array] $where [condition to apply]
     * @return [type]        [return data sets]
     */
-    function get_all_rows($table,$where, $tableNameToJoin, $tableRelation)
+    function get_all_rows($table,$where, $tableNameToJoin, $tableRelation, $likes, $places)
     {
             //$data = array();
             //$query = $this->db->query("SELECT *FROM $table");
@@ -193,9 +194,13 @@ class Midae_model extends CI_Model {
                $this->db->where($where);
             }
            
-           if($tableNameToJoin && $tableRelation){
+           if($tableNameToJoin!=false && $tableRelation!=false){
 
                 $this->db->join($tableNameToJoin, $tableRelation);
+           }
+
+           if($likes!=false){
+            $this->db->like($likes, 'after'); 
            }
             /*foreach ($query->result_array() as $row)
             {
@@ -204,6 +209,31 @@ class Midae_model extends CI_Model {
             $query = $this->db->get();
             return $query->result_array(); 
             //return $data;
+    }
+
+    function get_all_rows_quote($table,$where, $tableNameToJoin, $tableRelation,$likes)
+    {
+            //$data = array();
+            //$query = $this->db->query("SELECT *FROM $table");
+
+            $this->db->select('*');
+            $this->db->from($table);
+
+            if($where!=false){
+               $this->db->where($where);
+            }
+           
+           if($tableNameToJoin!=false && $tableRelation!=false){
+
+                $this->db->join($tableNameToJoin, $tableRelation);
+           }
+
+          
+            //$this->db->like('customer_name',"j",'after'); 
+         
+            $query = $this->db->get();
+            return $query->result_array(); 
+           
     }
 
 
@@ -282,7 +312,7 @@ class Midae_model extends CI_Model {
      * @param  [array] $order_by [order by]
      * @return [type] [return sepcified row]
      */
-    function get_specified_row($table,$where,$order_by)
+    function get_specified_row($table,$where,$order_by,$tableNameToJoin, $tableRelation)
     {
         
         $this->db->select('*');
@@ -295,8 +325,13 @@ class Midae_model extends CI_Model {
 
         if($order_by!=false)
         {
-            $this->db->order_by($order_by);
+            $this->db->order_by($order_by[0], $order_by[1]);
         }
+
+        if($tableNameToJoin && $tableRelation){
+
+                $this->db->join($tableNameToJoin, $tableRelation);
+           }
 
         $query = $this->db->get();
         return $query->row_array();    
@@ -322,6 +357,36 @@ class Midae_model extends CI_Model {
 
     }
 
+    function get_all_rows1($table,$where, $tableNameToJoin, $tableRelation, $likes, $places)
+    {
+            //$data = array();
+            //$query = $this->db->query("SELECT *FROM $table");
+
+            $this->db->select('*');
+            $this->db->from($table);
+
+            if($where!=false){
+               $this->db->where($where);
+            }
+           
+           if($tableNameToJoin!=false && $tableRelation!=false){
+                for ($i=0; $i < count($tableNameToJoin); $i++){
+                    $this->db->join($tableNameToJoin[$i], $tableRelation[$i]);
+                }
+                
+           }
+
+           if($likes!=false){
+            $this->db->like($likes, 'after'); 
+           }
+            /*foreach ($query->result_array() as $row)
+            {
+               $data[] = $row;
+            }*/
+            $query = $this->db->get();
+            return $query->result_array(); 
+            //return $data;
+    }
 
 
     /**
@@ -346,11 +411,15 @@ class Midae_model extends CI_Model {
         }
         else if($messageType=="record")
         {
-             $this->session->set_flashdata('record', 'New Job successfully recorded');
+             $this->session->set_flashdata('record', 'Data successfully recorded');
         }
         else if($messageType=="error")
         {
              $this->session->set_flashdata('error', 'There is an errors in processing, please try again.');
+        }
+        else if($messageType=="convert")
+        {
+             $this->session->set_flashdata('convert', 'Successfully converted.');
         }
        
 
@@ -360,65 +429,75 @@ class Midae_model extends CI_Model {
 
 
 
-    /*---------------------------------------------------------------
-    / Invoices Only
-    /------------------------------------------------------------ */
-
-    function get_invoices($status = 'all')
-    {
-        $this->db->select('*');
-        $this->db->from('ci_invoices');
-        $this->db->join('ci_clients', 'ci_clients.client_id = ci_invoices.client_id');
-        if($status != 'all')
-        {
-        $this->db->where('ci_invoices.invoice_status', $status);
-        }
-        $this->db->order_by('invoice_id', 'DESC');
-        $invoices = $this->db->get()->result_array();
-        $invoice_amount = 0;
-        foreach($invoices as $invoice_count=>$invoice)
-        {
-            $invoice_totals = $this->get_invoice_total_amount($invoice['invoice_id']);
-            $invoices[$invoice_count]['invoice_amount'] = $invoice_totals['item_total'] + $invoice_totals['tax_total'] - $invoice['invoice_discount'];
-            $invoices[$invoice_count]['total_paid'] = $invoice_totals['amount_paid'];
-        }
-        return $invoices;
+    public function get_data_highchart($tahun){
+        //$dd = date('2014');
+        //$this->db->select('');
+        //$this->db->from('invoice_payments');
+        //$this->db->where('invoice_payment_date', 'YEAR(2014)', FALSE);
+        //$this->db->group_by('MONTH(invoice_date_created)');
+        $sql = "select sum(invoice_payment_amount) as amount, MONTH(invoice_payment_date) as month from invoice_payments where YEAR(invoice_payment_date) = $tahun AND invoice_status = 1 group by MONTH(invoice_payment_date)";
+        
+        /*$query = $this->db->get();*/
+        $query = $this->db->query($sql);
+        return $query->result_array();
     }
-    
-    function get_invoice_total_amount($invoice_id = 0)
-    {
-        $invoice_totals = array();
-        $this->db->select('*');
-        $this->db->from('ci_invoice_items');
-        $this->db->where('ci_invoice_items.invoice_id', $invoice_id);
-        $invoice_items = $this->db->get();
-        $item_total = 0;
-        $tax_total = 0;
-        $items_total_discount = 0;
-        foreach($invoice_items->result_array() as $item_count=>$item)
-        {
-            $item_amount = ($item['item_quantity'] * $item['item_price']) - $item['item_discount'];
-            if($item['item_taxrate_id'] != 0)
+
+
+
+
+    /*=========================================== APPS API ONLY ================================= */
+    public function get_table_details($table){
+
+        $dbName = $this->db->database;
+        $query = $this->db->query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$table' and EXTRA = 'AUTO_INCREMENT' ");
+       
+
+            foreach ($query->result_array() as $row)
             {
-                $tax_rate = $this->common_model->get_tax($item['item_taxrate_id']);
-                $tax_total += $item_amount * $tax_rate;
+               $data[] = $row;
             }
-            $item_total = $item_total + $item_amount;
-            $items_total_discount += $item['item_discount'];
-        }
 
-        $invoice = $this->db->select('invoice_discount')->where('invoice_id', $invoice_id)->get('ci_invoices')->row();
-
-        $amount_paid = $this->get_invoice_paid_amount($invoice_id);
-        $invoice_totals['item_total']           = $item_total;
-        $invoice_totals['tax_total']            = $tax_total;
-        $invoice_totals['sub_total']            = $item_total + $tax_total;
-        $invoice_totals['items_total_discount'] = $items_total_discount;
-        $invoice_totals['amount_paid']          = $amount_paid;
-        $invoice_totals['amount_due']           = $item_total + $tax_total - $amount_paid - $invoice->invoice_discount;
-
-        return $invoice_totals;
+            return $data;
     }
+
+
+    
+
+    function get_data_join($table,$where, $join_to, $join_id, $likes, $places)
+    {
+            //$data = array();
+            //$query = $this->db->query("SELECT *FROM $table");
+
+            $this->db->select('*');
+            $this->db->from($table);
+
+            if($where!=false){
+               $this->db->where($where);
+            }
+           
+           if($join_to!=false && $join_id!=false){
+                for ($i=0; $i < count($join_to); $i++){
+                    $this->db->join($join_to[$i], $join_to[$i].".".$join_id[$i]." = ".$table.".".$join_id[$i]);
+                }
+                
+           }
+
+           if($likes!=false){
+            $this->db->like($likes, 'after'); 
+           }
+            
+            $query = $this->db->get();
+            return $query->result_array(); 
+            
+    }
+   
+
+
+ 
+
+
+
+    
 
 
 }

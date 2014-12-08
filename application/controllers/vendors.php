@@ -21,7 +21,7 @@
  * @version    0.4.1
 */
 
-class Vendors extends CI_Controller {
+class Vendors extends MY_Controller {
 
     public function access_map(){
         return array(
@@ -34,21 +34,10 @@ class Vendors extends CI_Controller {
     {
         parent::__construct();
         $this->load->database();
-        $this->load->helper('url');
-        $this->load->library('grocery_CRUD');
     }
 
     public function index()
     {
-
-        // Component
-       // $this->output->enable_profiler(TRUE); //Profiler Debug
-        $this->load->model('Midae_model');
-        $data['user_meta'] = $this->Midae_model->get_user_meta();
-        $data['top_title'] = ucwords(strtolower($this->uri->segment('1'))); //URI title.
-        $data['top_desc'] = "Change your page purpose here"; //function purpose here.
-        //End of component
-
         $crud = new grocery_CRUD();
         $state = $crud->getState();
         $crud->set_theme('datatables');
@@ -67,26 +56,44 @@ class Vendors extends CI_Controller {
              ->display_as('vendor_state','State')
              ->display_as('country_id','Country')
              ->display_as('last_update','Date Changes');
+
         $crud->unset_texteditor('vendor_address','full_text');
         $crud->unset_print();
+
+        
+        
 
         if($state == "add" | $state == "edit"){
         $crud->fields('vendor_name','vendor_firstname','vendor_lastname','vendor_email','vendor_phone','vendor_mobile','vendor_fax','vendor_address','vendor_postcode','vendor_state','country_id');
         $crud->callback_before_insert(array($this,'_last_update'));
+
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         }elseif ($state == "read") {
         $crud->fields('vendor_name','vendor_firstname','vendor_lastname','vendor_email','vendor_phone','vendor_mobile','vendor_fax','vendor_address','vendor_postcode','vendor_state','country_id','last_update');
         $crud->callback_before_insert(array($this,'_last_update'));
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         }
         else{
         $crud->columns('vendor_name','vendor_firstname','vendor_lastname','vendor_mobile','vendor_address');
+        
+        $crud->set_rules('vendor_name','Vendor Name', 'required');
+        $crud->set_rules('vendor_firstname','Vendor First Name', 'required');
+        $crud->set_rules('vendor_lastname','Vendor Last Name', 'required');
+        $crud->set_rules('vendor_email', 'Vendor Email', 'valid_email|required');
+        $crud->set_rules('vendor_phone', 'Vendor Phone','integer|required');
+        $crud->set_rules('vendor_mobile','Vendor Mobile', 'integer|required');
+        $crud->set_rules('vendor_address', 'Vendor Address', 'required');
+        $crud->set_rules('vendor_postcode', 'Vendor Postcode' ,'integer|required');
+        $crud->set_rules('vendor_state', 'Vendor State', 'required');
+        $crud->set_rules('country_id', 'Vendor Country', 'required');
+        
+
         $output = $crud->render();
-        $output = array_merge($data,(array)$output);
+        //$output = array_merge($data,(array)$output);
         $this->load->view('cruds.php',$output);
         }
 

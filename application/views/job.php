@@ -235,7 +235,7 @@
                                             </td>
                                            
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             
                                             <td align="right">Currency</td>
                                             <td>
@@ -253,7 +253,7 @@
                                                 </div>
                                             </td>
                                            
-                                        </tr>
+                                        </tr> -->
                                          <tr>
                                             
                                             <td align="right"></td>
@@ -578,7 +578,7 @@
                                             <th style="width: 10px">#</th>
                                             <th style="width: 430px">Description</th>
                                             <th>Hours</th>
-                                            <th>Amount</th>
+                                            <th>Amount(<?php echo $this->config->item("currency");?>)</th>
                                             <th>Due Date</th>
                                             <!-- <th>Done Date</th> -->
                                             <th>Staff</th>
@@ -664,11 +664,11 @@
                                                         groupVar[1].val(new_amount);
                                                         return true;
                                                 }
-                                                else{
-                                                    alert("Please enter the hours rate!!");
-                                                    groupVar[2].focus();
-                                                    return false;
-                                                }
+                                                //else{
+                                                    //alert("Please enter the hours rate!!");
+                                                    //groupVar[2].focus();
+                                                    //return false;
+                                                //}
                                         });
                                     })
                                     </script>
