@@ -62,7 +62,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_date_created">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_date_created" REQUIRED>
                                                     </div>
                                                 </div>
                                             </td>
@@ -77,7 +77,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_valid_until">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="quote_valid_until" REQUIRED>
                                                     </div>
                                                 </div>
                                             </td>
@@ -88,7 +88,7 @@
                                             <td align="right">Status</td>
                                             <td>
                                                 <div class="col-xs-5">
-                                                    <select class="form-control" name="quote_status">
+                                                    <select class="form-control" name="quote_status" REQUIRED>
                                                         <option value="0">DRAFT</option>
                                                         <option value="1">ACCEPTED</option>
                                                         <option value="2">REJECTED</option>
@@ -105,7 +105,7 @@
                                             <td align="right">Customer</td>
                                             <td>
                                                 <div class="col-xs-5">
-                                                    <input id="country_name" class="form-control txt-auto"/>
+                                                    <input id="country_name" class="form-control txt-auto" REQUIRED/>
                                                     <input type="hidden" id="customer_id" name="customer_id">
                                                 </div>
                                             </td>
@@ -274,7 +274,7 @@
                                             </tr>
                                              <tr class="toclone" id="current_row"><!-- form template -->
                                                 <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" id="item_name" name="item_name[]">
+                                                    <input type="text" class="form-control input-sm" placeholder="" id="item_name" name="item_name[]" REQUIRED>
                                                     <br/>
                                                     <a class='buttonProduct' href="#inline_content" id="papar_product"><!-- <button class="btn btn-success btn-sm buttonProduct">Add Item From Products</button> -->Fetch data from product</a>
                                                     <script>
@@ -308,11 +308,11 @@
                                                     <input type="hidden" name="quote_product_id[]" id="quote_product_id">
                                                 </td>
                                                   <td align="center">
-                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" data-calculate="a">
+                                                   <input type="text" class="form-control input-sm" placeholder="" name="item_quantity[]" id="item_quantity" data-calculate="a" REQUIRED>
 
                                                 </td>
                                                 <td align="center">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price" data-calculate="a">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="item_price[]" id="item_price" data-calculate="a" REQUIRED>
                                                 </td>
 
                                                 <td align="center">

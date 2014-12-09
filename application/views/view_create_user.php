@@ -46,7 +46,7 @@
                                 <div class="box-body">
                                     <div class="form-group">
                                     <label>User role</label>
-                                    <select class="form-control" name="userrole">
+                                    <select class="form-control" name="userrole" REQUIRED>
                                     <?php 
                                     foreach ($user_role as $key => $value) {?>
                                     <option value="<?php echo $value['id']; ?>"><?php echo $value['role_name'];?></option>
@@ -55,19 +55,19 @@
                                     </div>
                                     <div class="form-group">
                                     <label>Firstname</label>
-                                    <input type="text" name="firstname" class="form-control" placeholder="Enter ...">
+                                    <input type="text" name="firstname" class="form-control" placeholder="Enter ..." REQUIRED>
                                     </div>
                                     <div class="form-group">
                                     <label>Lastname</label>
-                                    <input type="text" name="lastname" class="form-control" placeholder="Enter ...">
+                                    <input type="text" name="lastname" class="form-control" placeholder="Enter ..." REQUIRED>
                                     </div>
                                     <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" name="email" class="form-control" placeholder="Enter ...">
+                                    <input type="email" name="email" class="form-control" placeholder="Enter ..." REQUIRED>
                                     </div>
                                     <div class="form-group">
                                     <label>Password</label>
-                                    <input type="text" name="password" class="form-control" placeholder="Enter ...">
+                                    <input type="text" name="password" class="form-control" placeholder="Enter ..." REQUIRED>
                                     </div> 
                                     <div>
                                         <input type="submit" value="Submit" />
