@@ -1,26 +1,32 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Api_auth
+class Api_auth extends CI_Controller
 {
     private $CI;
-    public function login($username, $password) {
-        // $CI =& get_instance();
-        // //$CI->load->add_package_path(APPPATH.'third_party/ezRbac/');
-        // //$this->CI->load->library(APPPATH.'third_party/ezRbac/ezRbacHook.php');
-        // //include APPPATH.'third_party/ezRbac/ezRbacHook.php';
-        // //$CI->load->library(APPPATH.'third_party/ezRbac/ezRbacHook.php');
-        // include(APPPATH.'third_party/ezRbac/ezRbacHook.php');
-        // $u = $CI->ezrbac->getCurrentUser()->email;
-        // $p = $CI->ezrbac->getCurrentUser()->password;
-        // if($username == $u && $password == $p)
-        if($username == 'test' && $password == 'test')
-        {
-            return true;            
+    public function login($username, $password) 
+    {
+         $CI =& get_instance();
+         $CI->load->model('Midae_model');
+         $CI->load->library('encrypt');
+                
+        $where = array('email' => $username);
+        $customer = $CI->Midae_model->get_specified_row("system_users",$where,false,false, false);
+
+        if(!empty($customer)){ //if data exist
+             
+             if($CI->encrypt->sha1($password . $customer['salt']) === $customer['password']) //if password match with the database
+             {
+                return true;   
+                      
+             }
+             else
+             {
+                return false;           
+             }   
+        
         }
-        else
-        {
-            return false;           
-        }           
     }
+
+       
 
 }
 

@@ -36,7 +36,7 @@ abstract class REST_Controller extends CI_Controller
      *
      * @var array
      */
-    protected $allowed_http_methods = array('get', 'delete', 'post', 'put', 'options', 'patch', 'head');
+     protected $allowed_http_methods = array('get', 'delete', 'post', 'put', 'options', 'patch', 'head');
     //protected $allowed_http_methods = array('get',  'delete', 'post', 'put', 'patch', 'head');
 
     /**
