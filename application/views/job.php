@@ -73,6 +73,7 @@
                                             
                                             <td align="right">Type </td>
                                             <td>
+                                            <div class="row">
                                                <div class="col-xs-7">
                                                     <select class="form-control" name="job_type_id" REQUIRED>
                                                        <option value="">Please select</option>
@@ -85,9 +86,13 @@
                                                         <?php
                                                         }
                                                         ?>
-                                                        
-                                                    </select>
+                                                        <!--style="position:relative;top:0;left:180px"-->
+                                                    </select> 
                                                 </div>
+                                                <div class="col-xs-3">
+                                                    <button class="btn btn-warning btn-sm" type="reset" onclick="window.location.href='<?php echo base_url();?>jobs/job_type'">Add Job Type</button>
+                                                </div>
+                                            </div>
                                             </td>
                                            
                                         </tr>
@@ -260,7 +265,7 @@
                                             <td>
                                             <div class="col-xs-7">
                                                 <button class="btn btn-warning btn-sm" type="reset">Reset</button>
-                                               <input class="btn btn-primary btn-sm" name="save" type="submit" value="Save">
+                                                <input class="btn btn-primary btn-sm" name="save" type="submit" value="Save">
 
                                             </div>
                                             </td>

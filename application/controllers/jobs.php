@@ -27,7 +27,8 @@ class Jobs extends MY_Controller {
             'update'=>'edit',
             'ajax_job_task' => 'view',
             'ajax_job_task_edit' => 'view',
-            'ajax_product' => 'view'
+            'ajax_product' => 'view',
+            'job_type' => 'view'
         );
     }
 
@@ -470,6 +471,20 @@ class Jobs extends MY_Controller {
 
         
 
+    }
+
+
+    public function job_type(){
+        $crud  = new grocery_CRUD();
+        $state = $crud->getState();
+        $crud->set_theme('datatables');
+        $crud->set_table('job_types');
+        $crud->set_subject('Job Types');        
+        $crud->unset_print();    
+        $crud->unset_read();
+        $output = $crud->render();
+        $this->load->view('cruds.php',$output);
+        
     }
 
 }

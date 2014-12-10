@@ -110,6 +110,7 @@
                                             
                                             <td align="right">Type</td>
                                             <td>
+                                            <div class="row">
                                                <div class="col-xs-7">
                                                     <select class="form-control" name="job_type_id" REQUIRED>
                                                         <option value="">Please select</option>
@@ -125,6 +126,10 @@
                                                         
                                                     </select>
                                                 </div>
+                                                <div class="col-xs-3">
+                                                    <button class="btn btn-warning btn-sm" type="reset" onclick="window.location.href='<?php echo base_url();?>jobs/job_type'">Add Job Type</button>
+                                                </div>
+                                            </div>
                                             </td>
                                            
                                         </tr>
