@@ -33,7 +33,8 @@ class Settings extends MY_Controller {
             'updateemail'=>'view',
             'users'=>'view',
             'email'=>'view',
-            'update_user_now' => 'view'
+            'update_user_now' => 'view',
+            'currency' => 'view'
         );
     }
 
@@ -49,9 +50,22 @@ class Settings extends MY_Controller {
             show_error('you do not have permission to access this resource', 403);
         }else{
 
-            $this->load->view('settings');
+            $data['currency'] = $this->Midae_model->get_all_rows('currency',false,false,false, false, false);
+            $this->load->view('settings', $data);
         }
 
+    }
+
+    public function currency(){
+            $crud = new grocery_CRUD();
+            $state = $crud->getState();
+            $crud->set_theme('datatables');
+            $crud->set_table('currency');
+            $crud->set_subject('Currency');
+            $crud->columns('currency_name', 'currency_value');
+            $crud->display_as('currency_value','Currency value(Symbol) Example -> $');
+            $output = $crud->render();
+            $this->load->view('cruds.php',$output);
     }
 
     public function users()

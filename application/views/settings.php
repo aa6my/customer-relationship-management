@@ -59,12 +59,18 @@
                                             <input type="text" class="form-control" id="sitedescription" name="timezone" value="<?php echo $this->config->item('timezone'); ?>">
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Currency</label>
+                                            <label for="exampleInputEmail1">Currency </label> <a href="<?php echo base_url();?>settings/currency">[Add Currency]</a>
                                             
                                                     <select class="form-control" name="currency">
                                                         <option value="">--Select Currency--</option>
-                                                        <option value="$" <?php if($this->config->item('currency')=="$") echo 'selected';?>>USD [DEFAULT]</option>
-                                                        <option value="RM" <?php if($this->config->item('currency')=="RM") echo 'selected';?>>RM</option>
+                                                        <?php
+                                                        foreach($currency as $curr)
+                                                            {?>
+                                                        <option value="<?php echo $curr['currency_value'];?>" <?php if($this->config->item('currency')==$curr['currency_value']) echo 'selected';?>><?php echo $curr['currency_name'];?></option>
+                                                        
+                                                        <?php
+                                                            }
+                                                        ?>
                                                         
 
                                                     </select>
