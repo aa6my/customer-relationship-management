@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2014 at 10:32 AM
+-- Generation Time: Dec 12, 2014 at 08:50 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -19,49 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `crmv2`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `address`
---
-
-CREATE TABLE IF NOT EXISTS `address` (
-`address_id` smallint(10) unsigned NOT NULL,
-  `address_line1` varchar(255) NOT NULL,
-  `address_line2` varchar(255) DEFAULT NULL,
-  `address_state` varchar(100) DEFAULT NULL,
-  `address_postcode` varchar(10) NOT NULL,
-  `country_id` smallint(10) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1003 ;
-
---
--- Dumping data for table `address`
---
-
-INSERT INTO `address` (`address_id`, `address_line1`, `address_line2`, `address_state`, `address_postcode`, `country_id`, `last_update`) VALUES
-(1002, '', NULL, NULL, '', 0, '2014-10-26 12:06:11');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `calendar`
---
-
-CREATE TABLE IF NOT EXISTS `calendar` (
-  `date` date NOT NULL,
-  `data` text COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `calendar`
---
-
-INSERT INTO `calendar` (`date`, `data`) VALUES
-('2014-10-15', 'Test123'),
-('2014-10-21', 'Raining'),
-('2014-10-23', 'tst');
 
 -- --------------------------------------------------------
 
@@ -102,7 +59,7 @@ INSERT INTO `config_data` (`key`, `value`) VALUES
 ('charset', 'utf-8'),
 ('currency', '$'),
 ('currencyposition', 'left'),
-('debug', 'TRUE'),
+('debug', 'FALSE'),
 ('email', 'YOUR EMAIL'),
 ('emailpassword', 'YOUR EMAIL PASSWORD'),
 ('mailtype', 'html'),
@@ -115,22 +72,6 @@ INSERT INTO `config_data` (`key`, `value`) VALUES
 ('smtp_timeout', '30'),
 ('timezone', 'Asia/Kuala_Lumpur'),
 ('wordwrap', 'TRUE');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contacts`
---
-
-CREATE TABLE IF NOT EXISTS `contacts` (
-`contact_id` int(10) NOT NULL,
-  `contact_fname` varchar(50) NOT NULL,
-  `contact_lname` int(50) NOT NULL,
-  `contact_email` varchar(100) NOT NULL,
-  `contact_phone` varchar(20) NOT NULL,
-  `contact_mobile` varchar(20) NOT NULL,
-  `contact_fax` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -396,6 +337,27 @@ INSERT INTO `country` (`country_id`, `country_iso`, `country_name`, `country_nic
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `currency`
+--
+
+CREATE TABLE IF NOT EXISTS `currency` (
+`currency_id` int(11) NOT NULL,
+  `currency_name` varchar(20) NOT NULL,
+  `currency_value` varchar(5) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `currency`
+--
+
+INSERT INTO `currency` (`currency_id`, `currency_name`, `currency_value`) VALUES
+(1, 'Singapore Dollar', '$'),
+(2, 'MYR', 'RM'),
+(3, 'USD', '$');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customers`
 --
 
@@ -484,144 +446,6 @@ INSERT INTO `invoices` (`invoice_id`, `customer_id`, `invoice_subject`, `invoice
 (42, 2, 'hj', '2014-11-26', '10001', 'kk', '2014-11-26', 1),
 (43, 1, 'bb', '2014-12-17', '10001', 'tt', '2014-12-17', 1),
 (44, 1, 'sdfsf', '2014-11-27', '10002', 'dfvgdfg', '2014-11-29', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `invoices_test`
---
-
-CREATE TABLE IF NOT EXISTS `invoices_test` (
-`invoice_id` int(5) NOT NULL,
-  `invoice_total` mediumint(9) NOT NULL,
-  `invoice_date` date NOT NULL,
-  `invoice_status` varchar(20) NOT NULL COMMENT '1-paid, 2-unpaid'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=121 ;
-
---
--- Dumping data for table `invoices_test`
---
-
-INSERT INTO `invoices_test` (`invoice_id`, `invoice_total`, `invoice_date`, `invoice_status`) VALUES
-(1, 100, '2014-11-18', '1'),
-(2, 2000, '2014-11-13', '2'),
-(3, 100, '2014-11-15', '1'),
-(4, 2000, '2014-11-03', '2'),
-(5, 300, '2014-10-22', '1'),
-(6, 800, '2014-11-07', '2'),
-(7, 700, '2014-11-01', '1'),
-(8, 400, '2014-11-02', '2'),
-(9, 900, '2014-11-03', '1'),
-(10, 2000, '2014-11-04', '2'),
-(11, 3400, '2014-11-05', '1'),
-(12, 56000, '2014-11-06', '2'),
-(13, 700, '2014-11-07', '1'),
-(14, 700, '2014-11-08', '1'),
-(15, 400, '2014-11-09', '2'),
-(16, 900, '2014-11-10', '1'),
-(17, 2000, '2014-11-11', '2'),
-(18, 3400, '2014-11-12', '1'),
-(19, 56000, '2014-11-13', '2'),
-(20, 700, '2014-11-14', '1'),
-(21, 9000, '2014-11-15', '2'),
-(22, 5400, '2014-11-16', '1'),
-(23, 12000, '2014-11-17', '2'),
-(24, 2300, '2014-11-18', '1'),
-(25, 5000, '2014-11-19', '2'),
-(26, 6600, '2014-11-20', '1'),
-(27, 7800, '2014-11-21', '2'),
-(28, 100, '2014-11-22', '1'),
-(29, 2000, '2014-11-23', '2'),
-(30, 100, '2014-11-23', '1'),
-(31, 2000, '2014-11-24', '2'),
-(32, 100, '2014-11-25', '1'),
-(33, 2000, '2014-11-26', '2'),
-(34, 100, '2014-11-27', '1'),
-(35, 3200, '2014-11-28', '2'),
-(36, 3400, '2014-11-29', '1'),
-(37, 4000, '2014-11-30', '2'),
-(38, 800, '2014-10-01', '1'),
-(39, 600, '2014-10-02', '2'),
-(40, 900, '2014-10-03', '1'),
-(41, 8900, '2014-10-04', '2'),
-(42, 560, '2014-10-05', '1'),
-(43, 2000, '2014-10-06', '2'),
-(44, 100, '2014-10-07', '1'),
-(45, 2000, '2014-10-08', '2'),
-(46, 100, '2014-10-09', '1'),
-(47, 2000, '2014-10-11', '2'),
-(48, 100, '2014-10-12', '1'),
-(50, 120, '2013-04-01', '1'),
-(51, 4500, '2013-04-02', '2'),
-(52, 780, '2013-04-03', '1'),
-(53, 5600, '2013-04-04', '2'),
-(54, 3400, '2013-04-05', '1'),
-(55, 2100, '2013-04-06', '2'),
-(56, 340, '2013-04-07', '1'),
-(57, 6700, '2013-04-08', '2'),
-(58, 100, '2013-04-09', '1'),
-(59, 2000, '2013-04-10', '2'),
-(60, 100, '2013-04-11', '1'),
-(61, 2000, '2013-04-12', '2'),
-(62, 100, '2013-04-13', '1'),
-(63, 2000, '2013-04-14', '2'),
-(64, 100, '2013-04-15', '1'),
-(65, 2000, '2013-04-16', '2'),
-(66, 100, '2013-04-17', '1'),
-(67, 600, '2013-04-18', '2'),
-(68, 100, '2013-05-01', '1'),
-(69, 5600, '2013-05-02', '2'),
-(70, 100, '2013-05-03', '1'),
-(71, 2000, '2013-05-04', '2'),
-(72, 100, '2013-05-05', '1'),
-(73, 2000, '2013-05-06', '2'),
-(74, 340, '2013-05-07', '1'),
-(75, 2300, '2013-05-08', '2'),
-(76, 100, '2013-05-09', '1'),
-(77, 2000, '2013-05-10', '2'),
-(78, 100, '2013-05-11', '1'),
-(79, 2000, '2013-05-12', '2'),
-(80, 100, '2013-05-13', '1'),
-(81, 2000, '2013-05-14', '2'),
-(82, 100, '2013-05-15', '1'),
-(83, 2000, '2013-05-16', '2'),
-(84, 100, '2013-05-17', '1'),
-(85, 2000, '2013-05-18', '2'),
-(86, 100, '2013-05-19', '1'),
-(87, 2000, '2013-05-20', '2'),
-(88, 340, '2013-05-21', '1'),
-(89, 2000, '2013-05-22', '2'),
-(90, 100, '2013-05-23', '1'),
-(91, 2000, '2013-05-24', '2'),
-(92, 5600, '2013-05-25', '1'),
-(93, 3400, '2012-07-01', '2'),
-(94, 100, '2012-07-02', '1'),
-(95, 7800, '2012-07-03', '2'),
-(96, 100, '2012-07-04', '1'),
-(97, 2000, '2012-07-05', '2'),
-(98, 100, '2012-07-06', '1'),
-(99, 2000, '2012-07-07', '2'),
-(100, 100, '2012-07-08', '1'),
-(101, 2600, '2012-07-09', '2'),
-(102, 120, '2012-07-10', '1'),
-(103, 2000, '2012-07-11', '2'),
-(104, 1220, '2012-07-12', '1'),
-(105, 3400, '2012-07-13', '2'),
-(106, 700, '2012-07-14', '1'),
-(107, 700, '2012-07-15', '1'),
-(108, 400, '2012-07-16', '2'),
-(109, 900, '2012-07-17', '1'),
-(110, 2000, '2012-07-18', '2'),
-(111, 3400, '2012-07-19', '1'),
-(112, 56000, '2012-07-20', '2'),
-(113, 700, '2012-07-21', '1'),
-(114, 9000, '2012-07-22', '2'),
-(115, 5400, '2012-07-23', '1'),
-(116, 12000, '2012-07-24', '2'),
-(117, 2300, '2012-07-25', '1'),
-(118, 5000, '2012-07-26', '2'),
-(119, 6600, '2012-07-27', '1'),
-(120, 7800, '2012-07-28', '2');
 
 -- --------------------------------------------------------
 
@@ -761,7 +585,7 @@ INSERT INTO `jobs_task` (`job_task_id`, `job_id`, `product_id`, `job_task_hour`,
 CREATE TABLE IF NOT EXISTS `job_types` (
 `job_type_id` int(5) NOT NULL,
   `job_type_name` varchar(30) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `job_types`
@@ -769,7 +593,8 @@ CREATE TABLE IF NOT EXISTS `job_types` (
 
 INSERT INTO `job_types` (`job_type_id`, `job_type_name`) VALUES
 (1, 'Web development'),
-(2, 'Developing CRM');
+(2, 'Developing CRM'),
+(4, 'Asp.net development');
 
 -- --------------------------------------------------------
 
@@ -799,24 +624,6 @@ CREATE TABLE IF NOT EXISTS `leads` (
 
 INSERT INTO `leads` (`lead_id`, `lead_name`, `lead_firstname`, `lead_lastname`, `lead_email`, `lead_phone`, `lead_mobile`, `lead_fax`, `lead_address`, `lead_postcode`, `lead_state`, `country_id`, `last_update`) VALUES
 (1, 'hazmi', 'norli', 'lihazmey', 'nnn@yahoo.com', '0126787656', '0126787656', '09876545', 'sdfsdf\r\n', '16800', 'kelantan', 129, '2014-11-05 02:06:01');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `member`
---
-
-CREATE TABLE IF NOT EXISTS `member` (
-`member_id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL DEFAULT '',
-  `last_name` varchar(255) NOT NULL DEFAULT '',
-  `business` varchar(255) NOT NULL DEFAULT '',
-  `email` varchar(255) NOT NULL DEFAULT '',
-  `phone` varchar(255) NOT NULL DEFAULT '',
-  `mobile` varchar(255) NOT NULL DEFAULT '',
-  `date_created` date NOT NULL,
-  `date_updated` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -938,7 +745,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-12-02 08:38:52', '::1', NULL, NULL, NULL, 1, 1),
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-12-12 07:47:48', '::1', NULL, NULL, NULL, 1, 1),
 (2, 'test@test.com', '75452472672901921027f997beb8d48a8a955aca', '546c71c87ea164.62588652', 1, '2014-11-19 11:33:12', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
@@ -1049,18 +856,6 @@ INSERT INTO `vendors` (`vendor_id`, `vendor_name`, `vendor_firstname`, `vendor_l
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vendor_address`
---
-
-CREATE TABLE IF NOT EXISTS `vendor_address` (
-  `address_id` int(10) NOT NULL,
-  `vendor_id` int(10) NOT NULL,
-  `priority` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `websites`
 --
 
@@ -1083,18 +878,6 @@ INSERT INTO `websites` (`website_id`, `website_url`, `website_name`, `last_updat
 --
 
 --
--- Indexes for table `address`
---
-ALTER TABLE `address`
- ADD PRIMARY KEY (`address_id`);
-
---
--- Indexes for table `calendar`
---
-ALTER TABLE `calendar`
- ADD PRIMARY KEY (`date`);
-
---
 -- Indexes for table `catproduct`
 --
 ALTER TABLE `catproduct`
@@ -1107,16 +890,16 @@ ALTER TABLE `config_data`
  ADD PRIMARY KEY (`key`);
 
 --
--- Indexes for table `contacts`
---
-ALTER TABLE `contacts`
- ADD PRIMARY KEY (`contact_id`);
-
---
 -- Indexes for table `country`
 --
 ALTER TABLE `country`
  ADD PRIMARY KEY (`country_id`);
+
+--
+-- Indexes for table `currency`
+--
+ALTER TABLE `currency`
+ ADD PRIMARY KEY (`currency_id`);
 
 --
 -- Indexes for table `customers`
@@ -1140,12 +923,6 @@ ALTER TABLE `files`
 -- Indexes for table `invoices`
 --
 ALTER TABLE `invoices`
- ADD PRIMARY KEY (`invoice_id`);
-
---
--- Indexes for table `invoices_test`
---
-ALTER TABLE `invoices_test`
  ADD PRIMARY KEY (`invoice_id`);
 
 --
@@ -1183,12 +960,6 @@ ALTER TABLE `job_types`
 --
 ALTER TABLE `leads`
  ADD PRIMARY KEY (`lead_id`);
-
---
--- Indexes for table `member`
---
-ALTER TABLE `member`
- ADD PRIMARY KEY (`member_id`);
 
 --
 -- Indexes for table `payments`
@@ -1261,25 +1032,20 @@ ALTER TABLE `websites`
 --
 
 --
--- AUTO_INCREMENT for table `address`
---
-ALTER TABLE `address`
-MODIFY `address_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1003;
---
 -- AUTO_INCREMENT for table `catproduct`
 --
 ALTER TABLE `catproduct`
 MODIFY `catproduct_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `contacts`
---
-ALTER TABLE `contacts`
-MODIFY `contact_id` int(10) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
 MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=240;
+--
+-- AUTO_INCREMENT for table `currency`
+--
+ALTER TABLE `currency`
+MODIFY `currency_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `customers`
 --
@@ -1300,11 +1066,6 @@ MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 ALTER TABLE `invoices`
 MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
---
--- AUTO_INCREMENT for table `invoices_test`
---
-ALTER TABLE `invoices_test`
-MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=121;
 --
 -- AUTO_INCREMENT for table `invoice_items`
 --
@@ -1329,17 +1090,12 @@ MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=229;
 -- AUTO_INCREMENT for table `job_types`
 --
 ALTER TABLE `job_types`
-MODIFY `job_type_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `job_type_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `leads`
 --
 ALTER TABLE `leads`
 MODIFY `lead_id` smallint(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `member`
---
-ALTER TABLE `member`
-MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `payments`
 --
