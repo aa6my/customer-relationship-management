@@ -314,6 +314,7 @@ class Invoices extends MY_Controller {
               }
               
               unlink("tmp_pdf/".$file_name.".pdf");
+              $this->Midae_model->display_message("email", "invoices");
 
   
     }
