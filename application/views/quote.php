@@ -177,9 +177,15 @@
                         <div class="col-xs-12">
                             <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
                            <!--  <button class="btn bg-blue pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button> -->
-                            <button class="btn bg-maroon pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> 
-                            <a href="<?php echo base_url(); ?>quotess/pdf/<?php echo $quote_id;?>">
-                            Generate PDF</a></button>
+                           
+                            <button class="btn btn-warning btn-sm pull-right" style="margin-right: 5px;" onclick="window.location.href='<?php echo base_url(); ?>quotes/pdf/<?php echo $quote_id;?>'"><i class="fa fa-download"></i> 
+                                
+                                Generate PDF
+                            </button>
+                            <button class="btn btn-warning btn-sm pull-right" style="margin-right: 5px;" onclick="window.location.href='<?php echo base_url(); ?>quotes/send_mail/<?php echo $quote_id;?>'"><i class="fa  fa-envelope-o"></i> 
+                               
+                                Send Email
+                            </button>
                         </div>
                     </div>
                 </section>		

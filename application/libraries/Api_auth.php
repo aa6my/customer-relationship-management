@@ -15,7 +15,16 @@ class Api_auth extends CI_Controller
              
              if($CI->encrypt->sha1($password . $customer['salt']) === $customer['password']) //if password match with the database
              {
-                return true;   
+                header('Access-Control-Allow-Origin: *');
+                header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+                header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+                if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
+                    $this->response(null, 200); 
+                }
+
+                if(!$this->input->get_request_header('Authorization')){
+                    $this->response(null, 200);    
+                }
                       
              }
              else
