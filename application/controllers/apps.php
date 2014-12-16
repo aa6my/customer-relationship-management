@@ -12,8 +12,13 @@ class Apps extends REST_Controller
 		$this->load->helper('url');
 		$this->url    = current_url();
         header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        header('Access-Control-Allow-Credentials: true');
+        header("Access-Control-Allow-Headers: X-Custom-Header, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+        //header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+       // if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
+           // header('')
+            //return $this->response(array('asd'), 200)
+        //}
         /*if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
             die();
         }
@@ -58,6 +63,9 @@ class Apps extends REST_Controller
 
 	function dataAll_get() 
     {
+        //header( "HTTP/1.1 200 OK" );
+        
+
         if(($this->get('val') && !$this->get('key')) || ($this->get('key') && !$this->get('val')))
         {
         	$this->response(array('error' => 'The key parameter and value parameter must have'), 400);
@@ -142,12 +150,25 @@ class Apps extends REST_Controller
     }
 
 
-
+    public function dataAll_options(){
+       /* if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+       header( "HTTP/1.1 200 OK" );
+       $this->response(array('ini delete', 200));
+       
+        }*/
+        header( "HTTP/1.1 200 OK" );
+        exit();
+    }
 
 
 
     public function dataAll_post()
     {
+
+
+        
+        $this->response(array('sdsd'=>$this->post('username'), 200));
+
     	//if($this->input->post('save')){
     		//echo $this->get('cuba');
 			//$website_name = $this->input->post('website_name');
@@ -159,7 +180,11 @@ class Apps extends REST_Controller
 
     public function dataAll_delete()
     {
-    	$id = $this->uri->segment(3);
+        //header("Access-Control-Allow-Headers: X-Custom-Header, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+       // header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        $id = $this->uri->segment(3);
+        $this->response(array('ini delete', 200));
+    	/*$id = $this->uri->segment(3);
         if(!$id)
         {
             $this->response(array('error' =>
@@ -177,8 +202,13 @@ class Apps extends REST_Controller
             }
                 $this->response($customer, 200); // 200 being the HTTP response code
         } else
-            $this->response(array('error' => 'Widget could not be found'), 404);
+            $this->response(array('error' => 'Widget could not be found'), 404);*/
         
+    }
+
+    public function dataAll_put(){
+       // $id = $this->uri->segment(3);
+        $this->response(array('ini put', 200));
     }
 
 

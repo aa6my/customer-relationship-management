@@ -22,7 +22,7 @@ $config['force_https'] = false;
 |	Default: xml
 |
 */
-$config['rest_default_format'] = 'xml';
+$config['rest_default_format'] = 'json';
 
 /*
 |--------------------------------------------------------------------------
@@ -85,7 +85,7 @@ $config['rest_realm'] = 'REST API';
 |
 */
 // $config['rest_auth'] = 'basic';
-$config['rest_auth'] = '';
+$config['rest_auth'] = 'basic';
 
 /*
 |--------------------------------------------------------------------------
