@@ -32,7 +32,8 @@ class Quotes extends MY_Controller {
                         'ajax_quote_delete' => 'view',
                         'ajax_quote_customer' => 'view',
                         'convert_to_invoive' => 'view',
-                        'pdf' => 'view'
+                        'pdf' => 'view',
+                        'send_mail' => 'view'
                     );
     }
 
@@ -42,6 +43,9 @@ class Quotes extends MY_Controller {
         $this->load->database();
         $this->load->helper('url');
         $this->load->library('grocery_CRUD');
+        $this->load->helper('email');
+        $this->load->library('email');
+        $this->load->helper('file');
     }
 
 
@@ -230,8 +234,72 @@ class Quotes extends MY_Controller {
 
     }
 
+    public function send_mail(){
+
+            $this->load->library('pdf');
+        
+        
+             $data['quote_id']    = $this->uri->segment(3) ;
+             $table = "quotes"; 
+             $where = array('quote_id' =>$data['quote_id']);
+             $tableNameToJoin = "customers";
+             $tableRelation = "quotes.customer_id = customers.customer_id";
+             $data['quote'] = $this->Midae_model->get_specified_row($table,$where,false,$tableNameToJoin, $tableRelation);
+             $table = "quote_items";
+             $where = array('quote_id' =>$data['quote_id']);
+             $data['quote_items'] = $this->Midae_model->get_all_rows($table,$where, false, false, false, false);
+             
+
+             $p = new pdf();
+             $p->load_view('quotepdf', $data);
+             $p->set_paper('c4', 'potrait');
+             $p->render();
+             $pp = $p->output();
+             
+             $file_name = "Quote_".$data['quote']['quote_date_created'];
+             file_put_contents("tmp_pdf/".$file_name.".pdf", $pp);
+
+             
+             
+            $config['protocol']=$this->config->item('protocol');
+            $config['smtp_host']= $this->config->item('smtp_host');
+            $config['smtp_port']= $this->config->item('smtp_port');
+            $config['smtp_timeout']= $this->config->item('smtp_timeout');
+            $config['smtp_user']=$this->config->item('email');
+            $config['smtp_pass']=$this->config->item('emailpassword');
+            $config['charset']=$this->config->item('charset');
+            $config['crlf'] = "\r\n";
+            $config['newline']= "\r\n";
+            $config['wordwrap'] = $this->config->item('wordwrap');
+            $config['mailtype'] = $this->config->item('mailtype');
+            $this->email->initialize($config);
+    
+             //read parameters from $_POST using input class
+              $email = $data['quote']['customer_email']; 
+  
+   
+              $this->email->from($this->config->item('email'),$this->config->item('sitename'));
+              $this->email->to($email); 
+              $this->email->subject("Quote from ".$this->config->item('sitename')." - ".$data['quote']['quote_date_created']);
+              $this->email->message("Please check this quotation for further information.");  
+              $this->email->attach("tmp_pdf/".$file_name.".pdf");
+              
+              
+              if( ! $this->email->send())
+              {
+                echo "Email not sent ".$this->email->print_debugger();      
+                
+
+              }
+              
+              unlink("tmp_pdf/".$file_name.".pdf");
+              $this->Midae_model->display_message("email", "quotes");
+
+  
+    }
+
      public function pdf (){
-        $this->load->library('pdf');
+            $this->load->library('pdf');
         //$id = $this->uri->segment(4);            
              //$this->pdf->load_view('quotepdf', $data);
              //$this->pdf->render();

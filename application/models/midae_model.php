@@ -421,6 +421,10 @@ class Midae_model extends CI_Model {
         {
              $this->session->set_flashdata('convert', 'Successfully converted.');
         }
+        else if($messageType=="email")
+        {
+             $this->session->set_flashdata('email', 'Successfully sent email.');
+        }
        
 
        return redirect($urlToGo);

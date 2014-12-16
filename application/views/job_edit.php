@@ -37,41 +37,30 @@
                 <!-- Main content -->
                 <section class="content">
                 <?php
+                //if wanna add any more type, just add the array value here!!! 
+                $arr = array(
+                             array('text' => $this->session->flashdata('save'), 'alert_type' => 'alert-success'),
+                             array('text' => $this->session->flashdata('record'), 'alert_type' => 'alert-success'),
+                             array('text' => $this->session->flashdata('error'), 'alert_type' => 'alert-danger'),
+                             array('text' => $this->session->flashdata('email'), 'alert_type' => 'alert-success')
+                             
+                            );
 
-                if($this->session->flashdata('save'))
+                foreach ($arr as $key => $value) {
 
-                {
-                    ?>
+                    if($value['text']){
+                        ?>
+                        <div class="alert <?php echo $value['alert_type'];?> alert-dismissable">
+                             <i class="fa fa-check"></i>
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <b><?php echo $value['text'];?> </b> 
+                         </div>
+                     <?php
 
-              
-                                    <div class="alert alert-success alert-dismissable">
-                                        <i class="fa fa-check"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b><?php echo $this->session->flashdata('save');?> </b> 
-                                    </div>
-                <?php
+                    }
+                    
                 }
-                else if($this->session->flashdata('record'))
-                {
-                ?>
-                                    <div class="alert alert-success alert-dismissable">
-                                        <i class="fa fa-check"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b><?php echo $this->session->flashdata('record');?> </b> 
-                                    </div>
-                <?php
-                }
-                
-                else if($this->session->flashdata('error'))
-                {
-                ?>
-                                   <div class="alert alert-danger alert-dismissable">
-                                        <i class="fa fa-ban"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b><?php echo $this->session->flashdata('error');?> </b> 
-                                    </div>
-                <?php
-                }
+               
                 ?>
                 <form action="" method="post">
                 <div class="row">
@@ -110,6 +99,7 @@
                                             
                                             <td align="right">Type</td>
                                             <td>
+                                            <div class="row">
                                                <div class="col-xs-7">
                                                     <select class="form-control" name="job_type_id" REQUIRED>
                                                         <option value="">Please select</option>
@@ -125,6 +115,10 @@
                                                         
                                                     </select>
                                                 </div>
+                                                <div class="col-xs-3">
+                                                    <button class="btn btn-warning btn-sm" type="reset" onclick="window.location.href='<?php echo base_url();?>jobs/job_type'">Add Job Type</button>
+                                                </div>
+                                            </div>
                                             </td>
                                            
                                         </tr>

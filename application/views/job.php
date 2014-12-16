@@ -63,7 +63,7 @@
                                             <td>
                                             
                                                <div class="col-xs-9">
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_title">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_title" REQUIRED>
                                                 </div>
                                             
                                             </td>
@@ -73,6 +73,7 @@
                                             
                                             <td align="right">Type </td>
                                             <td>
+                                            <div class="row">
                                                <div class="col-xs-7">
                                                     <select class="form-control" name="job_type_id" REQUIRED>
                                                        <option value="">Please select</option>
@@ -85,9 +86,13 @@
                                                         <?php
                                                         }
                                                         ?>
-                                                        
-                                                    </select>
+                                                        <!--style="position:relative;top:0;left:180px"-->
+                                                    </select> 
                                                 </div>
+                                                <div class="col-xs-3">
+                                                    <button class="btn btn-warning btn-sm" type="reset" onclick="window.location.href='<?php echo base_url();?>jobs/job_type'">Add Job Type</button>
+                                                </div>
+                                            </div>
                                             </td>
                                            
                                         </tr>
@@ -106,7 +111,7 @@
                                             <td align="right">Status</td>
                                             <td>
                                                <div class="col-xs-7">
-                                                    <select class="form-control" name="job_status">
+                                                    <select class="form-control" name="job_status" REQUIRED>
                                                         <option value="">Please Select</option>
                                                         <option value="0">New</option>
                                                         <option value="1">Existing</option>
@@ -125,7 +130,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_quote_date">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_quote_date" REQUIRED>
                                                     </div>
                                                 </div>
                                             </td>
@@ -140,7 +145,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_date_start">
+                                                            <input type="date" class="form-control datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_date_start" REQUIRED>
                                                     </div>
                                                 </div>
                                             </td>
@@ -155,7 +160,7 @@
                                                          <div class="input-group-addon">
                                                                     <i class="fa fa-clock-o"></i>
                                                          </div>
-                                                        <input type="text" class="form-control timepicker" name="job_start_time">
+                                                        <input type="text" class="form-control timepicker" name="job_start_time" REQUIRED>
                                                            
                                                     </div>
                                                 </div>
@@ -171,7 +176,7 @@
                                                          <div class="input-group-addon">
                                                                     <i class="fa fa-clock-o"></i>
                                                          </div>
-                                                        <input type="text" class="form-control timepicker" name="job_end_time">
+                                                        <input type="text" class="form-control timepicker" name="job_end_time" REQUIRED>
                                                            
                                                     </div>
                                                 </div>
@@ -187,7 +192,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control input-sm datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_due_date">
+                                                            <input type="date" class="form-control input-sm datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_due_date" REQUIRED>
                                                     </div>
                                                 </div>
                                             </td>
@@ -202,7 +207,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control input-sm datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_complete_date">
+                                                            <input type="date" class="form-control input-sm datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_complete_date" REQUIRED>
                                                     </div>
                                                 </div>
                                             </td>
@@ -213,7 +218,7 @@
                                             <td align="right">Staff Member</td>
                                             <td>
                                                <div class="col-xs-7">
-                                                    <select class="form-control" name="user_id">
+                                                    <select class="form-control" name="user_id" REQUIRED>
                                                     <option value="">Please Select</option>
                                                         <?php 
                                                         foreach ($groupData['staff'] as $key => $value) {?>
@@ -260,7 +265,7 @@
                                             <td>
                                             <div class="col-xs-7">
                                                 <button class="btn btn-warning btn-sm" type="reset">Reset</button>
-                                               <input class="btn btn-primary btn-sm" name="save" type="submit" value="Save">
+                                                <input class="btn btn-primary btn-sm" name="save" type="submit" value="Save">
 
                                             </div>
                                             </td>
@@ -383,7 +388,7 @@
                                             <td>
                                             
                                                <div class="col-xs-7">
-                                                    <select class="form-control" name="website_id">
+                                                    <select class="form-control" name="website_id" REQUIRED>
                                                     <option value="">Please Select</option>
                                                         <?php 
                                                         foreach ($groupData['website'] as $value ) {
@@ -403,7 +408,7 @@
                                             <td>
                                             
                                                <div class="col-xs-7">
-                                                    <select class="form-control" name="customer_id">
+                                                    <select class="form-control" name="customer_id" REQUIRED>
                                                     <option value="">Please Select</option>
                                                         <?php 
                                                         foreach ($groupData['customer'] as $value ) {
@@ -450,7 +455,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_renewal_date">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_renewal_date" REQUIRED>
                                                     </div>
                                                 </div>
                                             </td>
@@ -592,25 +597,25 @@
                                                  -->
                                             </td>
                                             <td>
-                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description">
+                                                    <input type="text" class="form-control input-sm" placeholder="" name="job_task_description" REQUIRED>
                                                 
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_hour" id="job_task_hour" style="width:40px;">
+                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_hour" id="job_task_hour" style="width:40px;" REQUIRED>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount" style="width:40px;">
+                                                <input type="text" class="form-control input-sm" placeholder="" name="job_task_amount" id="job_task_amount" style="width:40px;" REQUIRED>
                                             </td>
                                             <td>
                                                
                                                   
                                                         
-                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_task_due_date" style="width:150px">
+                                                            <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="job_task_due_date" style="width:150px" REQUIRED>
                                                   
                                             </td>
                                             <!-- <td>Done Date</td> -->
                                             <td>
-                                                <select class="form-control" name="user_id" style="width:100px">
+                                                <select class="form-control" name="user_id" style="width:100px" REQUIRED>
                                                         <?php 
                                                         foreach ($groupData['staff'] as $key => $value) {?>
                                                             <option value="<?php echo $value['user_id']; ?>"><?php echo $value['first_name'].' '.$value['last_name'];?></option>

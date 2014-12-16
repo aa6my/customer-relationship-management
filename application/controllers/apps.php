@@ -11,6 +11,19 @@ class Apps extends REST_Controller
 		parent::__construct();
 		$this->load->helper('url');
 		$this->url    = current_url();
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        /*if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
+            die();
+        }
+
+        if(!$this->input->get_request_header('Authorization')){
+            $this->response(null, 400);    
+        }
+
+        $this->authorization = $this->input->get_request_header('Authorization');*/
+    
 		//if($this->input->server('REQUEST_METHOD')=="DELETE"){
 		//	$this.dataAll_delete();
 		//}

@@ -10,7 +10,7 @@
 |	Default: FALSE
 |
 */
-$config['force_https'] = TRUE;
+$config['force_https'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +84,8 @@ $config['rest_realm'] = 'REST API';
 |	'session' = check for PHP session variable. Set variable name below.
 |
 */
-$config['rest_auth'] = false;
+// $config['rest_auth'] = 'basic';
+$config['rest_auth'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -99,7 +100,7 @@ $config['rest_auth'] = false;
 */
 
 //change this to '' for wildcard unit test
-$config['auth_source'] = 'ldap';
+$config['auth_source'] = 'library';
 
 /*
 |--------------------------------------------------------------------------
@@ -115,8 +116,8 @@ $config['auth_source'] = 'ldap';
 |	E.g: md5('admin:REST API:1234') = '1e957ebc35631ab22d5bd6526bd14ea2'
 |
 */
-$config['auth_library_class'] = '';
-$config['auth_library_function'] = '';
+$config['auth_library_class'] = 'Api_auth';
+$config['auth_library_function'] = 'login';
 
 /*
 |--------------------------------------------------------------------------
