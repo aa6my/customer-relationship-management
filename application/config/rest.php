@@ -84,8 +84,8 @@ $config['rest_realm'] = 'REST API';
 |	'session' = check for PHP session variable. Set variable name below.
 |
 */
-// $config['rest_auth'] = 'basic';
-$config['rest_auth'] = 'basic';
+ //$config['rest_auth'] = 'basic';
+$config['rest_auth'] = false;
 
 /*
 |--------------------------------------------------------------------------

@@ -13,25 +13,9 @@ class Apps extends REST_Controller
 		$this->url    = current_url();
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Allow-Method: POST, GET, OPTIONS, PUT, DELETE');
         header("Access-Control-Allow-Headers: X-Custom-Header, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
-        //header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-       // if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
-           // header('')
-            //return $this->response(array('asd'), 200)
-        //}
-        /*if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
-            die();
-        }
-
-        if(!$this->input->get_request_header('Authorization')){
-            $this->response(null, 400);    
-        }
-
-        $this->authorization = $this->input->get_request_header('Authorization');*/
-    
-		//if($this->input->server('REQUEST_METHOD')=="DELETE"){
-		//	$this.dataAll_delete();
-		//}
+       
 	}
 
 	/**
@@ -151,11 +135,7 @@ class Apps extends REST_Controller
 
 
     public function dataAll_options(){
-       /* if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-       header( "HTTP/1.1 200 OK" );
-       $this->response(array('ini delete', 200));
        
-        }*/
         header( "HTTP/1.1 200 OK" );
         exit();
     }
@@ -164,45 +144,31 @@ class Apps extends REST_Controller
 
     public function dataAll_post()
     {
-
-
+        /**
+         * insert into table
+         * Currently only one table only can insert at mean time
+         * Will changes time to time in order to create function for dynamic fucntion
+         */
+        $table     = $this->post('type'); //this is actually a table name
+        $arrayData = $this->post('formData');        
+        $insert    = $this->Midae_model->insert_new_data($arrayData,$table);
         
-        $this->response(array('sdsd'=>$this->post('username'), 200));
-
-    	//if($this->input->post('save')){
-    		//echo $this->get('cuba');
-			//$website_name = $this->input->post('website_name');
-			//echo $website_name;
-		//}
-    	  // 200 being the HTTP response code
+        $this->response(array('Respone'=> 'Success Insert into Data'), 200);
     	  
     }
 
     public function dataAll_delete()
     {
-        //header("Access-Control-Allow-Headers: X-Custom-Header, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
-       // header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-        $id = $this->uri->segment(3);
-        $this->response(array('ini delete', 200));
-    	/*$id = $this->uri->segment(3);
-        if(!$id)
-        {
-            $this->response(array('error' =>
-                                'An ID must be supplied to delete a customer'), 400);
-        }
-
-
-        if($id) {
-            try {
-              $customer = $this->Midae_model->delete_data('invoices_test', array('invoice_id' => $id));
-            } catch (Exception $e) {
-                
-                $this->response(array('error' => $e->getMessage()),
-                                        $e->getCode());
-            }
-                $this->response($customer, 200); // 200 being the HTTP response code
-        } else
-            $this->response(array('error' => 'Widget could not be found'), 404);*/
+        
+        $type  = $this->get('type');
+        $key   = $this->get('key');
+        $val   = $this->get('val');
+        
+        $table = $type;
+        $where = array($key => $val);        
+        $kk    = $this->Midae_model->delete_data($table, $where);
+        $this->response(array('Requestsuccess'), 200);
+    	
         
     }
 
