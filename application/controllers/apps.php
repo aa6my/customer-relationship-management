@@ -173,8 +173,16 @@ class Apps extends REST_Controller
     }
 
     public function dataAll_put(){
-       // $id = $this->uri->segment(3);
-        $this->response(array('ini put', 200));
+
+        $tableToUpdate  = $this->put('type');
+        $pk             = $this->put('primaryKey');
+        $pkVal          = $this->put('primaryKeyVal');
+        
+        
+        $columnToUpdate = $this->put('formData');
+        $usingCondition = array($pk => $pkVal);        
+        $kk             = $this->Midae_model->update_data($columnToUpdate, $tableToUpdate, $usingCondition);
+        $this->response(array('Requestsuccess'), 200);
     }
 
 
