@@ -159,15 +159,54 @@ class Apps extends REST_Controller
 
     public function dataAll_delete()
     {
-        
+        $loop = false;
+
         $type  = $this->get('type');
-        $key   = $this->get('key');
-        $val   = $this->get('val');
+        if (false !== strpos($type,'-')){
+            $loop = true;
+            $type  = explode('-', $type);
+        }
         
-        $table = $type;
+        $key   = $this->get('key');
+        if (false !== strpos($key,'-')){
+            
+            $key  = explode('-', $key);
+        }
+        
+        $val   = $this->get('val');
+        if (false !== strpos($val,'-')){
+            
+            $val  = explode('-', $val);
+        }
+
+        if($loop == true){
+            
+            $bil = count($type);
+            for($i = 0; $i < $bil; $i++){
+
+                $table = $type[$i];
+                $where = array($key[$i] => $val[$i]);
+                $doDelete = $this->Midae_model->delete_data($table, $where);
+            }
+
+            $this->response(array('Multiple tables Delete Success'), 200);
+        }
+        else{
+                $table = $type;
+                $where = array($key => $val);
+                $doDelete = $this->Midae_model->delete_data($table, $where);
+
+            $this->response(array('Single table Delete Success'), 200);
+        }
+        
+
+
+        
+
+       /* $table = $type;
         $where = array($key => $val);        
-        $kk    = $this->Midae_model->delete_data($table, $where);
-        $this->response(array('Requestsuccess'), 200);
+        $kk    = $this->Midae_model->delete_data($table, $where);*/
+        //$this->response(array('Loop'=>print_r($key)), 200);
     	
         
     }
