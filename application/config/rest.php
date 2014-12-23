@@ -22,7 +22,7 @@ $config['force_https'] = false;
 |	Default: xml
 |
 */
-$config['rest_default_format'] = 'xml';
+$config['rest_default_format'] = 'json';
 
 /*
 |--------------------------------------------------------------------------
@@ -84,8 +84,8 @@ $config['rest_realm'] = 'REST API';
 |	'session' = check for PHP session variable. Set variable name below.
 |
 */
-// $config['rest_auth'] = 'basic';
-$config['rest_auth'] = '';
+ //$config['rest_auth'] = 'basic';
+$config['rest_auth'] = false;
 
 /*
 |--------------------------------------------------------------------------

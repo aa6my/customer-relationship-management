@@ -11,25 +11,20 @@ class Apps extends REST_Controller
 		parent::__construct();
 		$this->load->helper('url');
 		$this->url    = current_url();
+
+        /**
+         * Set header for cross origin request(CORS)
+         * Allow (POST, GET, OPTIONS, PUT, DELETE) method for operations, by default is not available
+         * Allow authorization basic authentication
+         */
         header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-        /*if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
-            die();
-        }
-
-        if(!$this->input->get_request_header('Authorization')){
-            $this->response(null, 400);    
-        }
-
-        $this->authorization = $this->input->get_request_header('Authorization');*/
-    
-		//if($this->input->server('REQUEST_METHOD')=="DELETE"){
-		//	$this.dataAll_delete();
-		//}
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Allow-Method: POST, GET, OPTIONS, PUT, DELETE');
+        header("Access-Control-Allow-Headers: X-Custom-Header, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+       
 	}
 
-	/**
+	/************** THIS FUNCTION WILL CHANGE DEPEND ON COMPLEXITY OF CLIENT SIDE REQUESTED ****************************
 	 * @param   [type] [parameter]
 	 *          [value][table name]
 	 *          eg : crm/type/invoices
@@ -58,6 +53,12 @@ class Apps extends REST_Controller
 
 	function dataAll_get() 
     {
+        /************** THIS FUNCTION WILL CHANGE DEPEND ON COMPLEXITY OF CLIENT SIDE REQUESTED ****************************
+        *
+        *
+        */
+        
+
         if(($this->get('val') && !$this->get('key')) || ($this->get('key') && !$this->get('val')))
         {
         	$this->response(array('error' => 'The key parameter and value parameter must have'), 400);
@@ -71,8 +72,8 @@ class Apps extends REST_Controller
         
 		
 		$type    =  $this->get('type'); // get type of table need to fetch data eg:|customers(user/type/customers)|
-		$key     =  $this->get('key'); // UNIQUE ID in table to fetch from eg : |customers(user/type/customers/fetch/all@specified/key/customer_id)
-		$table   = $type; //asign type into table variable
+		$key     =  $this->get('key');  // UNIQUE ID in table to fetch from eg : |customers(user/type/customers/fetch/all@specified/key/customer_id)
+		$table   = $type;               // asign type into table variable
 		
 		
 		$join_id = $this->get('joinid');
@@ -142,43 +143,107 @@ class Apps extends REST_Controller
     }
 
 
-
+    public function dataAll_options(){
+       
+       /**
+        * OPTIONS requested set header and status to OK
+        * This method majority applied for DELETE and PUT operations
+        */
+        header( "HTTP/1.1 200 OK" );
+        exit();
+    }
 
 
 
     public function dataAll_post()
     {
-    	//if($this->input->post('save')){
-    		//echo $this->get('cuba');
-			//$website_name = $this->input->post('website_name');
-			//echo $website_name;
-		//}
-    	  // 200 being the HTTP response code
+        /************** THIS FUNCTION WILL CHANGE DEPEND ON COMPLEXITY OF CLIENT SIDE REQUESTED ****************************
+         * insert into table
+         * Currently only one table only can insert at mean time
+         * Will changes time to time in order to create function for dynamic fucntion
+         */
+        $table     = $this->post('type'); //this is actually a table name
+        $arrayData = $this->post('formData');        
+        $insert    = $this->Midae_model->insert_new_data($arrayData,$table);
+        
+        $this->response(array('Respone'=> 'Success Insert into Data'), 200);
     	  
     }
 
     public function dataAll_delete()
     {
-    	$id = $this->uri->segment(3);
-        if(!$id)
-        {
-            $this->response(array('error' =>
-                                'An ID must be supplied to delete a customer'), 400);
+        /************** THIS FUNCTION WILL CHANGE DEPEND ON COMPLEXITY OF CLIENT SIDE REQUESTED ****************************
+         * This function can accept multiple and single table to delete
+         * How this can happen? 
+         * If want to make multiple delete operation, separate it by '-' :
+         * example : type/customer-vendors/key/customer_id-vendor_id/12-30
+         * Just separate by '-' symbols to delete multiple table
+         * Single table example :
+         * example : type/customers/key/customer_id/val/12
+         *
+         * Multiple table delete notes :
+         *     - The 'type','key' and 'val' values must be in order form respectively
+         *     - The number of values also must be the same
+         *     - If the number of value in 'type' have 3 value, so in 'key' and 'val' also need 3 value otherwise, error will returned
+         */
+        $loop = false;                          // only for multiple table delete, if have this set to true
+
+        $type  = $this->get('type');            // get type value in url
+        if (false !== strpos($type,'-')){       // if '-' existed
+            $loop = true;                       // set the loop value to TRUE
+            $type  = explode('-', $type);       // and then explode those '-' into array value
+        }
+        
+        $key   = $this->get('key');             // same with type but no need to set loop to true because already set in 'type'
+        if (false !== strpos($key,'-')){
+            
+            $key  = explode('-', $key);
+        }
+        
+        $val   = $this->get('val');             // same with type but no need to set loop to true because already set in 'type'
+        if (false !== strpos($val,'-')){
+            
+            $val  = explode('-', $val);
         }
 
+        // multiple tables delete
+        if($loop == true){
+            
+            $bil = count($type);
+            for($i = 0; $i < $bil; $i++){
 
-        if($id) {
-            try {
-              $customer = $this->Midae_model->delete_data('invoices_test', array('invoice_id' => $id));
-            } catch (Exception $e) {
-                
-                $this->response(array('error' => $e->getMessage()),
-                                        $e->getCode());
+                $table = $type[$i];
+                $where = array($key[$i] => $val[$i]);
+                $doDelete = $this->Midae_model->delete_data($table, $where);
             }
-                $this->response($customer, 200); // 200 being the HTTP response code
-        } else
-            $this->response(array('error' => 'Widget could not be found'), 404);
+
+            $this->response(array('Multiple tables Delete Success'), 200);
+        }
+        // single table delete
+        else{
+                $table = $type;
+                $where = array($key => $val);
+                $doDelete = $this->Midae_model->delete_data($table, $where);
+
+            $this->response(array('Single table Delete Success'), 200);
+        }
         
+    }
+
+    public function dataAll_put(){
+
+        /************** THIS FUNCTION WILL CHANGE DEPEND ON COMPLEXITY OF CLIENT SIDE REQUESTED ****************************    
+        *
+        */
+        $tableToUpdate  = $this->put('type');
+        $pk             = $this->put('primaryKey');
+        $pkVal          = $this->put('primaryKeyVal');
+        
+        
+        $columnToUpdate = $this->put('formData');
+        $usingCondition = array($pk => $pkVal);        
+        $kk             = $this->Midae_model->update_data($columnToUpdate, $tableToUpdate, $usingCondition);
+        $this->response(array('Requestsuccess'), 200);
     }
 
 
