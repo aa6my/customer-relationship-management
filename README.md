@@ -1,7 +1,7 @@
 Customer Relationship Management
 ================================
 
-Version 0.5.1
+Version 0.7.0
 
 Manage & Monitor by :
 
