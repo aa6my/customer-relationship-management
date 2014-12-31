@@ -63,6 +63,7 @@
       
       function install()
       {
+         /* check query and query sql execution */
           if (!$this->check_database())
           {
               return FALSE;
@@ -87,7 +88,10 @@
                   return FALSE;
               }
           }
+          /* end query execution */
 
+
+          /* user meta, system user and installation setup form reqistration here */
           $username = $this->input->post('username');
           $firstname = $this->input->post('firstname');
           $lastname = $this->input->post('lastname');
@@ -133,15 +137,20 @@
             "'.$lastname.'",
             "'.$phone.'")');
 
+          /* end registration */
 
-          
+
+
+          /* declare constant value */
           $config_folder=APPPATH.'config/';
           
           $config_file=file_get_contents($config_folder.'constants.php')."\r\ndefine('INSTALLED',TRUE);";
           
           file_put_contents($config_folder.'constants.php',$config_file);
-          
+          /* end declaration */
                    
+
+          /* Set value hook to true */
           $config_files=preg_replace(
                        array(                            
                             "/config\['enable_hooks'\] = FALSE;/si"
@@ -153,30 +162,10 @@
                        file_get_contents($config_folder.'config.php')
           );
           file_put_contents($config_folder.'config.php',$config_files);
+          /* end hook */
+          
 
-          /*$htaccess=file_get_contents(BASEPATH.'../.htaccess');
-
-          $rr = preg_replace(
-                            "/RewriteBase \/.*?/si", "RewriteBase mm", $htaccess
-                        );
-          file_put_contents(BASEPATH.'../.htaccess',$rr);*/
-          
-          
-         /* $autoload['model'] = array('');
-          
-          $config_file=preg_replace(
-                       array(
-                            "/autoload\['libraries'\] = array\(\);/si"
-                       ),
-                       array(
-                            'autoload[\'libraries\'] = array(\'database\',\'driver\',\'session\');'
-                       ),
-                       file_get_contents($config_folder.'autoload.php')
-          );
-          
-          file_put_contents($config_folder.'autoload.php',$config_file);*/
-          
-          
+          /* set the value db connection */
           $config_file=preg_replace(
                        array(
                             "/'hostname' => '',/si",
@@ -194,7 +183,24 @@
           );
           
           file_put_contents($config_folder.'database.php',$config_file);
-          
+          /* end db connection */
+
+
+          /* set the value of route default controller */
+          $routes_file=preg_replace(
+                       array(                            
+                            "/route\['default_controller'\] = \'install\';/si"
+                       ),
+                       array(
+                           
+                           'route[\'default_controller\'] = \'dashboard\';' 
+                       ),
+                       file_get_contents($config_folder.'routes.php')
+          );
+          file_put_contents($config_folder.'routes.php',$routes_file);
+          /* end route replacement */
+
+
           return TRUE;
       }
       

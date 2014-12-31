@@ -11,39 +11,39 @@
             <div id="save_result"></div>
             <div class="form-group has-feedback">
                 <label class="control-label" for="database_host">Database host<sup class="mandatory">*</sup></label>
-                <input type="text" id="database_host" name="database_host" class="form-control required" value="localhost" />
+                <input type="text" id="database_host" name="database_host" class="form-control required"/>
             </div>
             <div class="form-group has-feedback">
                 <label class="control-label" for="database_name">Database name<sup class="mandatory">*</sup></label>
-                <input type="text" name="database_name" id="database_name" class="form-control required" value="c"/>
+                <input type="text" name="database_name" id="database_name" class="form-control required"/>
             </div>
             <div class="form-group has-feedback">
                 <label class="control-label" for="database_user">Database user<sup class="mandatory">*</sup></label>
-                <input type="text" name="database_user" id="database_user" class="form-control required" value="root"/>
+                <input type="text" name="database_user" id="database_user" class="form-control required"/>
             </div>
             <div class="form-group has-feedback">
-                <label class="control-label" for="database_password">Database password<sup class="mandatory">*</sup></label>
+                <label class="control-label" for="database_password">Database password</label>
                 <input type="password" name="database_password" id="database_password">
             </div>
             <div class="form-group has-feedback">
                 <label for="username">Your Firstaname<sup class="mandatory">*</sup></label>
-                <input type="text" name="firstname" id="firstname" class="form-control required" value="Ahmad">
+                <input type="text" name="firstname" id="firstname" class="form-control required">
             </div>
             <div class="form-group has-feedback">
                 <label for="username">Your Lastname<sup class="mandatory">*</sup></label>
-                <input type="text" name="lastname" id="lastname" class="form-control required" value="Pintu">
+                <input type="text" name="lastname" id="lastname" class="form-control required">
             </div>
             <div class="form-group has-feedback">
                 <label for="username">Your Phone<sup class="mandatory">*</sup></label>
-                <input type="text" name="phone" id="phone" class="form-control required" value="012345678">
+                <input type="text" name="phone" id="phone" class="form-control required">
             </div>
             <div class="form-group has-feedback">
                 <label for="username">Your username<sup class="mandatory">*</sup></label>
-                <input type="email" name="username" id="username" class="form-control required email" value="a@admin.com">
+                <input type="email" name="username" id="username" class="form-control required email">
             </div>
             <div class="form-group has-feedback">
                 <label class="control-label" for="admin_password">Your password<sup class="mandatory">*</sup></label>
-                <input type="password" name="admin_password" id="admin_password" class="form-control required" value="qwe123">
+                <input type="password" name="admin_password" id="admin_password" class="form-control required">
             </div>
             <button type="button" onclick="submit_form('#install_form','','<?php echo base_url();?>assets/img/ajax-loader-install.gif')" class="btn btn-primary block full-width m-b">Install</button>
         </form>
