@@ -51,7 +51,7 @@ Needed software to be downloaded:
 1. Unzip the Fat Free CRM zip file  and copy the folder  to C:\xampp\htdocs, then right click and rename the folder to customer-relationship-management
 2. The folder structure should then be C:\xampp\htdocs\ customer-relationship-management
 3. Go to phpmyadmin, creata a database name "crm". Next, go to C:\xampp\htdocs\ customer-relationship-management and drag crm.sql file into crm database.
-4. Then, go to https://localhost/customer-relationship-management/. In this page you have to enter all the required details.
+4. Then, go to https://localhost/customer-relationship-management/. 
 
 ###**Tech**
 ___________________________________________
