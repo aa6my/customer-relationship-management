@@ -47,9 +47,9 @@
                 </div>
                 <div class="footer">
                     <div class="showcase sweet">                                                               
-                    <button type="submit" class="btn bg-olive btn-block">Sign me in</button>  
+                    <button type="submit" class="btn bg-olive btn-block">Log In</button>  
                     </div>
-                    <p><a href="javascript:" onclick="display.password()">I forgot my password</a></p>
+                    <!-- <p><a href="javascript:" onclick="display.password()">I forgot my password</a></p> -->
                 </div>
             </form>
 
