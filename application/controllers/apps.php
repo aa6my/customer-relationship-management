@@ -59,7 +59,7 @@ class Apps extends REST_Controller
         */
         
 
-        if(($this->get('val') && !$this->get('k ey')) || ($this->get('key') && !$this->get('val')))
+        if(($this->get('val') && !$this->get('key')) || ($this->get('key') && !$this->get('val')))
         {
         	$this->response(array('error' => 'The key parameter and value parameter must have'), 400);
         }
@@ -73,14 +73,17 @@ class Apps extends REST_Controller
 		
 		$type    =  $this->get('type'); // get type of table need to fetch data eg:|customers(user/type/customers)|
 		$key     =  $this->get('key');  // UNIQUE ID in table to fetch from eg : |customers(user/type/customers/fetch/all@specified/key/customer_id)
-		$table   = $type;               // asign type into table variable
-		
+		$table   = $type;               // asign type into table variable	
 		
 		$join_id = $this->get('joinid');
 		$join_id = explode('-', $join_id);
 		$join_to = $this->get('jointo');
 		$join_to = explode('-', $join_to);
 
+        if (false !== strpos($key,'-')){
+
+                $key = explode('-', $key);
+        }
         
         if (false !== strpos($this->url,'joinid')) //if joinid name in url variable exist
         {
