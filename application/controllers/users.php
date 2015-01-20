@@ -52,7 +52,7 @@ class Users extends CI_Controller {
         $firstname = $this->input->post("firstname");
         $lastname = $this->input->post("lastname");
         $email = $this->input->post("email");
-        $password = $this->input->post("password");
+        /*$password = $this->input->post("password");*/
         $status = $this->input->post("status");
 
         $x = $this->ezrbac->createUser(array(

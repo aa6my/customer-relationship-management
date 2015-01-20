@@ -1,0 +1,1 @@
+<script type="text/javascript">$('document').ready(function(){setTimeout(function(){location.href="<?= $url?>";},1500);});</script>

@@ -59,7 +59,7 @@ class Apps extends REST_Controller
         */
         
 
-        if(($this->get('val') && !$this->get('key')) || ($this->get('key') && !$this->get('val')))
+        if(($this->get('val') && !$this->get('k ey')) || ($this->get('key') && !$this->get('val')))
         {
         	$this->response(array('error' => 'The key parameter and value parameter must have'), 400);
         }

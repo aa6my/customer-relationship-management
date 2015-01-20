@@ -481,7 +481,7 @@ class Midae_model extends CI_Model {
            
            if($join_to!=false && $join_id!=false){
                 for ($i=0; $i < count($join_to); $i++){
-                    $this->db->join($join_to[$i], $join_to[$i].".".$join_id[$i]." = ".$table.".".$join_id[$i]);
+                    $this->db->join($join_to[$i], $join_to[$i].".".$join_id[$i]." = ".$table.".".$join_id[$i], ' left outer');
                 }
                 
            }
