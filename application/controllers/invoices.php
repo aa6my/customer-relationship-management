@@ -87,14 +87,14 @@ class Invoices extends MY_Controller {
             {
                 $postData = $this->input->post();
                 $bil      = count($postData['item_name']);
-                $invoice          = $this->get_invoice_number();
-                $invoice_number   = ($invoice!="") ? $invoice['invoice_number'] : "";
-                $invoice_number   = ($invoice_number!="") ? $invoice_number + 1 : 10001;
+                //$invoice          = $this->get_invoice_number();
+                //$invoice_number   = ($invoice!="") ? $invoice['invoice_number'] : "";
+                //$invoice_number   = ($invoice_number!="") ? $invoice_number + 1 : 10001;
 
                 /** insert into invoice table **/
                 $arrayData = array('invoice_subject'          => $postData['invoice_subject'],
                                    'invoice_date_created'     => $postData['invoice_date_created'],
-                                   'invoice_number'           => $invoice_number,
+                                   //'invoice_number'           => $invoice_number,
                                    'invoice_valid_until'      => $postData['invoice_valid_until'],
                                    'customer_id'              => $postData['customer_id'],
                                    'invoice_customer_notes'   => $postData['invoice_customer_notes'],
