@@ -497,7 +497,13 @@ class Midae_model extends CI_Model {
    
 
 
- 
+    function get_invoice_id(){
+        $this->db->select('*');
+        $this->db->from('invoices');
+        $this->db->order_by('invoice_id','desc');
+        $query = $this->db->get();
+        return $query->row_array();  
+    }
 
 
 

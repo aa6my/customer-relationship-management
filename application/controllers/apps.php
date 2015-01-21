@@ -158,16 +158,56 @@ class Apps extends REST_Controller
     public function dataAll_post()
     {
         /************** THIS FUNCTION WILL CHANGE DEPEND ON COMPLEXITY OF CLIENT SIDE REQUESTED ****************************
-         * insert into table
-         * Currently only one table only can insert at mean time
-         * Will changes time to time in order to create function for dynamic fucntion
+         * 
+         * Multiple or single table inserted
+         * Usage(client side) : 
+         * For the table : (multiple table inserted)    just seperated with '-' symbol
+         *                 (single table inserted)      just write down one name only
+         * $formData = array(
+                            array('name'=>'emi'),                   -----> data for table customers
+                            array('subject_name'=>'akhlak')         -----> data for table subjects
+                        );
+            $post = array('type'=>'customers-subjects', 'formData'=>$formData); 
+         * p/s : Data and table name must be write down in sequence order
+         * 
+         * Will changes time to time in order to create function for dynamic function
+         * PEACE
          */
-        $table     = $this->post('type'); //this is actually a table name
-        $arrayData = $this->post('formData');        
-        $insert    = $this->Midae_model->insert_new_data($arrayData,$table);
         
-        $this->response(array('Respone'=> 'Success Insert into Data'), 200);
-    	  
+        // get table value from client side
+        // get data value from client side
+        // set variable loop as a boolean to false for initial start
+        // set variable loop as a boolean true value if multiple table detected
+        $type      = $this->post('type');
+        $arrayData = $this->post('formData'); 
+        $loop = false;
+        // only for multiple table delete, if have this set to true        
+        if (false !== strpos($type,'-')){       // if '-' existed
+            $loop = true;                       // set the loop value to TRUE
+            $table = explode('-', $type);       // and then explode those '-' into array value
+        }
+        // if '-' symbol detected
+        // count the array size
+        // make insert function inside loop
+        // loop iteration depend on arraysize
+        if($loop == true){            
+            $bil = count($table);
+            for($i = 0; $i < $bil; $i++){
+                $doAdd = $this->Midae_model->insert_new_data($arrayData[$i],$table[$i]);                
+            }            
+                $this->response(array('Respone'=> 'Multiple table Insert into table'), 200);
+        }
+        // if no '-' detected
+        // single table inserted function will triggered
+        // use the array index 0
+        else{
+            $table = $type;
+            $doAdd = $this->Midae_model->insert_new_data($arrayData[0],$table);
+            $this->response(array('Respone'=> 'Single table Insert into table'), 200); 
+        }
+    
+        
+          
     }
 
     public function dataAll_delete()
@@ -251,5 +291,25 @@ class Apps extends REST_Controller
 	{
 		var_dump($this->request->body);
 	}
+
+
+    function dataInvoice_get() 
+    {
+        
+        
+        $data['invoices'] = $this->Midae_model->get_invoice_id();
+
+   
+
+        if($data)
+        {
+            $this->response($data, 200); // 200 being the HTTP response code
+        }
+
+        else
+        {
+            $this->response(array('error' => 'User could not be found'), 404);
+        }
+    }
 
 }
