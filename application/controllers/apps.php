@@ -202,8 +202,14 @@ class Apps extends REST_Controller
         // use the array index 0
         else{
             $table = $type;
-            $doAdd = $this->Midae_model->insert_new_data($arrayData[0],$table);
-            $this->response(array('Respone'=> 'Single table Insert into table'), 200); 
+            if($arrayData[0] == "" || $arrayData[0] == "undefined"){
+                $data_val = $arrayData;
+            }
+            else{
+                $data_val = $arrayData[0];
+            }
+            
+            $doAdd = $this->Midae_model->insert_new_data($data_val,$table); 
         }
     
         
