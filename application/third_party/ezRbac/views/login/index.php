@@ -11,7 +11,7 @@
 <html class="bg-black">
     <head>
         <meta charset="UTF-8">
-        <title>AdminLTE | Log in</title>
+        <title>Customer Relationship Management</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -29,7 +29,7 @@
     <body class="bg-black">
 
         <div class="form-box" id="login-box" <?php if ($this->input->post('action') == 'recover_password') echo "style='display:none'" ?>>
-            <div class="header">Sign In</div>
+            <div class="header">Customer Relationship Management</div>
             <form action="" method="post">
                 <div class="body bg-gray">                
                         <?php if ($this->input->post('action') != 'recover_password'): ?>
