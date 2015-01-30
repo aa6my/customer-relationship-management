@@ -245,8 +245,8 @@ $(function () {
             
         },
         credits: {
-            text : 'SegiMidaeInfocomn',
-            href : 'http://segimidae.net',
+            text : '',
+            href : '',
             style : {
                 color : '#55A3D1',
                 padding : '3px',
