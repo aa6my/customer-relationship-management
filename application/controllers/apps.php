@@ -201,13 +201,6 @@ class Apps extends REST_Controller
         // single table inserted function will triggered
         // use the array index 0
         else{
-            /*$table = $type;
-            if($arrayData[0] == "" || $arrayData[0] == "undefined"){
-                $data_val = $arrayData;
-            }
-            else{
-                $data_val = $arrayData[0];
-            }*/
             
             $table = $type;
             if(!isset($arrayData[0])){
