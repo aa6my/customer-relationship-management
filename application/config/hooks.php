@@ -24,5 +24,13 @@ $hook['post_controller_constructor'][] = array(
         'filepath' => 'hooks'
         );
 
+$hook['display_override'][] = array(
+    'class' => 'Minifyhtml',
+    'function' => 'output',
+    'filename' => 'Minifyhtml.php',
+    'filepath' => 'hooks',
+    'params' => array()
+);
+
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

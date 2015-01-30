@@ -1,7 +1,7 @@
         <header class="header">
             <a href="<?php echo base_url(); ?>dashboard" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                CRM - <?php echo $this->config->item('sitename'); ?>
+                <?php echo $this->config->item('sitename'); ?>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">

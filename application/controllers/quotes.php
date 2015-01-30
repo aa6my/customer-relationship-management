@@ -391,13 +391,13 @@ class Quotes extends MY_Controller {
         $table            = "quotes";
         $where            = array('quote_id' => $data['quote_id']);
         $quotes           = $this->Midae_model->get_specified_row($table,$where,false,false, false);
-        $invoice          = $this->get_invoice_number();
-        $invoice_number   = ($invoice=="") ? $invoice['invoice_number'] : "";
-        $invoice_number   = ($invoice_number!="") ? $invoice_number + 1 : 10001;
+        //$invoice          = $this->get_invoice_number();
+        //$invoice_number   = ($invoice=="") ? $invoice['invoice_number'] : "";
+        //$invoice_number   = ($invoice_number!="") ? $invoice_number + 1 : 10001;
         $arrayData        = array( 'customer_id'            =>$quotes['customer_id'],
                                    'invoice_subject'        => $quotes['quote_subject'],
                                    'invoice_date_created'   => date('Y-m-d'),
-                                   'invoice_number'         => $invoice_number,
+                                   //'invoice_number'         => $invoice_number,
                                    'invoice_customer_notes' => $quotes['quote_customer_notes'],
                                    'invoice_valid_until'    => $quotes['quote_valid_until'],
                                    'invoice_status'         => $quotes['quote_status']

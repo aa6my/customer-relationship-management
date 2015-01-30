@@ -24,10 +24,16 @@
                                 <i class="fa fa-folder"></i> <span>Customers</span>
                             </a>
                         </li>
-                         <li class="<?php if($this->uri->segment(1)=="products"){echo "active";}?>">
-                            <a href="<?php echo base_url(); ?>products">
+                         <li class="treeview <?php if($this->uri->segment(1)=="products"){echo "active";}?>">
+                            <a href="#">
                                 <i class="fa fa-folder"></i> <span>Products</span>
+                                <i class="fa pull-right fa-angle-left"></i>
                             </a>
+                            <ul class="treeview-menu">
+                                <li class="<?php if($this->uri->segment(1)=="products"){echo "active";}?>"><a href="<?php echo base_url(); ?>products"><i class="fa fa-angle-double-right"></i> Manage Products</a></li>
+                                <li class="<?php if($this->uri->segment(1)=="products/category"){echo "active";}?>"><a href="<?php echo base_url(); ?>products/category"><i class="fa fa-angle-double-right"></i> Product Category</a></li>
+
+                            </ul>
                         </li>
                         <li class="<?php if($this->uri->segment(1)=="quotes"){echo "active";}?>">
                             <a href="<?php echo base_url(); ?>quotes">

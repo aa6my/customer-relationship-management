@@ -38,7 +38,7 @@
 
                 <section class="content">
 
-    <div class="container">
+    <div style="margin: 20px">
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url() ?>calendar">Calendar</a></li>
             <li><a href="<?php echo base_url() ?>calendar/events">Add Event</a></li>
