@@ -86,7 +86,7 @@ class Products extends MY_Controller {
         $state = $crud->getState();
         $crud->set_theme('datatables');
         $crud->set_table('catproduct');
-        $crud->set_subject('Category Products');
+        $crud->set_subject('Product Categories');
         $crud->display_as('catproduct_name','Category Name');
         $crud->unset_print();
 
