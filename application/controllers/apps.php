@@ -201,8 +201,16 @@ class Apps extends REST_Controller
         // single table inserted function will triggered
         // use the array index 0
         else{
-            $table = $type;
+            /*$table = $type;
             if($arrayData[0] == "" || $arrayData[0] == "undefined"){
+                $data_val = $arrayData;
+            }
+            else{
+                $data_val = $arrayData[0];
+            }*/
+            
+            $table = $type;
+            if(!isset($arrayData[0])){
                 $data_val = $arrayData;
             }
             else{
@@ -316,6 +324,55 @@ class Apps extends REST_Controller
         {
             $this->response(array('error' => 'User could not be found'), 404);
         }
+    }
+
+    public function dataChart_get(){
+        $tahun = $this->get('year');
+       // $tahun = ($tahun!="") ? $tahun : date('Y');
+        $bulan = array(1 => 'Jan',
+                       2 => 'Feb',
+                       3 => 'Mac',
+                       4 => 'Apr',
+                       5 => 'May',
+                       6 => 'June',
+                       7 => 'July',
+                       8 => 'Aug',
+                       9 => 'Sep',
+                       10 => 'Oct',
+                       11 => 'Nov',
+                       12 => 'Dec');
+
+        $data = $this->Midae_model->get_data_highchart($tahun);
+        $month = array();
+        $amount = array();
+        $amount['name'] = "Amount";
+        $textTahun = array();
+        $textTahun['tahun'] = $tahun;
+       
+
+        foreach($data as $k => $v){
+
+                if(array_key_exists($v['month'],$bulan)){
+                    
+                    $month['month'][] = $bulan[$v['month']];
+                }
+        }
+               
+                
+     
+
+        $results = array();
+        foreach($data as $key => $value){
+
+            $amount['data'][] = $value['amount'];
+        }
+
+        $results = array();       
+        array_push($results, $amount); 
+        array_push($results, $month);
+        array_push($results, $textTahun);
+       // print json_encode($results, JSON_NUMERIC_CHECK);
+        $this->response($results, 200);
     }
 
 }
