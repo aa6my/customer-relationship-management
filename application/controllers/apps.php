@@ -327,8 +327,7 @@ class Apps extends REST_Controller
     }
 
     public function dataChart_get(){
-        $tahun = $this->get('year');
-       // $tahun = ($tahun!="") ? $tahun : date('Y');
+        $tahun = $this->get('year');       
         $bulan = array(1 => 'Jan',
                        2 => 'Feb',
                        3 => 'Mac',
@@ -371,7 +370,7 @@ class Apps extends REST_Controller
         array_push($results, $amount); 
         array_push($results, $month);
         array_push($results, $textTahun);
-       // print json_encode($results, JSON_NUMERIC_CHECK);
+       
         $this->response($results, 200);
     }
 
