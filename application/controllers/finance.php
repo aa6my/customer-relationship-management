@@ -57,7 +57,7 @@ class Finance extends MY_Controller {
         if($this->input->post('search')){
 
         if($this->input->post('client_id')!=""){
-            $where = array("invoices.customer_id" => $client) ;
+            $where = array("invoices.customer_id" => $client,"invoice_payments.invoice_payment_date >=" => $new_from_date,"invoice_payments.invoice_payment_date <=" => $new_to_date) ;
         }
         else if($this->input->post('client_id')==""){
             $where = array("invoice_payments.invoice_payment_date >=" => $new_from_date,"invoice_payments.invoice_payment_date <=" => $new_to_date) ;
