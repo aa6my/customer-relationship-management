@@ -69,7 +69,7 @@
               return FALSE;
           }
           
-          $sql=file_get_contents(BASEPATH.'../crm.sql');
+          $sql=file_get_contents(BASEPATH.'../schema/customer-relationship-management.sql');
           $sql=explode(';',$sql);
           foreach($sql as $query)
           {

@@ -1,17 +1,23 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Dec 22, 2014 at 09:21 PM
--- Server version: 5.5.38-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.4
+-- Host: 127.0.0.1
+-- Generation Time: Mar 03, 2015 at 07:57 AM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
 --
--- Database: `crm`
+-- Database: `crmv2`
 --
 
 -- --------------------------------------------------------
@@ -21,10 +27,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `catproduct` (
-  `catproduct_id` int(5) NOT NULL AUTO_INCREMENT,
-  `catproduct_name` varchar(50) NOT NULL,
-  PRIMARY KEY (`catproduct_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+`catproduct_id` int(5) NOT NULL,
+  `catproduct_name` varchar(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -34,8 +39,7 @@ CREATE TABLE IF NOT EXISTS `catproduct` (
 
 CREATE TABLE IF NOT EXISTS `config_data` (
   `key` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  PRIMARY KEY (`key`)
+  `value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -52,8 +56,8 @@ INSERT INTO `config_data` (`key`, `value`) VALUES
 ('mailtype', 'text'),
 ('newline', '\\r\\n'),
 ('protocol', 'smtp'),
-('sitedescription', 'Hell Yeah!'),
-('sitename', 'SeGi MiDae'),
+('sitedescription', 'Site Description'),
+('sitename', 'Add Your Site'),
 ('smtp_host', 'ssl://smtp.googlemail.com'),
 ('smtp_port', '465'),
 ('smtp_timeout', '30'),
@@ -67,14 +71,13 @@ INSERT INTO `config_data` (`key`, `value`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `country` (
-  `country_id` int(11) NOT NULL AUTO_INCREMENT,
+`country_id` int(11) NOT NULL,
   `country_iso` char(2) NOT NULL,
   `country_name` varchar(80) NOT NULL,
   `country_nicename` varchar(80) NOT NULL,
   `country_iso3` char(3) DEFAULT NULL,
   `country_numcode` smallint(6) DEFAULT NULL,
-  `country_phonecode` int(5) NOT NULL,
-  PRIMARY KEY (`country_id`)
+  `country_phonecode` int(5) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=240 ;
 
 --
@@ -329,10 +332,9 @@ INSERT INTO `country` (`country_id`, `country_iso`, `country_name`, `country_nic
 --
 
 CREATE TABLE IF NOT EXISTS `currency` (
-  `currency_id` int(11) NOT NULL AUTO_INCREMENT,
+`currency_id` int(11) NOT NULL,
   `currency_name` varchar(20) NOT NULL,
-  `currency_value` varchar(5) NOT NULL,
-  PRIMARY KEY (`currency_id`)
+  `currency_value` varchar(5) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
@@ -351,7 +353,7 @@ INSERT INTO `currency` (`currency_id`, `currency_name`, `currency_value`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `customers` (
-  `customer_id` int(5) NOT NULL AUTO_INCREMENT,
+`customer_id` int(5) NOT NULL,
   `customer_name` varchar(250) NOT NULL,
   `customer_firstname` varchar(50) NOT NULL,
   `customer_lastname` varchar(50) NOT NULL,
@@ -363,9 +365,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `customer_postcode` varchar(7) NOT NULL,
   `customer_state` varchar(30) NOT NULL,
   `country_id` smallint(10) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -374,13 +375,12 @@ CREATE TABLE IF NOT EXISTS `customers` (
 --
 
 CREATE TABLE IF NOT EXISTS `events` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(10) unsigned NOT NULL,
   `title` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
   `body` text COLLATE utf8_spanish_ci NOT NULL,
   `class` varchar(45) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'info',
   `start` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `end` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `end` varchar(15) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -390,12 +390,11 @@ CREATE TABLE IF NOT EXISTS `events` (
 --
 
 CREATE TABLE IF NOT EXISTS `files` (
-  `file_id` int(5) NOT NULL AUTO_INCREMENT,
+`file_id` int(5) NOT NULL,
   `file_name` varchar(30) NOT NULL,
   `file_content` mediumblob NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`file_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -404,16 +403,28 @@ CREATE TABLE IF NOT EXISTS `files` (
 --
 
 CREATE TABLE IF NOT EXISTS `invoices` (
-  `invoice_id` int(11) NOT NULL AUTO_INCREMENT,
+`invoice_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL COMMENT 'from customer table',
   `invoice_subject` text NOT NULL,
   `invoice_date_created` date NOT NULL,
   `invoice_number` varchar(50) NOT NULL,
   `invoice_customer_notes` longtext NOT NULL,
   `invoice_valid_until` date NOT NULL,
-  `invoice_status` int(5) NOT NULL,
-  PRIMARY KEY (`invoice_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+  `invoice_status` int(5) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Triggers `invoices`
+--
+DELIMITER //
+CREATE TRIGGER `IncreaseInvoiceNumber` BEFORE INSERT ON `invoices`
+ FOR EACH ROW begin
+DECLARE a int default 1000;
+SELECT invoice_number INTO  a FROM invoices ORDER BY invoice_id DESC LIMIT 1;
+SET NEW.invoice_number = a+1;
+end
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -422,7 +433,7 @@ CREATE TABLE IF NOT EXISTS `invoices` (
 --
 
 CREATE TABLE IF NOT EXISTS `invoice_items` (
-  `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,
+`invoice_item_id` int(11) NOT NULL,
   `invoice_id` int(11) NOT NULL COMMENT 'from invoice table',
   `product_id` int(5) NOT NULL DEFAULT '0' COMMENT 'from product table',
   `invoice_item_name` varchar(300) NOT NULL DEFAULT 'no name',
@@ -430,9 +441,8 @@ CREATE TABLE IF NOT EXISTS `invoice_items` (
   `invoice_item_price` double NOT NULL DEFAULT '0',
   `invoice_item_quantity` double NOT NULL DEFAULT '0',
   `invoice_item_discount` double NOT NULL DEFAULT '0',
-  `invoice_item_subtotal` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`invoice_item_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
+  `invoice_item_subtotal` double NOT NULL DEFAULT '0'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -441,15 +451,14 @@ CREATE TABLE IF NOT EXISTS `invoice_items` (
 --
 
 CREATE TABLE IF NOT EXISTS `invoice_payments` (
-  `invoice_payment_id` int(5) NOT NULL AUTO_INCREMENT,
+`invoice_payment_id` int(5) NOT NULL,
   `invoice_id` int(5) NOT NULL COMMENT 'from INVOICES table',
   `payment_id` int(5) NOT NULL COMMENT 'from PAYMENTS table',
   `invoice_payment_amount` double NOT NULL,
   `invoice_payment_date` date NOT NULL,
   `invoice_payment_note` text NOT NULL,
-  `invoice_status` int(5) NOT NULL COMMENT 'same like invoice table',
-  PRIMARY KEY (`invoice_payment_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+  `invoice_status` int(5) NOT NULL COMMENT 'same like invoice table'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -458,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `invoice_payments` (
 --
 
 CREATE TABLE IF NOT EXISTS `jobs` (
-  `job_id` int(5) NOT NULL AUTO_INCREMENT,
+`job_id` int(5) NOT NULL,
   `customer_id` int(5) NOT NULL,
   `website_id` int(5) NOT NULL,
   `job_title` varchar(20) NOT NULL,
@@ -482,9 +491,8 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `job_discount_amount` int(5) NOT NULL,
   `job_discount_name` varchar(50) NOT NULL,
   `job_discount_type` int(5) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`job_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -493,17 +501,16 @@ CREATE TABLE IF NOT EXISTS `jobs` (
 --
 
 CREATE TABLE IF NOT EXISTS `jobs_task` (
-  `job_task_id` int(5) NOT NULL AUTO_INCREMENT,
+`job_task_id` int(5) NOT NULL,
   `job_id` int(5) NOT NULL COMMENT 'from JOBS table',
   `product_id` int(5) NOT NULL DEFAULT '0',
   `job_task_hour` int(5) NOT NULL,
   `job_task_amount` double NOT NULL,
   `job_task_due_date` date NOT NULL,
   `user_id` int(5) NOT NULL COMMENT 'from USER_META table',
-  `job_task_percentage` int(5) NOT NULL COMMENT '0-untick(0 percent), 1-tick(100 percent)',
-  `job_task_description` text NOT NULL,
-  PRIMARY KEY (`job_task_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=229 ;
+  `job_task_percentage` int(5) NOT NULL DEFAULT '0' COMMENT '0-untick(0 percent), 1-tick(100 percent)',
+  `job_task_description` text NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 -- --------------------------------------------------------
 
@@ -512,10 +519,9 @@ CREATE TABLE IF NOT EXISTS `jobs_task` (
 --
 
 CREATE TABLE IF NOT EXISTS `job_types` (
-  `job_type_id` int(5) NOT NULL AUTO_INCREMENT,
-  `job_type_name` varchar(30) NOT NULL,
-  PRIMARY KEY (`job_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+`job_type_id` int(5) NOT NULL,
+  `job_type_name` varchar(30) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -524,7 +530,7 @@ CREATE TABLE IF NOT EXISTS `job_types` (
 --
 
 CREATE TABLE IF NOT EXISTS `leads` (
-  `lead_id` smallint(6) NOT NULL AUTO_INCREMENT,
+`lead_id` smallint(6) NOT NULL,
   `lead_name` varchar(250) NOT NULL,
   `lead_firstname` varchar(50) NOT NULL,
   `lead_lastname` varchar(50) NOT NULL,
@@ -536,9 +542,8 @@ CREATE TABLE IF NOT EXISTS `leads` (
   `lead_postcode` varchar(7) NOT NULL,
   `lead_state` varchar(30) NOT NULL,
   `country_id` smallint(10) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`lead_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -547,9 +552,8 @@ CREATE TABLE IF NOT EXISTS `leads` (
 --
 
 CREATE TABLE IF NOT EXISTS `payments` (
-  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `payment_method` text NOT NULL,
-  PRIMARY KEY (`payment_id`)
+`payment_id` int(11) NOT NULL,
+  `payment_method` text NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
@@ -566,15 +570,14 @@ INSERT INTO `payments` (`payment_id`, `payment_method`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `products` (
-  `product_id` int(5) NOT NULL AUTO_INCREMENT,
+`product_id` int(5) NOT NULL,
   `product_sku` varchar(20) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `product_desc` text NOT NULL,
   `product_quantity` int(5) NOT NULL,
   `product_amount` double NOT NULL,
-  `catproduct_id` int(5) NOT NULL,
-  PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+  `catproduct_id` int(5) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -583,16 +586,15 @@ CREATE TABLE IF NOT EXISTS `products` (
 --
 
 CREATE TABLE IF NOT EXISTS `quotes` (
-  `quote_id` int(11) NOT NULL AUTO_INCREMENT,
+`quote_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL COMMENT 'from customer table',
   `quote_subject` varchar(300) NOT NULL,
   `quote_date_created` date NOT NULL,
   `quote_valid_until` date NOT NULL,
   `quote_discount` double NOT NULL,
   `quote_customer_notes` text NOT NULL,
-  `quote_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0-draft,1-approved,2-rejected,3-canceled',
-  PRIMARY KEY (`quote_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+  `quote_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0-draft,1-approved,2-rejected,3-canceled'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -601,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `quotes` (
 --
 
 CREATE TABLE IF NOT EXISTS `quote_items` (
-  `quote_item_id` int(11) NOT NULL AUTO_INCREMENT,
+`quote_item_id` int(11) NOT NULL,
   `quote_id` int(11) NOT NULL COMMENT 'from quote table',
   `product_id` int(5) NOT NULL DEFAULT '0' COMMENT 'from product table',
   `quote_item_name` varchar(300) NOT NULL,
@@ -609,9 +611,8 @@ CREATE TABLE IF NOT EXISTS `quote_items` (
   `quote_item_price` double NOT NULL,
   `quote_item_quantity` double NOT NULL,
   `quote_item_discount` double NOT NULL,
-  `quote_item_subtotal` double NOT NULL,
-  PRIMARY KEY (`quote_item_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+  `quote_item_subtotal` double NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -620,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `quote_items` (
 --
 
 CREATE TABLE IF NOT EXISTS `system_users` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+`id` bigint(20) unsigned NOT NULL,
   `email` varchar(254) COLLATE utf8_bin DEFAULT NULL,
   `password` varchar(160) COLLATE utf8_bin DEFAULT NULL,
   `salt` varchar(160) COLLATE utf8_bin DEFAULT NULL,
@@ -631,16 +632,15 @@ CREATE TABLE IF NOT EXISTS `system_users` (
   `reset_request_time` datetime DEFAULT NULL,
   `reset_request_ip` varchar(64) COLLATE utf8_bin DEFAULT NULL,
   `verification_status` tinyint(1) NOT NULL DEFAULT '0',
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `system_users`
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `last_login`, `last_login_ip`, `reset_request_code`, `reset_request_time`, `reset_request_ip`, `verification_status`, `status`) VALUES
-(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '2014-12-23 02:20:40', '203.106.121.197', NULL, NULL, NULL, 1, 1);
+(1, 'admin@admin.com', '8e666f12a66c17a952a1d5e273428e478e02d943', '4f6cdddc4979b8.51434094', 1, '0000-00-00 00:00:00', '::1', NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -651,8 +651,7 @@ INSERT INTO `system_users` (`id`, `email`, `password`, `salt`, `user_role_id`, `
 CREATE TABLE IF NOT EXISTS `user_access_map` (
   `user_role_id` int(10) NOT NULL,
   `controller` varchar(255) COLLATE utf8_bin NOT NULL,
-  `permission` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`user_role_id`,`controller`)
+  `permission` int(10) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -673,8 +672,7 @@ CREATE TABLE IF NOT EXISTS `user_autologin` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `user_agent` varchar(150) COLLATE utf8_bin NOT NULL,
   `last_ip` varchar(40) COLLATE utf8_bin NOT NULL,
-  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`key_id`,`user_id`)
+  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -687,8 +685,7 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
   `user_id` bigint(20) unsigned NOT NULL,
   `first_name` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `last_name` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `phone` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
+  `phone` varchar(100) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -696,7 +693,7 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
 --
 
 INSERT INTO `user_meta` (`user_id`, `first_name`, `last_name`, `phone`) VALUES
-(1, 'Saiful', 'Nizam', NULL);
+(1, '', 'Admin', NULL);
 
 -- --------------------------------------------------------
 
@@ -705,10 +702,9 @@ INSERT INTO `user_meta` (`user_id`, `first_name`, `last_name`, `phone`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `user_role` (
-  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(5) unsigned NOT NULL,
   `role_name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
-  `default_access` varchar(10) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `default_access` varchar(10) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
 --
@@ -726,7 +722,7 @@ INSERT INTO `user_role` (`id`, `role_name`, `default_access`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `vendors` (
-  `vendor_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
+`vendor_id` smallint(10) unsigned NOT NULL,
   `vendor_name` varchar(250) NOT NULL,
   `vendor_firstname` varchar(50) NOT NULL,
   `vendor_lastname` varchar(50) NOT NULL,
@@ -738,9 +734,8 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `vendor_postcode` varchar(7) NOT NULL,
   `vendor_state` varchar(30) NOT NULL,
   `country_id` smallint(10) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`vendor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=211 ;
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -749,9 +744,275 @@ CREATE TABLE IF NOT EXISTS `vendors` (
 --
 
 CREATE TABLE IF NOT EXISTS `websites` (
-  `website_id` int(5) NOT NULL AUTO_INCREMENT,
+`website_id` int(5) NOT NULL,
   `website_url` varchar(20) NOT NULL,
   `website_name` varchar(20) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`website_id`)
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `catproduct`
+--
+ALTER TABLE `catproduct`
+ ADD PRIMARY KEY (`catproduct_id`);
+
+--
+-- Indexes for table `config_data`
+--
+ALTER TABLE `config_data`
+ ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `country`
+--
+ALTER TABLE `country`
+ ADD PRIMARY KEY (`country_id`);
+
+--
+-- Indexes for table `currency`
+--
+ALTER TABLE `currency`
+ ADD PRIMARY KEY (`currency_id`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+ ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `files`
+--
+ALTER TABLE `files`
+ ADD PRIMARY KEY (`file_id`);
+
+--
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+ ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+ ADD PRIMARY KEY (`invoice_item_id`);
+
+--
+-- Indexes for table `invoice_payments`
+--
+ALTER TABLE `invoice_payments`
+ ADD PRIMARY KEY (`invoice_payment_id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+ ADD PRIMARY KEY (`job_id`);
+
+--
+-- Indexes for table `jobs_task`
+--
+ALTER TABLE `jobs_task`
+ ADD PRIMARY KEY (`job_task_id`);
+
+--
+-- Indexes for table `job_types`
+--
+ALTER TABLE `job_types`
+ ADD PRIMARY KEY (`job_type_id`);
+
+--
+-- Indexes for table `leads`
+--
+ALTER TABLE `leads`
+ ADD PRIMARY KEY (`lead_id`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+ ADD PRIMARY KEY (`payment_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+ ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `quotes`
+--
+ALTER TABLE `quotes`
+ ADD PRIMARY KEY (`quote_id`);
+
+--
+-- Indexes for table `quote_items`
+--
+ALTER TABLE `quote_items`
+ ADD PRIMARY KEY (`quote_item_id`);
+
+--
+-- Indexes for table `system_users`
+--
+ALTER TABLE `system_users`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_access_map`
+--
+ALTER TABLE `user_access_map`
+ ADD PRIMARY KEY (`user_role_id`,`controller`);
+
+--
+-- Indexes for table `user_autologin`
+--
+ALTER TABLE `user_autologin`
+ ADD PRIMARY KEY (`key_id`,`user_id`);
+
+--
+-- Indexes for table `user_meta`
+--
+ALTER TABLE `user_meta`
+ ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `user_role`
+--
+ALTER TABLE `user_role`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `vendors`
+--
+ALTER TABLE `vendors`
+ ADD PRIMARY KEY (`vendor_id`);
+
+--
+-- Indexes for table `websites`
+--
+ALTER TABLE `websites`
+ ADD PRIMARY KEY (`website_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `catproduct`
+--
+ALTER TABLE `catproduct`
+MODIFY `catproduct_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `country`
+--
+ALTER TABLE `country`
+MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=240;
+--
+-- AUTO_INCREMENT for table `currency`
+--
+ALTER TABLE `currency`
+MODIFY `currency_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `files`
+--
+ALTER TABLE `files`
+MODIFY `file_id` int(5) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+MODIFY `invoice_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `invoice_payments`
+--
+ALTER TABLE `invoice_payments`
+MODIFY `invoice_payment_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `jobs_task`
+--
+ALTER TABLE `jobs_task`
+MODIFY `job_task_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+--
+-- AUTO_INCREMENT for table `job_types`
+--
+ALTER TABLE `job_types`
+MODIFY `job_type_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `leads`
+--
+ALTER TABLE `leads`
+MODIFY `lead_id` smallint(6) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `quotes`
+--
+ALTER TABLE `quotes`
+MODIFY `quote_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `quote_items`
+--
+ALTER TABLE `quote_items`
+MODIFY `quote_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `system_users`
+--
+ALTER TABLE `system_users`
+MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `user_role`
+--
+ALTER TABLE `user_role`
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `vendors`
+--
+ALTER TABLE `vendors`
+MODIFY `vendor_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `websites`
+--
+ALTER TABLE `websites`
+MODIFY `website_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
