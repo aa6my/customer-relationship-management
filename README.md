@@ -26,7 +26,7 @@ Needed software to be downloaded:
 <li> XAMPP</li>
 <li> Sublime Text 3</li>
 
-(A)Install XAMPP
+(A)Installation XAMPP
 
 
 
